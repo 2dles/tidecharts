@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const ADSENSE_CLIENT = process.env.NEXT_PUBLIC_ADSENSE_CLIENT;
@@ -70,6 +71,7 @@ export default function RootLayout({
           />
         )}
         {children}
+        <Analytics />
       </body>
     </html>
   );
