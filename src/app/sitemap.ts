@@ -20,6 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     })),
     { url: `${base}/widget`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${base}/privacy`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
     { url: `${base}/guides`, lastModified: now, changeFrequency: "weekly", priority: 0.6 },
     ...ARTICLES.map((a) => ({
       url: `${base}/guides/${a.slug}`,

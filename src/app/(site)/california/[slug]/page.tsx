@@ -7,6 +7,7 @@ import ScoreBadge from "@/components/ScoreBadge";
 import ScoreDial from "@/components/ScoreDial";
 import TideChart from "@/components/TideChart";
 import TideStrip from "@/components/TideStrip";
+import AdSlot from "@/components/AdSlot";
 import { getLocationData } from "@/lib/data";
 import { getProducts } from "@/lib/gear";
 import { LOCATIONS, getLocation, getNearby } from "@/lib/locations";
@@ -521,6 +522,8 @@ export default async function LocationPage({
           })}
         </div>
       </section>
+
+      <AdSlot placement="location" />
 
       {/* SPECIES */}
       <section className="mt-10" aria-labelledby="species-h">
