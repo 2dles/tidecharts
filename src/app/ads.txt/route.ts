@@ -7,6 +7,6 @@ export function GET() {
     ? `google.com, ${client.replace("ca-", "")}, DIRECT, f08c47fec0942fa0\n`
     : "# ads.txt — populated automatically when NEXT_PUBLIC_ADSENSE_CLIENT is configured\n";
   return new Response(body, {
-    headers: { "content-type": "text/plain" },
+    headers: { "content-type": "text/plain; charset=utf-8" },
   });
 }
