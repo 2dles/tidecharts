@@ -60,8 +60,11 @@ export default function SiteLayout({
               </div>
             </div>
           </div>
-          <p className="mt-8 border-t border-line pt-6">
-            © {new Date().getFullYear()} USTideCharts.com · Not for navigation.
+          <p className="mt-8 flex flex-wrap gap-x-4 gap-y-1 border-t border-line pt-6">
+            <span>© {new Date().getFullYear()} USTideCharts.com · Not for navigation.</span>
+            <Link href="/privacy" className="hover:text-ink-dim">
+              Privacy Policy
+            </Link>
           </p>
         </div>
       </footer>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ProductCard from "@/components/ProductCard";
+import AdSlot from "@/components/AdSlot";
 import { ARTICLES, getArticle } from "@/lib/articles";
 import { getProducts } from "@/lib/gear";
 
@@ -86,6 +87,8 @@ export default async function ArticlePage({
           </section>
         ))}
       </article>
+
+      <AdSlot placement="guide" />
 
       <section className="mt-12" aria-labelledby="article-gear-h">
         <h2 id="article-gear-h" className="text-lg font-semibold tracking-tight">
