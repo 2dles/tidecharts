@@ -4,9 +4,18 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { LOCATIONS, type Location } from "@/lib/locations";
+import { LOCATIONS } from "@/lib/locations";
 
-function match(loc: Location, q: string): number {
+export interface SearchLoc {
+  slug: string;
+  name: string;
+  state: string;
+  stateName: string;
+  tagline: string;
+  aliases?: string[];
+}
+
+function match(loc: SearchLoc, q: string): number {
   const query = q.toLowerCase().trim();
   if (!query) return 0;
   const name = loc.name.toLowerCase();
@@ -17,7 +26,14 @@ function match(loc: Location, q: string): number {
   return 0;
 }
 
-export default function SearchBar({ large = false }: { large?: boolean }) {
+export default function SearchBar({
+  large = false,
+  locations,
+}: {
+  large?: boolean;
+  locations?: SearchLoc[];
+}) {
+  const list: SearchLoc[] = locations ?? LOCATIONS;
   const router = useRouter();
   const [q, setQ] = useState("");
   const [open, setOpen] = useState(false);
@@ -27,12 +43,12 @@ export default function SearchBar({ large = false }: { large?: boolean }) {
 
   const results = useMemo(() => {
     if (!q.trim()) return [];
-    return LOCATIONS.map((l) => ({ l, score: match(l, q) }))
+    return list.map((l) => ({ l, score: match(l, q) }))
       .filter((r) => r.score > 0)
       .sort((a, b) => b.score - a.score)
       .slice(0, 6)
       .map((r) => r.l);
-  }, [q]);
+  }, [q, list]);
 
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
@@ -42,7 +58,7 @@ export default function SearchBar({ large = false }: { large?: boolean }) {
     return () => document.removeEventListener("mousedown", onClick);
   }, []);
 
-  const go = (loc: Location) => {
+  const go = (loc: SearchLoc) => {
     setOpen(false);
     setQ("");
     router.push(`/${loc.state}/${loc.slug}`);

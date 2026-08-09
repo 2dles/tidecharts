@@ -1,7 +1,9 @@
 import Link from "next/link";
 import SearchBar from "@/components/SearchBar";
+import { getSearchIndex } from "@/lib/stations";
 
-export default function NotFound() {
+export default async function NotFound() {
+  const searchIndex = await getSearchIndex();
   return (
     <div className="mx-auto max-w-xl px-4 pt-28 text-center sm:px-6">
       <p className="text-6xl" aria-hidden>🌊</p>
@@ -13,7 +15,7 @@ export default function NotFound() {
         or head back to shore.
       </p>
       <div className="mt-6">
-        <SearchBar />
+        <SearchBar locations={searchIndex} />
       </div>
       <Link href="/" className="mt-6 inline-block text-sm text-sky-300 hover:text-teal-300">
         ← Back to the dashboard

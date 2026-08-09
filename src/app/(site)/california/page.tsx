@@ -5,6 +5,7 @@ import ScoreBadge from "@/components/ScoreBadge";
 import SearchBar from "@/components/SearchBar";
 import { getLocationData } from "@/lib/data";
 import { LOCATIONS, type Location } from "@/lib/locations";
+import { getSearchIndex, getStationLocations } from "@/lib/stations";
 import { nextEvents } from "@/lib/noaa";
 import { dayScores, scoreLabel } from "@/lib/score";
 import { fmtTime, naiveDateStr, ptNow } from "@/lib/tz";
@@ -41,6 +42,8 @@ async function locSummary(loc: Location) {
 
 export default async function CaliforniaPage() {
   const summaries = await Promise.all(LOCATIONS.map(locSummary));
+  const stations = await getStationLocations();
+  const searchIndex = await getSearchIndex();
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -74,7 +77,7 @@ export default async function CaliforniaPage() {
         California locations, from the redwood coast to the Mexican border.
       </p>
       <div className="mt-6 max-w-xl">
-        <SearchBar />
+        <SearchBar locations={searchIndex} />
       </div>
 
       {REGIONS.map((region) => {
@@ -117,6 +120,42 @@ export default async function CaliforniaPage() {
           </section>
         );
       })}
+
+      {stations.length > 0 && (
+        <section className="mt-12" aria-labelledby="all-stations-h">
+          <h2 id="all-stations-h" className="text-lg font-semibold tracking-tight">
+            Every California Tide Station
+          </h2>
+          <p className="mt-2 max-w-2xl text-sm text-ink-dim">
+            Live tide charts for all {stations.length + LOCATIONS.length} NOAA
+            prediction stations on the California coast — every harbor, creek
+            mouth, and pier in the official network.
+          </p>
+          {REGIONS.map((region) => {
+            const rs = stations.filter((s) => s.region === region.key);
+            if (rs.length === 0) return null;
+            return (
+              <div key={region.key} className="mt-5">
+                <h3 className="text-sm font-semibold uppercase tracking-wider text-ink-faint">
+                  {region.name}
+                </h3>
+                <ul className="mt-2 flex flex-wrap gap-2">
+                  {rs.map((s) => (
+                    <li key={s.slug}>
+                      <Link
+                        href={`/california/${s.slug}`}
+                        className="chip transition-colors hover:border-line-hi hover:text-ink"
+                      >
+                        {s.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
+        </section>
+      )}
     </div>
   );
 }

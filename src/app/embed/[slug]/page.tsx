@@ -6,14 +6,14 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import TideChart from "@/components/TideChart";
 import { getLocationData } from "@/lib/data";
-import { LOCATIONS, getLocation } from "@/lib/locations";
+import { findLocation, getAllLocations } from "@/lib/stations";
 import { nextEvents } from "@/lib/noaa";
 import { fmtTime } from "@/lib/tz";
 
 export const revalidate = 1800;
 
-export function generateStaticParams() {
-  return LOCATIONS.map((l) => ({ slug: l.slug }));
+export async function generateStaticParams() {
+  return (await getAllLocations()).map((l) => ({ slug: l.slug }));
 }
 
 export async function generateMetadata({
@@ -22,7 +22,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const loc = getLocation(slug);
+  const loc = await findLocation(slug);
   return {
     title: loc ? `${loc.name} Tide Widget` : "Tide Widget",
     robots: { index: false, follow: true },
@@ -35,7 +35,7 @@ export default async function EmbedPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const loc = getLocation(slug);
+  const loc = await findLocation(slug);
   if (!loc) notFound();
 
   const data = await getLocationData(loc);

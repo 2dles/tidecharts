@@ -4,6 +4,7 @@ import SearchBar from "@/components/SearchBar";
 import ScoreBadge from "@/components/ScoreBadge";
 import ProductCard from "@/components/ProductCard";
 import { getLocation } from "@/lib/locations";
+import { getSearchIndex } from "@/lib/stations";
 import { getLocationData } from "@/lib/data";
 import { nextEvents } from "@/lib/noaa";
 import { dayScores, scoreLabel } from "@/lib/score";
@@ -40,6 +41,7 @@ async function featuredCard(slug: string) {
 }
 
 export default async function Home() {
+  const searchIndex = await getSearchIndex();
   const cards = (await Promise.all(FEATURED.map(featuredCard))).filter(
     (c): c is NonNullable<Awaited<ReturnType<typeof featuredCard>>> => c != null,
   );
@@ -60,7 +62,7 @@ export default async function Home() {
           know if it&apos;s worth going in five seconds.
         </p>
         <div className="animate-rise animate-rise-3 mx-auto mt-9 max-w-2xl">
-          <SearchBar large />
+          <SearchBar large locations={searchIndex} />
           <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs text-ink-faint">
             <span>Try:</span>
             {["monterey", "san-diego", "bodega-bay", "half-moon-bay"].map((s) => {

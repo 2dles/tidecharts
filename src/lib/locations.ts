@@ -13,6 +13,8 @@ export interface Location {
   lat: number;
   lon: number;
   region: Region;
+  /** "featured" = hand-curated page; "station" = auto-generated from NOAA list */
+  tier?: "featured" | "station";
   tagline: string;
   intro: string;
   speciesKeys: string[];

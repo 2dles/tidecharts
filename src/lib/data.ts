@@ -41,7 +41,14 @@ export async function getLocationData(
   const marineLive =
     marineR.status === "fulfilled" && marineR.value.length > 0;
 
-  const points = pointsLive ? pointsR.value : sampleTideSeries(loc);
+  // Subordinate NOAA stations publish only high/low events (no dense series).
+  // For those, synthesize the curve between real extremes with a cosine —
+  // exact at every high/low, standard tide-clock interpolation between.
+  const points = pointsLive
+    ? pointsR.value
+    : eventsLive
+      ? synthesizeSeries(eventsR.value)
+      : sampleTideSeries(loc);
   const events = eventsLive
     ? eventsR.value
     : sampleTideEvents(points); // works on live or sample points
@@ -56,6 +63,28 @@ export async function getLocationData(
     days: wx.days,
     moon: moonInfo(),
     fetchedAt: ptNow(),
-    source: pointsLive && wxLive && marineLive ? "live" : "sample",
+    source:
+      (pointsLive || eventsLive) && wxLive && marineLive ? "live" : "sample",
   };
+}
+
+/** Cosine interpolation between real high/low events, every 10 minutes. */
+export function synthesizeSeries(events: { t: number; h: number }[]): {
+  t: number;
+  h: number;
+}[] {
+  if (events.length < 2) return [];
+  const out: { t: number; h: number }[] = [];
+  const STEP = 10 * 60_000;
+  for (let i = 0; i < events.length - 1; i++) {
+    const a = events[i];
+    const b = events[i + 1];
+    if (b.t <= a.t) continue;
+    for (let t = a.t; t < b.t; t += STEP) {
+      const f = (1 - Math.cos(Math.PI * ((t - a.t) / (b.t - a.t)))) / 2;
+      out.push({ t, h: Number((a.h + (b.h - a.h) * f).toFixed(3)) });
+    }
+  }
+  out.push({ ...events[events.length - 1] });
+  return out;
 }
