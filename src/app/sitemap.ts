@@ -1,10 +1,12 @@
 import type { MetadataRoute } from "next";
 import { LOCATIONS } from "@/lib/locations";
+import { getStationLocations } from "@/lib/stations";
 import { ARTICLES } from "@/lib/articles";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = "https://ustidecharts.com";
   const now = new Date();
+  const stations = await getStationLocations();
   return [
     { url: `${base}/`, lastModified: now, changeFrequency: "hourly", priority: 1 },
     {
@@ -18,6 +20,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "hourly" as const,
       priority: 0.8,
+    })),
+    ...stations.map((l) => ({
+      url: `${base}/california/${l.slug}`,
+      lastModified: now,
+      changeFrequency: "hourly" as const,
+      priority: 0.6,
     })),
     { url: `${base}/widget`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/privacy`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },

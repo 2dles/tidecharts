@@ -10,7 +10,8 @@ import TideStrip from "@/components/TideStrip";
 import AdSlot from "@/components/AdSlot";
 import { getLocationData } from "@/lib/data";
 import { getProducts } from "@/lib/gear";
-import { LOCATIONS, getLocation, getNearby } from "@/lib/locations";
+import { getNearby } from "@/lib/locations";
+import { findLocation, getAllLocations, nearestLocations } from "@/lib/stations";
 import { bestWindows, dayScores, scoreAt, scoreLabel } from "@/lib/score";
 import { SPECIES, speciesActivity } from "@/lib/species";
 import {
@@ -29,8 +30,8 @@ import { ARTICLES } from "@/lib/articles";
 
 export const revalidate = 1800;
 
-export function generateStaticParams() {
-  return LOCATIONS.map((l) => ({ slug: l.slug }));
+export async function generateStaticParams() {
+  return (await getAllLocations()).map((l) => ({ slug: l.slug }));
 }
 
 export async function generateMetadata({
@@ -39,7 +40,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const loc = getLocation(slug);
+  const loc = await findLocation(slug);
   if (!loc) return {};
 
   const now = ptNow();
@@ -89,7 +90,7 @@ export default async function LocationPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const loc = getLocation(slug);
+  const loc = await findLocation(slug);
   if (!loc) notFound();
 
   const data = await getLocationData(loc);
@@ -133,7 +134,8 @@ export default async function LocationPage({
   const gear = getProducts(gearKeys).slice(0, 4);
 
   const relatedArticles = ARTICLES.slice(0, 3);
-  const nearby = getNearby(loc);
+  const nearby =
+    loc.tier === "station" ? await nearestLocations(loc) : getNearby(loc);
 
   // --- Crawlable prose + FAQ (unique per page, refreshed with the data) ---
 
