@@ -87,9 +87,14 @@ export default async function Home() {
           <h2 id="conditions-h" className="text-xl font-semibold tracking-tight">
             Right now on the coast
           </h2>
-          <Link href="/california" className="text-sm text-sky-300 hover:text-teal-300">
-            All California locations →
-          </Link>
+          <div className="flex gap-4 text-sm">
+            <Link href="/water-temps" className="text-sky-300 hover:text-teal-300">
+              Water temp map →
+            </Link>
+            <Link href="/california" className="text-sky-300 hover:text-teal-300">
+              All locations →
+            </Link>
+          </div>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {cards.map(({ loc, nextHigh, nextLow, now, score }) => (

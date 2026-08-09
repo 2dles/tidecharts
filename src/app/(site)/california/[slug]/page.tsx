@@ -489,7 +489,14 @@ export default async function LocationPage({
               </dd>
             </div>
             <div className="flex items-center justify-between">
-              <dt className="text-ink-faint">Water temp</dt>
+              <dt>
+                <Link
+                  href="/water-temps"
+                  className="text-ink-faint underline decoration-line underline-offset-4 transition-colors hover:text-sky-300"
+                >
+                  Water temp
+                </Link>
+              </dt>
               <dd className="font-medium tabular-nums">
                 {sea?.waterTempF != null ? `${Math.round(sea.waterTempF)}°F` : "—"}
               </dd>
