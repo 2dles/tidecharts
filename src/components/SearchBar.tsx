@@ -13,14 +13,20 @@ export interface SearchLoc {
   stateName: string;
   tagline: string;
   aliases?: string[];
+  /** Short right-hand label for the dropdown (e.g. "Near San Rafael") */
+  context?: string;
 }
 
 function match(loc: SearchLoc, q: string): number {
   const query = q.toLowerCase().trim();
   if (!query) return 0;
   const name = loc.name.toLowerCase();
-  if (name.startsWith(query)) return 3;
-  if (name.includes(query)) return 2;
+  if (name.startsWith(query)) return 5;
+  // aliases[0] is the station's PRIMARY nearby city — rank it above
+  // stations that merely have the city as a secondary tag
+  if (loc.aliases?.[0]?.startsWith(query)) return 4;
+  if (name.includes(query)) return 3;
+  if (loc.aliases?.some((a) => a.startsWith(query))) return 2.5;
   if (loc.aliases?.some((a) => a.includes(query))) return 2;
   if (loc.stateName.toLowerCase().startsWith(query)) return 1;
   return 0;
@@ -142,17 +148,16 @@ export default function SearchBar({
               onMouseEnter={() => setActive(i)}
               onMouseDown={(e) => e.preventDefault()}
               onClick={() => go(loc)}
-              className={`flex cursor-pointer items-center justify-between px-5 py-3 transition-colors ${
+              className={`flex cursor-pointer items-center gap-4 px-5 py-3 transition-colors ${
                 i === active ? "bg-sky-400/10" : ""
               }`}
             >
-              <span>
-                <span className="font-medium text-ink">{loc.name}</span>
-                <span className="ml-2 text-sm text-ink-faint">
-                  {loc.stateName}
-                </span>
+              <span className="min-w-0 flex-1 truncate font-medium text-ink">
+                {loc.name}
               </span>
-              <span className="text-xs text-ink-faint">{loc.tagline}</span>
+              <span className="hidden max-w-[55%] shrink-0 truncate text-xs text-ink-faint sm:block">
+                {loc.context ?? loc.tagline}
+              </span>
             </li>
           ))}
         </ul>
