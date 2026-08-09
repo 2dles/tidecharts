@@ -65,14 +65,16 @@ export async function generateMetadata({
         (e) =>
           `${e.type === "H" ? "high" : "low"} at ${fmtTime(e.t)} (${e.h.toFixed(1)} ft)`,
       );
-      description = `Today's tides in ${loc.name}, CA: ${parts.join(", ")}. Live NOAA tide chart, 7-day tide table, weather and the best fishing times.`;
+      description = `Today's tides in ${loc.name}, CA: ${parts.join(", ")}. Live NOAA tide chart, 7-day tide table, weather and the best fishing times.${loc.nearCity ? ` Nearest tide station to ${loc.nearCity}, CA.` : ""}`;
     }
   } catch {
     // keep static fallback description
   }
 
   return {
-    title: `${loc.name}, CA Tide Chart ${dateStr} — High & Low Tide Times`,
+    title: loc.nearCity
+      ? `${loc.name} (${loc.nearCity}), CA Tide Chart ${dateStr} — Tide Times`
+      : `${loc.name}, CA Tide Chart ${dateStr} — High & Low Tide Times`,
     description,
     alternates: { canonical: `/california/${loc.slug}` },
     openGraph: {
@@ -232,6 +234,14 @@ export default async function LocationPage({
           : `${monthName} is a slower month at ${loc.name} — check the species section above for what's closest to season.`;
       })(),
     },
+    ...(loc.nearCity
+      ? [
+          {
+            q: `Is this the tide chart for ${loc.nearCity}?`,
+            a: `Yes — ${loc.name} (NOAA station ${loc.stationId}) is the closest official tide prediction station to ${loc.nearCity}, California, so these are the tide times anglers and boaters in ${loc.nearCity} plan around.`,
+          },
+        ]
+      : []),
     {
       q: `How accurate is this ${loc.name} tide chart?`,
       a: `Predictions come directly from NOAA CO-OPS harmonic predictions for station ${loc.stationId} (${loc.stationName}) and are the same data used in official tide tables. Actual water levels can vary with storms and barometric pressure, so treat predictions as planning guidance, not navigation data.`,
