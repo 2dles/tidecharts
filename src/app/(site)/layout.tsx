@@ -22,8 +22,8 @@ export default function SiteLayout({
             <Link href="/guides" className="rounded-lg px-2 py-1.5 transition-colors hover:bg-card-hi hover:text-ink sm:px-3">
               Guides
             </Link>
-            <Link href="/water-temps" className="hidden rounded-lg px-2 py-1.5 transition-colors hover:bg-card-hi hover:text-ink sm:block sm:px-3">
-              Water Temps
+            <Link href="/water-temps" className="rounded-lg px-2 py-1.5 transition-colors hover:bg-card-hi hover:text-ink sm:px-3">
+              <span className="hidden sm:inline">Water </span>Temps
             </Link>
             <a
               href="https://theanglerstore.com?utm_source=ustidecharts&utm_medium=nav"
