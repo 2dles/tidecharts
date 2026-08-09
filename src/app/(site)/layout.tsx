@@ -22,6 +22,9 @@ export default function SiteLayout({
             <Link href="/guides" className="rounded-lg px-2 py-1.5 transition-colors hover:bg-card-hi hover:text-ink sm:px-3">
               Guides
             </Link>
+            <Link href="/water-temps" className="hidden rounded-lg px-2 py-1.5 transition-colors hover:bg-card-hi hover:text-ink sm:block sm:px-3">
+              Water Temps
+            </Link>
             <a
               href="https://theanglerstore.com?utm_source=ustidecharts&utm_medium=nav"
               className="ml-1 whitespace-nowrap rounded-lg bg-gradient-to-r from-sky-500/90 to-teal-500/90 px-2.5 py-1.5 font-medium text-abyss transition-opacity hover:opacity-90 sm:px-3"
@@ -50,6 +53,7 @@ export default function SiteLayout({
                 <p className="font-medium text-ink-dim">Explore</p>
                 <Link href="/california" className="hover:text-ink-dim">California Tides</Link>
                 <Link href="/guides" className="hover:text-ink-dim">Fishing Guides</Link>
+                <Link href="/water-temps" className="hover:text-ink-dim">Water Temperatures</Link>
                 <Link href="/widget" className="hover:text-ink-dim">Free Tide Widget</Link>
               </div>
               <div className="flex flex-col gap-2">
