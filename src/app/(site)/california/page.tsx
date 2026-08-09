@@ -7,7 +7,7 @@ import { getLocationData } from "@/lib/data";
 import { LOCATIONS, type Location } from "@/lib/locations";
 import { getSearchIndex, getStationLocations } from "@/lib/stations";
 import { nextEvents } from "@/lib/noaa";
-import { dayScores, scoreLabel } from "@/lib/score";
+import { SCORE_COLORS, dayScores, scoreLabel } from "@/lib/score";
 import { fmtTime, naiveDateStr, ptNow } from "@/lib/tz";
 
 export const revalidate = 1800;
@@ -97,7 +97,18 @@ export default async function CaliforniaPage() {
                 >
                   <div className="flex items-start justify-between gap-3">
                     <p className="font-semibold">{loc.name}</p>
-                    {score != null && <ScoreBadge label={scoreLabel(score)} size="sm" />}
+                    {score != null && (
+                      <div className="flex shrink-0 flex-col items-end gap-1">
+                        <p
+                          className="text-lg font-bold leading-none tabular-nums"
+                          style={{ color: SCORE_COLORS[scoreLabel(score)] }}
+                        >
+                          {score}
+                          <span className="text-[10px] font-medium text-ink-faint"> /100 today</span>
+                        </p>
+                        <ScoreBadge label={scoreLabel(score)} size="sm" />
+                      </div>
+                    )}
                   </div>
                   <p className="mt-1 text-xs text-ink-faint">{loc.tagline}</p>
                   <div className="mt-4 flex gap-6 border-t border-line pt-3 text-xs">
