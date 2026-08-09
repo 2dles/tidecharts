@@ -239,6 +239,12 @@ export async function getSearchIndex() {
     stateName: l.stateName,
     tagline: l.tagline,
     aliases: l.aliases,
+    // Short right-hand label for the dropdown
+    context: l.nearCity
+      ? `Near ${l.nearCity}`
+      : l.tier === "station"
+        ? "NOAA tide station"
+        : l.tagline,
   }));
 }
 
