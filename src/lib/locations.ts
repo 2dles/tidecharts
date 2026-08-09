@@ -15,6 +15,8 @@ export interface Location {
   region: Region;
   /** "featured" = hand-curated page; "station" = auto-generated from NOAA list */
   tier?: "featured" | "station";
+  /** Nearest coastal city, when it differs from the station name (auto pages) */
+  nearCity?: string;
   tagline: string;
   intro: string;
   speciesKeys: string[];
