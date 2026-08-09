@@ -2,6 +2,8 @@
 
 export interface Species {
   key: string;
+  /** Path under /public, e.g. "/species/striped-bass.jpg" — card shows it when set */
+  image?: string;
   name: string;
   scientific: string;
   emoji: string;

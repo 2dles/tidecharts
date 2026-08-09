@@ -87,24 +87,44 @@ const CA_CITIES: [string, number, number][] = [
   ["Carlsbad", 33.16, -117.35], ["Encinitas", 33.04, -117.29],
   ["Del Mar", 32.96, -117.27], ["Coronado", 32.69, -117.18],
   ["Imperial Beach", 32.58, -117.11], ["Chula Vista", 32.64, -117.08],
+  ["National City", 32.68, -117.1], ["Solana Beach", 32.99, -117.27],
+  ["Montara", 37.54, -122.51], ["Moss Beach", 37.52, -122.51],
+  ["El Granada", 37.5, -122.47], ["Aptos", 36.98, -121.9],
+  ["Seaside", 36.61, -121.85], ["Grover Beach", 35.12, -120.62],
+  ["Summerland", 34.42, -119.6], ["Isla Vista", 34.41, -119.86],
+  ["South San Francisco", 37.65, -122.41], ["San Bruno", 37.63, -122.41],
+  ["Brisbane", 37.68, -122.4], ["Millbrae", 37.6, -122.39],
+  ["Burlingame", 37.58, -122.35], ["Foster City", 37.56, -122.27],
+  ["Menlo Park", 37.45, -122.18], ["Union City", 37.59, -122.02],
+  ["Newark", 37.53, -122.04], ["Milpitas", 37.43, -121.9],
+  ["Sunnyvale", 37.37, -122.04], ["Albany", 37.89, -122.3],
+  ["El Cerrito", 37.92, -122.31], ["Pinole", 38.0, -122.29],
+  ["Hercules", 38.02, -122.26], ["Rodeo", 38.03, -122.27],
+  ["Crockett", 38.05, -122.21], ["Port Costa", 38.05, -122.18],
+  ["Napa", 38.3, -122.29], ["American Canyon", 38.17, -122.26],
+  ["Suisun City", 38.24, -122.04], ["Rio Vista", 38.16, -121.69],
+  ["Isleton", 38.16, -121.61], ["Stockton", 37.95, -121.29],
+  ["Sacramento", 38.58, -121.49], ["West Sacramento", 38.58, -121.53],
+  ["Larkspur", 37.93, -122.53], ["Corte Madera", 37.93, -122.51],
+  ["San Quentin", 37.94, -122.49], ["Fairfax", 37.99, -122.59],
+  ["Sonoma", 38.29, -122.46], ["Half Moon Bay Airport", 37.51, -122.5],
 ];
 
 const CURATED_NAMES = new Set(LOCATIONS.map((l) => l.name.toLowerCase()));
 
-function nearestCity(lat: number, lon: number): string | null {
-  let best: string | null = null;
-  let bestKm = 20; // max tag distance
+function nearbyCities(lat: number, lon: number): string[] {
+  const hits: { name: string; km: number }[] = [];
   for (const [name, cLat, cLon] of CA_CITIES) {
     if (CURATED_NAMES.has(name.toLowerCase())) continue;
     const dLat = (lat - cLat) * 111;
     const dLon = (lon - cLon) * 111 * Math.cos((lat * Math.PI) / 180);
     const km = Math.sqrt(dLat * dLat + dLon * dLon);
-    if (km < bestKm) {
-      bestKm = km;
-      best = name;
-    }
+    if (km <= 18) hits.push({ name, km });
   }
-  return best;
+  return hits
+    .sort((a, b) => a.km - b.km)
+    .slice(0, 3)
+    .map((h) => h.name);
 }
 
 function hash(s: string): number {
@@ -155,9 +175,11 @@ export async function getStationLocations(): Promise<Location[]> {
       usedSlugs.add(slug);
 
       const region = regionForLat(s.lat);
-      const city = nearestCity(s.lat, s.lng);
-      const cityIsNew =
-        city != null && !fullName.toLowerCase().includes(city.toLowerCase());
+      const cities = nearbyCities(s.lat, s.lng).filter(
+        (c) => !fullName.toLowerCase().includes(c.toLowerCase()),
+      );
+      const city = cities[0] ?? null;
+      const cityIsNew = city != null;
       let intro = makeIntro(display, fullName, region, s.id);
       if (cityIsNew) {
         intro += ` ${display} is the closest NOAA tide station to ${city}, California — if you fish, paddle, or boat out of ${city}, these are the tide predictions to plan around.`;
@@ -180,7 +202,7 @@ export async function getStationLocations(): Promise<Location[]> {
         intro,
         speciesKeys: REGION_SPECIES[region],
         nearby: [],
-        aliases: cityIsNew ? [city.toLowerCase()] : undefined,
+        aliases: cities.length ? cities.map((c) => c.toLowerCase()) : undefined,
       });
       if (out.length >= 250) break; // sanity cap
     }

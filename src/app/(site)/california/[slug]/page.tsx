@@ -544,7 +544,17 @@ export default async function LocationPage({
         </h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {activeSpecies.map(({ s, activity }) => (
-            <div key={s.key} className="card p-5">
+            <div key={s.key} className="card overflow-hidden">
+              {s.image && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={s.image}
+                  alt={`${s.name} (${s.scientific})`}
+                  className="h-32 w-full object-cover"
+                  loading="lazy"
+                />
+              )}
+              <div className="p-5">
               <div className="flex items-start justify-between">
                 <div>
                   <p className="font-semibold">{s.name}</p>
@@ -569,6 +579,7 @@ export default async function LocationPage({
                 Baits: <span className="text-ink-dim">{s.bait.slice(0, 3).join(", ")}</span>
               </p>
               <p className="mt-3 text-sm leading-relaxed text-ink-dim">{s.techniques}</p>
+              </div>
             </div>
           ))}
         </div>
