@@ -7,7 +7,7 @@ import { getLocation } from "@/lib/locations";
 import { getSearchIndex } from "@/lib/stations";
 import { getLocationData } from "@/lib/data";
 import { nextEvents } from "@/lib/noaa";
-import { dayScores, scoreLabel } from "@/lib/score";
+import { SCORE_COLORS, dayScores, scoreLabel } from "@/lib/score";
 import { fmtRelative, fmtTime, naiveDateStr, ptNow } from "@/lib/tz";
 import { ARTICLES } from "@/lib/articles";
 import { getProducts } from "@/lib/gear";
@@ -108,7 +108,18 @@ export default async function Home() {
                   <p className="font-semibold text-ink">{loc.name}</p>
                   <p className="text-xs text-ink-faint">California</p>
                 </div>
-                {score != null && <ScoreBadge label={scoreLabel(score)} size="sm" />}
+                {score != null && (
+                  <div className="flex shrink-0 flex-col items-end gap-1">
+                    <p
+                      className="text-lg font-bold leading-none tabular-nums"
+                      style={{ color: SCORE_COLORS[scoreLabel(score)] }}
+                    >
+                      {score}
+                      <span className="text-[10px] font-medium text-ink-faint"> /100</span>
+                    </p>
+                    <ScoreBadge label={scoreLabel(score)} size="sm" />
+                  </div>
+                )}
               </div>
               <dl className="mt-1 space-y-1.5 text-sm">
                 <div className="flex justify-between">
