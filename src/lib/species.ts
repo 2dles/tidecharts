@@ -18,6 +18,7 @@ export interface Species {
 export const SPECIES: Record<string, Species> = {
   "striped-bass": {
     key: "striped-bass",
+    image: "/species/striped-bass.jpg",
     name: "Striped Bass",
     scientific: "Morone saxatilis",
     emoji: "🐟",
@@ -31,6 +32,7 @@ export const SPECIES: Record<string, Species> = {
   },
   halibut: {
     key: "halibut",
+    image: "/species/halibut.jpg",
     name: "California Halibut",
     scientific: "Paralichthys californicus",
     emoji: "🐠",
@@ -44,6 +46,7 @@ export const SPECIES: Record<string, Species> = {
   },
   rockfish: {
     key: "rockfish",
+    image: "/species/rockfish.jpg",
     name: "Rockfish",
     scientific: "Sebastes spp.",
     emoji: "🐡",
@@ -57,6 +60,7 @@ export const SPECIES: Record<string, Species> = {
   },
   lingcod: {
     key: "lingcod",
+    image: "/species/lingcod.jpg",
     name: "Lingcod",
     scientific: "Ophiodon elongatus",
     emoji: "🦈",
@@ -70,6 +74,7 @@ export const SPECIES: Record<string, Species> = {
   },
   surfperch: {
     key: "surfperch",
+    image: "/species/surfperch.jpg",
     name: "Barred Surfperch",
     scientific: "Amphistichus argenteus",
     emoji: "🐟",
@@ -83,6 +88,7 @@ export const SPECIES: Record<string, Species> = {
   },
   salmon: {
     key: "salmon",
+    image: "/species/salmon.jpg",
     name: "King Salmon",
     scientific: "Oncorhynchus tshawytscha",
     emoji: "🐟",
@@ -96,6 +102,7 @@ export const SPECIES: Record<string, Species> = {
   },
   "white-seabass": {
     key: "white-seabass",
+    image: "/species/white-seabass.jpg",
     name: "White Seabass",
     scientific: "Atractoscion nobilis",
     emoji: "🐋",
@@ -109,6 +116,7 @@ export const SPECIES: Record<string, Species> = {
   },
   yellowtail: {
     key: "yellowtail",
+    image: "/species/yellowtail.jpg",
     name: "California Yellowtail",
     scientific: "Seriola dorsalis",
     emoji: "🐟",
@@ -122,6 +130,7 @@ export const SPECIES: Record<string, Species> = {
   },
   "calico-bass": {
     key: "calico-bass",
+    image: "/species/calico-bass.jpg",
     name: "Calico Bass",
     scientific: "Paralabrax clathratus",
     emoji: "🐠",
@@ -135,6 +144,7 @@ export const SPECIES: Record<string, Species> = {
   },
   corbina: {
     key: "corbina",
+    image: "/species/corbina.jpg",
     name: "California Corbina",
     scientific: "Menticirrhus undulatus",
     emoji: "🐟",
@@ -148,6 +158,7 @@ export const SPECIES: Record<string, Species> = {
   },
   "spotted-bay-bass": {
     key: "spotted-bay-bass",
+    image: "/species/spotted-bay-bass.jpg",
     name: "Spotted Bay Bass",
     scientific: "Paralabrax maculatofasciatus",
     emoji: "🐠",
@@ -161,6 +172,7 @@ export const SPECIES: Record<string, Species> = {
   },
   "leopard-shark": {
     key: "leopard-shark",
+    image: "/species/leopard-shark.jpg",
     name: "Leopard Shark",
     scientific: "Triakis semifasciata",
     emoji: "🦈",
@@ -174,6 +186,7 @@ export const SPECIES: Record<string, Species> = {
   },
   cabezon: {
     key: "cabezon",
+    image: "/species/cabezon.jpg",
     name: "Cabezon",
     scientific: "Scorpaenichthys marmoratus",
     emoji: "🐡",
