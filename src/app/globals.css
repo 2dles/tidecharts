@@ -106,6 +106,43 @@ body {
 .animate-rise-2 { animation-delay: 0.16s; }
 .animate-rise-3 { animation-delay: 0.24s; }
 
+/* Leaflet map: restyle light OSM tiles to the ocean-dark theme */
+.map-dark-tiles {
+  filter: invert(1) hue-rotate(200deg) saturate(0.35) brightness(0.85) contrast(0.95);
+}
+.leaflet-container.leaflet-container {
+  background: #071a2e;
+  font-family: inherit;
+}
+.leaflet-container .leaflet-popup-content-wrapper,
+.leaflet-container .leaflet-popup-tip {
+  background: #0a2036;
+  color: #e9f2fb;
+  border: 1px solid rgba(148, 197, 255, 0.22);
+  box-shadow: 0 12px 40px -18px rgba(0, 0, 0, 0.6);
+}
+.leaflet-container .leaflet-popup-content a {
+  color: #7dd3fc;
+}
+.leaflet-container a.leaflet-popup-close-button {
+  color: #9db8d2;
+}
+.leaflet-container .leaflet-control-attribution {
+  background: rgba(4, 16, 29, 0.7);
+  color: #647f9b;
+}
+.leaflet-container .leaflet-control-attribution a {
+  color: #9db8d2;
+}
+.leaflet-control-zoom a {
+  background: #0a2036;
+  color: #e9f2fb;
+  border-color: rgba(148, 197, 255, 0.22);
+}
+.leaflet-control-zoom a:hover {
+  background: #0e2a45;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-rise, .now-dot { animation: none; }
   .card-hover, .card-hover:hover { transform: none; transition: none; }
