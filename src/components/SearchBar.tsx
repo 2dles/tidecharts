@@ -148,14 +148,19 @@ export default function SearchBar({
               onMouseEnter={() => setActive(i)}
               onMouseDown={(e) => e.preventDefault()}
               onClick={() => go(loc)}
-              className={`flex cursor-pointer items-center gap-4 px-5 py-3 transition-colors ${
+              className={`cursor-pointer px-5 py-2.5 text-left transition-colors ${
                 i === active ? "bg-sky-400/10" : ""
               }`}
             >
-              <span className="min-w-0 flex-1 truncate font-medium text-ink">
-                {loc.name}
-              </span>
-              <span className="hidden max-w-[55%] shrink-0 truncate text-xs text-ink-faint sm:block">
+              <div className="flex items-baseline justify-between gap-4">
+                <span className="min-w-0 flex-1 truncate text-left font-medium text-ink">
+                  {loc.name}
+                </span>
+                <span className="hidden max-w-[55%] shrink-0 truncate text-xs text-ink-faint sm:block">
+                  {loc.context ?? loc.tagline}
+                </span>
+              </div>
+              <span className="mt-0.5 block truncate text-xs text-ink-faint sm:hidden">
                 {loc.context ?? loc.tagline}
               </span>
             </li>
