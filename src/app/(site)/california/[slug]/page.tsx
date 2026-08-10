@@ -8,6 +8,7 @@ import ScoreDial from "@/components/ScoreDial";
 import TideChart from "@/components/TideChart";
 import TideStrip from "@/components/TideStrip";
 import AdSlot from "@/components/AdSlot";
+import SpeciesImage from "@/components/SpeciesImage";
 import { getLocationData } from "@/lib/data";
 import { getProducts } from "@/lib/gear";
 import { getNearby } from "@/lib/locations";
@@ -553,13 +554,7 @@ export default async function LocationPage({
           {activeSpecies.map(({ s, activity }) => (
             <div key={s.key} className="card overflow-hidden">
               {s.image && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={s.image}
-                  alt={`${s.name} (${s.scientific})`}
-                  className="h-32 w-full object-cover"
-                  loading="lazy"
-                />
+                <SpeciesImage src={s.image} alt={`${s.name} (${s.scientific})`} />
               )}
               <div className="p-5">
               <div className="flex items-start justify-between">
