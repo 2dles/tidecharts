@@ -550,6 +550,18 @@ export default async function LocationPage({
         <h2 id="species-h" className="text-lg font-semibold tracking-tight">
           What&apos;s Biting at {loc.name}
         </h2>
+        <p className="mt-1 max-w-3xl text-xs leading-relaxed text-ink-faint">
+          Activity ratings reflect typical feeding seasons — <span className="text-ink-dim">not legal seasons</span>.
+          Regulations, closures, and size/bag limits change; always check current{" "}
+          <a
+            href="https://wildlife.ca.gov/Fishing/Ocean/Regulations"
+            rel="noopener"
+            className="text-sky-300 underline decoration-line underline-offset-2 hover:text-teal-300"
+          >
+            CDFW regulations
+          </a>{" "}
+          before keeping any fish.
+        </p>
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {activeSpecies.map(({ s, activity }) => (
             <div key={s.key} className="card overflow-hidden">
