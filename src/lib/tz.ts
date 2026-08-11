@@ -16,10 +16,19 @@ import type { NaiveMs } from "./types";
 
 const PT = "America/Los_Angeles";
 
-/** Current moment expressed as naive PT ms. */
-export function ptNow(): NaiveMs {
+/** Timezone for a location: NOAA lst_ldt returns STATION-LOCAL time, so all
+ * naive math must run in the station's own zone. */
+export function locTz(loc: { state: string; lon: number }): string {
+  if (loc.state === "florida") {
+    return loc.lon < -85.05 ? "America/Chicago" : "America/New_York";
+  }
+  return PT;
+}
+
+/** Current moment expressed as naive local ms for the given IANA timezone. */
+export function nowInTz(tz: string): NaiveMs {
   const parts = new Intl.DateTimeFormat("en-US", {
-    timeZone: PT,
+    timeZone: tz,
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
@@ -39,6 +48,18 @@ export function ptNow(): NaiveMs {
     get("minute"),
     get("second"),
   );
+}
+
+/** Current moment expressed as naive PT ms (California default). */
+export function ptNow(): NaiveMs {
+  return nowInTz(PT);
+}
+
+/** Short display label for a location's timezone: "PT" | "ET" | "CT". */
+export function tzAbbrev(tz: string): string {
+  if (tz === "America/New_York") return "ET";
+  if (tz === "America/Chicago") return "CT";
+  return "PT";
 }
 
 /** Parse "YYYY-MM-DD HH:mm" or "YYYY-MM-DDTHH:mm[:ss]" as naive PT. */

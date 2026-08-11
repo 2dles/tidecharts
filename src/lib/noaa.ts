@@ -2,7 +2,7 @@
 // Docs: https://api.tidesandcurrents.noaa.gov/api/prod/
 
 import type { TideEvent, TidePoint } from "./types";
-import { noaaDate, parseNaive, ptNow } from "./tz";
+import { noaaDate, nowInTz, parseNaive } from "./tz";
 
 const BASE = "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter";
 
@@ -40,8 +40,11 @@ function normalize<T extends { t: number }>(rows: T[]): T[] {
   return sorted.filter((r, i) => i === 0 || r.t > sorted[i - 1].t);
 }
 
-export async function fetchTideSeries(stationId: string): Promise<TidePoint[]> {
-  const now = ptNow();
+export async function fetchTideSeries(
+  stationId: string,
+  tz = "America/Los_Angeles",
+): Promise<TidePoint[]> {
+  const now = nowInTz(tz);
   const data = (await getJson(url(stationId, "10", now))) as {
     predictions?: RawPrediction[];
     error?: { message: string };
@@ -54,8 +57,11 @@ export async function fetchTideSeries(stationId: string): Promise<TidePoint[]> {
   );
 }
 
-export async function fetchTideEvents(stationId: string): Promise<TideEvent[]> {
-  const now = ptNow();
+export async function fetchTideEvents(
+  stationId: string,
+  tz = "America/Los_Angeles",
+): Promise<TideEvent[]> {
+  const now = nowInTz(tz);
   const data = (await getJson(url(stationId, "hilo", now))) as {
     predictions?: RawPrediction[];
     error?: { message: string };

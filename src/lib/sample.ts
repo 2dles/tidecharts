@@ -13,7 +13,7 @@ import type {
   TideEvent,
   TidePoint,
 } from "./types";
-import { naiveDateStr, ptNow } from "./tz";
+import { locTz, naiveDateStr, nowInTz } from "./tz";
 
 const HOUR = 3_600_000;
 const DAY = 86_400_000;
@@ -47,7 +47,7 @@ export function sampleTideHeight(t: number, seed: number): number {
 
 export function sampleTideSeries(loc: Location): TidePoint[] {
   const seed = hashSeed(loc.stationId);
-  const now = ptNow();
+  const now = nowInTz(locTz(loc));
   const start = Math.floor((now - DAY) / DAY) * DAY;
   const end = start + 9 * DAY;
   const pts: TidePoint[] = [];
@@ -71,7 +71,14 @@ export function sampleTideEvents(points: TidePoint[]): TideEvent[] {
 
 // --- Sun: NOAA solar position approximation (accurate to ~1 min) ---
 
-function sunTimes(dateStr: string, lat: number, lon: number) {
+/** Standard/daylight UTC offsets for a US IANA zone (hours, negative = west). */
+function tzOffsets(tz: string): { std: number; dst: number } {
+  if (tz === "America/New_York") return { std: -5, dst: -4 };
+  if (tz === "America/Chicago") return { std: -6, dst: -5 };
+  return { std: -8, dst: -7 }; // Pacific
+}
+
+function sunTimes(dateStr: string, lat: number, lon: number, tz: string) {
   const [y, mo, d] = dateStr.split("-").map(Number);
   const n =
     Math.floor((Date.UTC(y, mo - 1, d) - Date.UTC(y, 0, 1)) / DAY) + 1;
@@ -103,17 +110,18 @@ function sunTimes(dateStr: string, lat: number, lon: number) {
     const T = H + RA - 0.06571 * tApprox - 6.622;
     let UT = T - lngHour;
     UT = ((UT % 24) + 24) % 24;
-    // PT offset: PDT (-7) from 2nd Sunday of March to 1st Sunday of November
+    // US DST: daylight offset from 2nd Sunday of March to 1st Sunday of November
     const nthSunday = (month: number, nth: number) => {
       const first = new Date(Date.UTC(y, month - 1, 1)).getUTCDay();
       return 1 + ((7 - first) % 7) + (nth - 1) * 7;
     };
     const dstStart = nthSunday(3, 2); // 2nd Sunday of March
     const dstEnd = nthSunday(11, 1); // 1st Sunday of November
-    const pdt =
+    const isDst =
       (mo > 3 || (mo === 3 && d >= dstStart)) &&
       (mo < 11 || (mo === 11 && d < dstEnd));
-    let local = UT + (pdt ? -7 : -8);
+    const off = tzOffsets(tz);
+    let local = UT + (isDst ? off.dst : off.std);
     local = ((local % 24) + 24) % 24;
     return local;
   };
@@ -133,15 +141,20 @@ export function sampleWeatherDays(loc: Location): {
   days: DayAstro[];
 } {
   const seed = hashSeed(loc.slug);
-  const now = ptNow();
+  const tz = locTz(loc);
+  const now = nowInTz(tz);
   const start = Math.floor(now / DAY) * DAY - DAY;
   const hourly: HourlyWeather[] = [];
   const days: DayAstro[] = [];
-  const baseTemp = loc.region === "socal" ? 70 : loc.region === "central" ? 64 : 60;
+  const AIR: Record<string, number> = {
+    norcal: 60, central: 64, socal: 70,
+    panhandle: 82, gulf: 86, atlantic: 84, keys: 86,
+  };
+  const baseTemp = AIR[loc.region] ?? 68;
   for (let d = 0; d < 9; d++) {
     const dayStart = start + d * DAY;
     const dateStr = naiveDateStr(dayStart);
-    const sun = sunTimes(dateStr, loc.lat, loc.lon);
+    const sun = sunTimes(dateStr, loc.lat, loc.lon, tz);
     const dayCloud = 20 + 60 * Math.abs(Math.sin(seed * 9 + d * 1.7));
     days.push({
       date: dateStr,
@@ -176,10 +189,13 @@ export function sampleWeatherDays(loc: Location): {
 
 export function sampleMarine(loc: Location): HourlyMarine[] {
   const seed = hashSeed(loc.name);
-  const now = ptNow();
+  const now = nowInTz(locTz(loc));
   const start = Math.floor(now / DAY) * DAY - DAY;
-  const waterBase =
-    loc.region === "socal" ? 67 : loc.region === "central" ? 59 : 55;
+  const WATER: Record<string, number> = {
+    norcal: 55, central: 59, socal: 67,
+    panhandle: 82, gulf: 86, atlantic: 84, keys: 86,
+  };
+  const waterBase = WATER[loc.region] ?? 65;
   const out: HourlyMarine[] = [];
   for (let h = 0; h < 9 * 24; h++) {
     const t = start + h * HOUR;

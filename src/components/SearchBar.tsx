@@ -5,6 +5,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { LOCATIONS } from "@/lib/locations";
+import { stateCodeFor } from "@/lib/states";
 
 export interface SearchLoc {
   slug: string;
@@ -35,26 +36,48 @@ function match(loc: SearchLoc, q: string): number {
 export default function SearchBar({
   large = false,
   locations,
+  defaultState,
 }: {
   large?: boolean;
   locations?: SearchLoc[];
+  /** State slug to prefer in ranking. If omitted, detected from the visitor's IP. */
+  defaultState?: string;
 }) {
   const list: SearchLoc[] = locations ?? LOCATIONS;
   const router = useRouter();
   const [q, setQ] = useState("");
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
+  const [geoState, setGeoState] = useState<string | null>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
   const listId = large ? "loc-search-list-hero" : "loc-search-list";
+  const prefState = defaultState ?? geoState;
+
+  useEffect(() => {
+    if (defaultState) return;
+    fetch("/api/geo")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d: { state?: string | null } | null) => {
+        if (d?.state) setGeoState(d.state);
+      })
+      .catch(() => {});
+  }, [defaultState]);
 
   const results = useMemo(() => {
     if (!q.trim()) return [];
-    return list.map((l) => ({ l, score: match(l, q) }))
+    return list
+      .map((l) => {
+        const base = match(l, q);
+        // Small same-state boost: breaks ties toward the visitor's coast
+        // without letting a weak local match outrank a strong distant one.
+        const boost = base > 0 && l.state === prefState ? 0.25 : 0;
+        return { l, score: base === 0 ? 0 : base + boost };
+      })
       .filter((r) => r.score > 0)
       .sort((a, b) => b.score - a.score)
       .slice(0, 6)
       .map((r) => r.l);
-  }, [q, list]);
+  }, [q, list, prefState]);
 
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
@@ -111,7 +134,7 @@ export default function SearchBar({
               setOpen(false);
             }
           }}
-          placeholder="Search a fishing spot — Monterey, Half Moon Bay, San Diego…"
+          placeholder="Search a fishing spot — Monterey, Tampa Bay, Key West…"
           className={`w-full bg-transparent text-ink placeholder:text-ink-faint focus:outline-none ${
             large ? "text-lg" : "text-sm"
           }`}
@@ -135,8 +158,8 @@ export default function SearchBar({
         >
           {results.length === 0 && (
             <li className="px-5 py-4 text-sm text-ink-faint">
-              No matches yet — try Monterey, Bodega Bay, or San Diego. More
-              states are on the way.
+              No matches yet — try Monterey, San Diego, Tampa Bay, or Key
+              West. More states are on the way.
             </li>
           )}
           {results.map((loc, i) => (
@@ -155,6 +178,9 @@ export default function SearchBar({
               <div className="flex items-baseline justify-between gap-4">
                 <span className="min-w-0 flex-1 truncate text-left font-medium text-ink">
                   {loc.name}
+                  <span className="font-normal text-ink-faint">
+                    , {stateCodeFor(loc.state)}
+                  </span>
                 </span>
                 <span className="hidden max-w-[55%] shrink-0 truncate text-xs text-ink-faint sm:block">
                   {loc.context ?? loc.tagline}

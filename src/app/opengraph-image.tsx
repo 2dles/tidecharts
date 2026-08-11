@@ -48,7 +48,7 @@ export default function Image() {
             {"America's Fishing Dashboard"}
           </div>
           <div style={{ fontSize: 38, color: "#7dd3fc" }}>
-            Live tides · Fishing forecasts · Every California station
+            Live tides · Fishing forecasts · California & Florida
           </div>
         </div>
 
