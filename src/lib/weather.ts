@@ -1,6 +1,7 @@
 // Open-Meteo weather + marine forecasts (free, no key).
 
 import type { DayAstro, HourlyMarine, HourlyWeather } from "./types";
+import { fetchRetry } from "./fetch-retry";
 import { parseNaive } from "./tz";
 
 const M_TO_FT = 3.28084;
@@ -21,10 +22,10 @@ export async function fetchWeather(
     timezone: tz,
     forecast_days: "8",
   });
-  const res = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`, {
-    next: { revalidate: 1800 },
-  });
-  if (!res.ok) throw new Error(`Open-Meteo ${res.status}`);
+  const res = await fetchRetry(
+    `https://api.open-meteo.com/v1/forecast?${params}`,
+    { next: { revalidate: 1800 } },
+  );
   const data = (await res.json()) as {
     hourly: {
       time: string[];
@@ -79,11 +80,10 @@ export async function fetchMarine(
     timezone: tz,
     forecast_days: "8",
   });
-  const res = await fetch(
+  const res = await fetchRetry(
     `https://marine-api.open-meteo.com/v1/marine?${params}`,
     { next: { revalidate: 3600 } },
   );
-  if (!res.ok) throw new Error(`Open-Meteo marine ${res.status}`);
   const data = (await res.json()) as {
     hourly: {
       time: string[];
