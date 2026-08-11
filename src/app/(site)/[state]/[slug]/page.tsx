@@ -12,7 +12,7 @@ import SpeciesImage from "@/components/SpeciesImage";
 import { getLocationData } from "@/lib/data";
 import { getProducts } from "@/lib/gear";
 import { getNearby } from "@/lib/locations";
-import { findLocation, getAllLocations, nearestLocations } from "@/lib/stations";
+import { findLocation, nearestLocations } from "@/lib/stations";
 import { bestWindows, dayScores, scoreAt, scoreLabel } from "@/lib/score";
 import { SPECIES, speciesActivity } from "@/lib/species";
 import { getState, stateCodeFor } from "@/lib/states";
@@ -35,7 +35,12 @@ import { ARTICLES } from "@/lib/articles";
 export const revalidate = 1800;
 
 export async function generateStaticParams() {
-  return (await getAllLocations()).map((l) => ({ state: l.state, slug: l.slug }));
+  // Prerender ONLY curated flagship pages. The ~800 auto station pages render
+  // on first visit and then cache via ISR — prerendering all of them fired
+  // thousands of NOAA/Open-Meteo calls in one build burst, got the build IP
+  // rate-limited, and baked pages with sample-data fallback for 30 minutes.
+  const { LOCATIONS } = await import("@/lib/locations");
+  return LOCATIONS.map((l) => ({ state: l.state, slug: l.slug }));
 }
 
 export async function generateMetadata({

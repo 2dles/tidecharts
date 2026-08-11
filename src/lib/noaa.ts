@@ -2,6 +2,7 @@
 // Docs: https://api.tidesandcurrents.noaa.gov/api/prod/
 
 import type { TideEvent, TidePoint } from "./types";
+import { fetchRetry } from "./fetch-retry";
 import { noaaDate, nowInTz, parseNaive } from "./tz";
 
 const BASE = "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter";
@@ -23,8 +24,7 @@ function url(stationId: string, interval: "10" | "hilo", now: number): string {
 }
 
 async function getJson(u: string): Promise<unknown> {
-  const res = await fetch(u, { next: { revalidate: 1800 } });
-  if (!res.ok) throw new Error(`NOAA ${res.status}`);
+  const res = await fetchRetry(u, { next: { revalidate: 1800 } });
   return res.json();
 }
 

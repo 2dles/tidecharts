@@ -6,14 +6,16 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import TideChart from "@/components/TideChart";
 import { getLocationData } from "@/lib/data";
-import { findLocation, getAllLocations } from "@/lib/stations";
+import { findLocation } from "@/lib/stations";
 import { nextEvents } from "@/lib/noaa";
 import { fmtTime, locTz } from "@/lib/tz";
 
 export const revalidate = 1800;
 
 export async function generateStaticParams() {
-  return (await getAllLocations()).map((l) => ({ slug: l.slug }));
+  // Curated only — station embeds render on demand (see [state]/[slug]).
+  const { LOCATIONS } = await import("@/lib/locations");
+  return LOCATIONS.map((l) => ({ slug: l.slug }));
 }
 
 export async function generateMetadata({
