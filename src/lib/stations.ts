@@ -108,9 +108,15 @@ export async function getStationLocations(): Promise<Location[]> {
     }
 
     const out: Location[] = [];
+    // Cap is PER STATE. The mdapi list is ordered by station id, and Florida's
+    // ids sort before California's — a global cap would let one big state
+    // starve the others (FL alone has ~580 stations).
+    const perState = new Map<string, number>();
+    const CAP = 700;
     for (const s of data.stations) {
       const st = s.state ? byCode.get(s.state) : undefined;
       if (!st) continue;
+      if ((perState.get(st.slug) ?? 0) >= CAP) continue;
       if (!s.id || !s.name || s.lat == null || s.lng == null) continue;
       if (curatedIds.has(s.id)) continue;
 
@@ -156,7 +162,7 @@ export async function getStationLocations(): Promise<Location[]> {
         nearby: [],
         aliases: cities.length ? cities.map((c) => c.toLowerCase()) : undefined,
       });
-      if (out.length >= 600) break; // sanity cap
+      perState.set(st.slug, (perState.get(st.slug) ?? 0) + 1);
     }
     cached = out;
     return out;
