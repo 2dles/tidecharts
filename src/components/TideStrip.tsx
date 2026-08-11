@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import type { ScoreLabel, TideEvent, TidePoint } from "@/lib/types";
 import { nextEvents, tideHeightAt, tideRateAt } from "@/lib/noaa";
 import { SCORE_COLORS } from "@/lib/score";
-import { fmtRelative, fmtTime, ptNow } from "@/lib/tz";
+import { fmtRelative, fmtTime, nowInTz } from "@/lib/tz";
 
 interface Props {
   points: TidePoint[];
@@ -18,6 +18,8 @@ interface Props {
   initialNow: number;
   score: number;
   label: ScoreLabel;
+  /** IANA timezone of the station (client clock ticks in this zone). */
+  tz?: string;
 }
 
 export default function TideStrip({
@@ -26,16 +28,17 @@ export default function TideStrip({
   initialNow,
   score,
   label,
+  tz = "America/Los_Angeles",
 }: Props) {
   const [now, setNow] = useState(initialNow);
   useEffect(() => {
     // Intentional one-time sync from the server-seeded clock to the client
     // clock right after hydration; the extra render is the point.
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setNow(ptNow());
-    const id = setInterval(() => setNow(ptNow()), 30_000);
+    setNow(nowInTz(tz));
+    const id = setInterval(() => setNow(nowInTz(tz)), 30_000);
     return () => clearInterval(id);
-  }, []);
+  }, [tz]);
 
   const currentHeight = tideHeightAt(points, now);
   const currentRate = tideRateAt(points, now);

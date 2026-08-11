@@ -16,7 +16,7 @@ import {
   useState,
 } from "react";
 import type { DayAstro, TideEvent, TidePoint } from "@/lib/types";
-import { fmtDay, fmtTime, ptNow } from "@/lib/tz";
+import { fmtDay, fmtTime, nowInTz } from "@/lib/tz";
 
 const DAY = 86_400_000;
 const HOUR = 3_600_000;
@@ -25,8 +25,10 @@ interface Props {
   points: TidePoint[];
   events: TideEvent[];
   days: DayAstro[];
-  /** Server-computed naive-PT "now" (data.fetchedAt) used as the initial value. */
+  /** Server-computed naive-local "now" (data.fetchedAt) used as the initial value. */
   initialNow: number;
+  /** IANA timezone of the station (client clock ticks in this zone). */
+  tz?: string;
 }
 
 interface Hover {
@@ -51,7 +53,13 @@ function heightAt(points: TidePoint[], t: number): number | null {
   return a.h + ((t - a.t) / (b.t - a.t)) * (b.h - a.h);
 }
 
-export default function TideChart({ points, events, days, initialNow }: Props) {
+export default function TideChart({
+  points,
+  events,
+  days,
+  initialNow,
+  tz = "America/Los_Angeles",
+}: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
   // null until measured on the client — SSR serves the placeholder.
   const [width, setWidth] = useState<number | null>(null);
@@ -87,7 +95,7 @@ export default function TideChart({ points, events, days, initialNow }: Props) {
     const ro = new ResizeObserver((e) => setWidth(e[0].contentRect.width));
     if (el) ro.observe(el);
 
-    const n = ptNow();
+    const n = nowInTz(tz);
     setNow(n);
     const todayStart = Math.floor(n / DAY) * DAY;
     setDomain((d) => {
@@ -95,7 +103,7 @@ export default function TideChart({ points, events, days, initialNow }: Props) {
       return sameDay ? d : clampDomain(todayStart, todayStart + DAY);
     });
 
-    const id = setInterval(() => setNow(ptNow()), 60_000);
+    const id = setInterval(() => setNow(nowInTz(tz)), 60_000);
     return () => {
       ro.disconnect();
       clearInterval(id);

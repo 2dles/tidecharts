@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
-import { getLocation } from "@/lib/locations";
+import { findLocation } from "@/lib/stations";
+import { getState } from "@/lib/states";
 
 export const alt = "Tide chart and fishing forecast";
 export const size = { width: 1200, height: 630 };
@@ -8,11 +9,13 @@ export const contentType = "image/png";
 export default async function Image({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ state: string; slug: string }>;
 }) {
-  const { slug } = await params;
-  const loc = getLocation(slug);
-  const name = loc?.name ?? "California";
+  const { state, slug } = await params;
+  const loc = await findLocation(slug);
+  const st = getState(state);
+  const name = loc?.name ?? st?.name ?? "US Coast";
+  const code = st?.code ?? "US";
 
   return new ImageResponse(
     (
@@ -51,7 +54,7 @@ export default async function Image({
 
         <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
           <div style={{ fontSize: 84, fontWeight: 800, lineHeight: 1.05 }}>
-            {`${name}, CA`}
+            {`${name}, ${code}`}
           </div>
           <div style={{ fontSize: 40, color: "#7dd3fc" }}>
             Tide Chart & Fishing Forecast

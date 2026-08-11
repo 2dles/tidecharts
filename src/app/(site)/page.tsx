@@ -1,14 +1,15 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import SearchBar from "@/components/SearchBar";
-import ScoreBadge from "@/components/ScoreBadge";
 import ProductCard from "@/components/ProductCard";
+import FeaturedTabs, { type FeaturedCard } from "@/components/FeaturedTabs";
 import { getLocation } from "@/lib/locations";
 import { getSearchIndex } from "@/lib/stations";
+import { STATES } from "@/lib/states";
 import { getLocationData } from "@/lib/data";
 import { nextEvents } from "@/lib/noaa";
-import { SCORE_COLORS, dayScores, scoreLabel } from "@/lib/score";
-import { fmtRelative, fmtTime, naiveDateStr, ptNow } from "@/lib/tz";
+import { dayScores } from "@/lib/score";
+import { locTz, naiveDateStr, nowInTz } from "@/lib/tz";
 import { ARTICLES } from "@/lib/articles";
 import { getProducts } from "@/lib/gear";
 
@@ -21,29 +22,51 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-const FEATURED = ["monterey", "half-moon-bay", "san-diego", "bodega-bay"];
-
-async function featuredCard(slug: string) {
+async function featuredCard(slug: string): Promise<FeaturedCard | null> {
   const loc = getLocation(slug);
   if (!loc) return null;
+  const base = {
+    slug: loc.slug,
+    name: loc.name,
+    state: loc.state,
+    stateName: loc.stateName,
+  };
   try {
     const data = await getLocationData(loc);
-    const now = ptNow();
+    const now = nowInTz(locTz(loc));
     const { nextHigh, nextLow } = nextEvents(data.events, now);
     const today = dayScores(
       data.days, data.points, data.weather, data.marine, data.moon,
       naiveDateStr(now), 1,
     )[0];
-    return { loc, nextHigh, nextLow, now, score: today?.score ?? null };
+    return {
+      ...base,
+      nextHigh: nextHigh ? { t: nextHigh.t, h: nextHigh.h } : null,
+      nextLow: nextLow ? { t: nextLow.t, h: nextLow.h } : null,
+      now,
+      score: today?.score ?? null,
+    };
   } catch {
-    return { loc, nextHigh: null, nextLow: null, now: ptNow(), score: null };
+    return {
+      ...base,
+      nextHigh: null,
+      nextLow: null,
+      now: nowInTz(locTz(loc)),
+      score: null,
+    };
   }
 }
 
 export default async function Home() {
   const searchIndex = await getSearchIndex();
-  const cards = (await Promise.all(FEATURED.map(featuredCard))).filter(
-    (c): c is NonNullable<Awaited<ReturnType<typeof featuredCard>>> => c != null,
+  const groups = await Promise.all(
+    Object.values(STATES).map(async (st) => ({
+      state: st.slug,
+      stateName: st.name,
+      cards: (await Promise.all(st.featured.map(featuredCard))).filter(
+        (c): c is FeaturedCard => c != null,
+      ),
+    })),
   );
   const gear = getProducts(["surf-rod", "swimbait-kit", "braided-line", "cooler"]);
 
@@ -65,12 +88,13 @@ export default async function Home() {
           <SearchBar large locations={searchIndex} />
           <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs text-ink-faint">
             <span>Try:</span>
-            {["monterey", "san-diego", "bodega-bay", "half-moon-bay"].map((s) => {
-              const l = getLocation(s)!;
+            {["monterey", "san-diego", "key-west", "tampa-bay"].map((s) => {
+              const l = getLocation(s);
+              if (!l) return null;
               return (
                 <Link
                   key={s}
-                  href={`/california/${s}`}
+                  href={`/${l.state}/${s}`}
                   className="chip transition-colors hover:border-line-hi hover:text-ink-dim"
                 >
                   {l.name}
@@ -91,60 +115,12 @@ export default async function Home() {
             <Link href="/water-temps" className="text-sky-300 hover:text-teal-300">
               Water temp map →
             </Link>
-            <Link href="/california" className="text-sky-300 hover:text-teal-300">
+            <Link href="/locations" className="text-sky-300 hover:text-teal-300">
               All locations →
             </Link>
           </div>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {cards.map(({ loc, nextHigh, nextLow, now, score }) => (
-            <Link
-              key={loc.slug}
-              href={`/california/${loc.slug}`}
-              className="card card-hover flex flex-col gap-3 p-5"
-            >
-              <div className="flex items-start justify-between gap-2">
-                <div>
-                  <p className="font-semibold text-ink">{loc.name}</p>
-                  <p className="text-xs text-ink-faint">California</p>
-                </div>
-                {score != null && (
-                  <div className="flex shrink-0 flex-col items-end gap-1">
-                    <p
-                      className="text-lg font-bold leading-none tabular-nums"
-                      style={{ color: SCORE_COLORS[scoreLabel(score)] }}
-                    >
-                      {score}
-                      <span className="text-[10px] font-medium text-ink-faint"> /100</span>
-                    </p>
-                    <ScoreBadge label={scoreLabel(score)} size="sm" />
-                  </div>
-                )}
-              </div>
-              <dl className="mt-1 space-y-1.5 text-sm">
-                <div className="flex justify-between">
-                  <dt className="text-ink-faint">Next high</dt>
-                  <dd className="tabular-nums text-ink-dim">
-                    {nextHigh ? `${fmtTime(nextHigh.t)} · ${nextHigh.h.toFixed(1)} ft` : "—"}
-                  </dd>
-                </div>
-                <div className="flex justify-between">
-                  <dt className="text-ink-faint">Next low</dt>
-                  <dd className="tabular-nums text-ink-dim">
-                    {nextLow ? `${fmtTime(nextLow.t)} · ${nextLow.h.toFixed(1)} ft` : "—"}
-                  </dd>
-                </div>
-              </dl>
-              <p className="mt-auto text-xs text-teal-300/90">
-                {nextHigh && nextLow
-                  ? nextHigh.t < nextLow.t
-                    ? `Tide rising — high ${fmtRelative(nextHigh.t, now)}`
-                    : `Tide falling — low ${fmtRelative(nextLow.t, now)}`
-                  : "Open dashboard"}
-              </p>
-            </Link>
-          ))}
-        </div>
+        <FeaturedTabs groups={groups} />
       </section>
 
       {/* VALUE PROPS */}

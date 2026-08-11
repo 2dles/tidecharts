@@ -7,7 +7,7 @@ import type { LocationData } from "./types";
 import { fetchTideEvents, fetchTideSeries } from "./noaa";
 import { fetchMarine, fetchWeather } from "./weather";
 import { moonInfo } from "./astro";
-import { ptNow } from "./tz";
+import { locTz, nowInTz } from "./tz";
 import {
   sampleMarine,
   sampleTideEvents,
@@ -22,11 +22,12 @@ export interface LocationDataWithSource extends LocationData {
 export async function getLocationData(
   loc: Location,
 ): Promise<LocationDataWithSource> {
+  const tz = locTz(loc);
   const [pointsR, eventsR, wxR, marineR] = await Promise.allSettled([
-    fetchTideSeries(loc.stationId),
-    fetchTideEvents(loc.stationId),
-    fetchWeather(loc.lat, loc.lon),
-    fetchMarine(loc.lat, loc.lon),
+    fetchTideSeries(loc.stationId, tz),
+    fetchTideEvents(loc.stationId, tz),
+    fetchWeather(loc.lat, loc.lon, tz),
+    fetchMarine(loc.lat, loc.lon, tz),
   ]);
 
   // Per-stream fallback: a failed sub-request never discards good live data
@@ -62,7 +63,7 @@ export async function getLocationData(
     marine,
     days: wx.days,
     moon: moonInfo(),
-    fetchedAt: ptNow(),
+    fetchedAt: nowInTz(tz),
     source:
       (pointsLive || eventsLive) && wxLive && marineLive ? "live" : "sample",
   };

@@ -47,12 +47,12 @@ export default async function WidgetPage() {
           <li>
             <span className="font-medium text-ink">1.</span> Pick your location
             slug from the{" "}
-            <Link href="/california" className="text-sky-300 hover:text-teal-300">
+            <Link href="/locations" className="text-sky-300 hover:text-teal-300">
               locations page
             </Link>{" "}
             — it&apos;s the last part of the URL (e.g.{" "}
             <code className="rounded bg-card-hi px-1.5 py-0.5 text-xs">monterey</code>,{" "}
-            <code className="rounded bg-card-hi px-1.5 py-0.5 text-xs">half-moon-bay</code>).
+            <code className="rounded bg-card-hi px-1.5 py-0.5 text-xs">key-west</code>).
           </li>
           <li>
             <span className="font-medium text-ink">2.</span> Paste this snippet
@@ -102,8 +102,8 @@ export default async function WidgetPage() {
           </p>
           <p>
             We ask only that the small &quot;USTideCharts&quot; credit link stays
-            visible. Currently available for {count} California
-            locations, with more states coming — if you need a location we
+            visible. Currently available for {count} locations across
+            California and Florida, with more states coming — if you need a location we
             don&apos;t cover yet, reach out and we&apos;ll usually add it within
             a week.
           </p>

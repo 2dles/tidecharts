@@ -16,7 +16,7 @@ export default function SiteLayout({
             </span>
           </Link>
           <div className="flex items-center gap-0.5 text-sm text-ink-dim sm:gap-2">
-            <Link href="/california" className="rounded-lg px-2 py-1.5 transition-colors hover:bg-card-hi hover:text-ink sm:px-3">
+            <Link href="/locations" className="rounded-lg px-2 py-1.5 transition-colors hover:bg-card-hi hover:text-ink sm:px-3">
               Locations
             </Link>
             <Link href="/guides" className="rounded-lg px-2 py-1.5 transition-colors hover:bg-card-hi hover:text-ink sm:px-3">
@@ -52,6 +52,7 @@ export default function SiteLayout({
               <div className="flex flex-col gap-2">
                 <p className="font-medium text-ink-dim">Explore</p>
                 <Link href="/california" className="hover:text-ink-dim">California Tides</Link>
+                <Link href="/florida" className="hover:text-ink-dim">Florida Tides</Link>
                 <Link href="/guides" className="hover:text-ink-dim">Fishing Guides</Link>
                 <Link href="/water-temps" className="hover:text-ink-dim">Water Temperatures</Link>
                 <Link href="/widget" className="hover:text-ink-dim">Free Tide Widget</Link>

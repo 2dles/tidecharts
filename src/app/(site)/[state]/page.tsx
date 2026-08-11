@@ -1,34 +1,42 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ScoreBadge from "@/components/ScoreBadge";
 import SearchBar from "@/components/SearchBar";
 import { getLocationData } from "@/lib/data";
 import { LOCATIONS, type Location } from "@/lib/locations";
 import { getSearchIndex, getStationLocations } from "@/lib/stations";
+import { STATE_SLUGS, getState } from "@/lib/states";
 import { nextEvents } from "@/lib/noaa";
 import { SCORE_COLORS, dayScores, scoreLabel } from "@/lib/score";
-import { fmtTime, naiveDateStr, ptNow } from "@/lib/tz";
+import { fmtTime, locTz, naiveDateStr, nowInTz } from "@/lib/tz";
 
 export const revalidate = 1800;
 
-export const metadata: Metadata = {
-  title: "California Tide Charts & Fishing Forecasts",
-  description:
-    "Live tide charts and 7-day fishing forecasts for California's best fishing spots — Crescent City to San Diego. Tides, weather, species, and bite windows.",
-  alternates: { canonical: "/california" },
-};
+export function generateStaticParams() {
+  return STATE_SLUGS.map((state) => ({ state }));
+}
 
-const REGIONS: { key: Location["region"]; name: string }[] = [
-  { key: "norcal", name: "Northern California" },
-  { key: "central", name: "Central Coast" },
-  { key: "socal", name: "Southern California" },
-];
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ state: string }>;
+}): Promise<Metadata> {
+  const { state } = await params;
+  const st = getState(state);
+  if (!st) notFound(); // real 404 status before streaming starts
+  return {
+    title: `${st.name} Tide Charts & Fishing Forecasts`,
+    description: st.description,
+    alternates: { canonical: `/${st.slug}` },
+  };
+}
 
 async function locSummary(loc: Location) {
   try {
     const data = await getLocationData(loc);
-    const now = ptNow();
+    const now = nowInTz(locTz(loc));
     const { nextHigh, nextLow } = nextEvents(data.events, now);
     const today = dayScores(
       data.days, data.points, data.weather, data.marine, data.moon,
@@ -40,20 +48,31 @@ async function locSummary(loc: Location) {
   }
 }
 
-export default async function CaliforniaPage() {
-  const summaries = await Promise.all(LOCATIONS.map(locSummary));
-  const stations = await getStationLocations();
+export default async function StatePage({
+  params,
+}: {
+  params: Promise<{ state: string }>;
+}) {
+  const { state } = await params;
+  const st = getState(state);
+  if (!st) notFound();
+
+  const curated = LOCATIONS.filter((l) => l.state === st.slug);
+  const summaries = await Promise.all(curated.map(locSummary));
+  const stations = (await getStationLocations()).filter(
+    (s) => s.state === st.slug,
+  );
   const searchIndex = await getSearchIndex();
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "California Tide Charts & Fishing Forecasts",
-    url: "https://ustidecharts.com/california",
-    hasPart: LOCATIONS.map((l) => ({
+    name: `${st.name} Tide Charts & Fishing Forecasts`,
+    url: `https://ustidecharts.com/${st.slug}`,
+    hasPart: curated.map((l) => ({
       "@type": "Place",
-      name: `${l.name}, California`,
-      url: `https://ustidecharts.com/california/${l.slug}`,
+      name: `${l.name}, ${st.name}`,
+      url: `https://ustidecharts.com/${st.slug}/${l.slug}`,
     })),
   };
 
@@ -66,21 +85,18 @@ export default async function CaliforniaPage() {
       <Breadcrumbs
         crumbs={[
           { name: "Home", href: "/" },
-          { name: "California", href: "/california" },
+          { name: st.name, href: `/${st.slug}` },
         ]}
       />
       <h1 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
-        California <span className="text-ink-faint">Tides & Fishing</span>
+        {st.name} <span className="text-ink-faint">Tides & Fishing</span>
       </h1>
-      <p className="mt-3 max-w-2xl text-ink-dim">
-        Live NOAA tide predictions and fishing forecasts for {LOCATIONS.length}{" "}
-        California locations, from the redwood coast to the Mexican border.
-      </p>
+      <p className="mt-3 max-w-2xl text-ink-dim">{st.description}</p>
       <div className="mt-6 max-w-xl">
-        <SearchBar locations={searchIndex} />
+        <SearchBar locations={searchIndex} defaultState={st.slug} />
       </div>
 
-      {REGIONS.map((region) => {
+      {st.regions.map((region) => {
         const locs = summaries.filter((s) => s.loc.region === region.key);
         if (locs.length === 0) return null;
         return (
@@ -92,7 +108,7 @@ export default async function CaliforniaPage() {
               {locs.map(({ loc, nextHigh, nextLow, score }) => (
                 <Link
                   key={loc.slug}
-                  href={`/california/${loc.slug}`}
+                  href={`/${loc.state}/${loc.slug}`}
                   className="card card-hover flex flex-col p-5"
                 >
                   <div className="flex items-start justify-between gap-3">
@@ -135,14 +151,14 @@ export default async function CaliforniaPage() {
       {stations.length > 0 && (
         <section className="mt-12" aria-labelledby="all-stations-h">
           <h2 id="all-stations-h" className="text-lg font-semibold tracking-tight">
-            Every California Tide Station
+            Every {st.name} Tide Station
           </h2>
           <p className="mt-2 max-w-2xl text-sm text-ink-dim">
-            Live tide charts for all {stations.length + LOCATIONS.length} NOAA
-            prediction stations on the California coast — every harbor, creek
+            Live tide charts for all {stations.length + curated.length} NOAA
+            prediction stations on the {st.name} coast — every harbor, creek
             mouth, and pier in the official network.
           </p>
-          {REGIONS.map((region) => {
+          {st.regions.map((region) => {
             const rs = stations.filter((s) => s.region === region.key);
             if (rs.length === 0) return null;
             return (
@@ -154,7 +170,7 @@ export default async function CaliforniaPage() {
                   {rs.map((s) => (
                     <li key={s.slug}>
                       <Link
-                        href={`/california/${s.slug}`}
+                        href={`/${s.state}/${s.slug}`}
                         className="chip transition-colors hover:border-line-hi hover:text-ink"
                       >
                         {s.name}

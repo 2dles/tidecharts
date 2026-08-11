@@ -8,6 +8,7 @@ const M_TO_FT = 3.28084;
 export async function fetchWeather(
   lat: number,
   lon: number,
+  tz = "America/Los_Angeles",
 ): Promise<{ hourly: HourlyWeather[]; days: DayAstro[] }> {
   const params = new URLSearchParams({
     latitude: String(lat),
@@ -17,7 +18,7 @@ export async function fetchWeather(
     daily: "sunrise,sunset,weather_code,temperature_2m_max,temperature_2m_min",
     temperature_unit: "fahrenheit",
     wind_speed_unit: "mph",
-    timezone: "America/Los_Angeles",
+    timezone: tz,
     forecast_days: "8",
   });
   const res = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`, {
@@ -69,12 +70,13 @@ export async function fetchWeather(
 export async function fetchMarine(
   lat: number,
   lon: number,
+  tz = "America/Los_Angeles",
 ): Promise<HourlyMarine[]> {
   const params = new URLSearchParams({
     latitude: String(lat),
     longitude: String(lon),
     hourly: "wave_height,wave_period,sea_surface_temperature",
-    timezone: "America/Los_Angeles",
+    timezone: tz,
     forecast_days: "8",
   });
   const res = await fetch(

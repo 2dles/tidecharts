@@ -1,7 +1,10 @@
-// Location registry — the California pilot.
+// Location registry — curated flagship locations (CA + FL).
 // stationId = NOAA CO-OPS tide prediction station.
+import { FL_LOCATIONS } from "./locations-fl";
 
-export type Region = "norcal" | "central" | "socal";
+// Region keys are defined per-state in states.ts (norcal/central/socal,
+// panhandle/gulf/atlantic/keys, ...)
+export type Region = string;
 
 export interface Location {
   slug: string;
@@ -24,7 +27,7 @@ export interface Location {
   aliases?: string[];
 }
 
-export const LOCATIONS: Location[] = [
+export const CA_LOCATIONS: Location[] = [
   {
     slug: "crescent-city",
     name: "Crescent City",
@@ -366,6 +369,8 @@ export const LOCATIONS: Location[] = [
     aliases: ["mission bay", "coronado", "point loma"],
   },
 ];
+
+export const LOCATIONS: Location[] = [...CA_LOCATIONS, ...FL_LOCATIONS];
 
 export function getLocation(slug: string): Location | undefined {
   return LOCATIONS.find((l) => l.slug === slug);

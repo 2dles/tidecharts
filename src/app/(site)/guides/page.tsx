@@ -6,7 +6,7 @@ import { ARTICLES } from "@/lib/articles";
 export const metadata: Metadata = {
   title: "Fishing Guides — Tides, Moon Phases & Technique",
   description:
-    "Long-form guides on how tides affect fishing, reading tide charts, moon phases, and California surf fishing technique.",
+    "Long-form guides on how tides affect fishing, reading tide charts, moon phases, and surf fishing technique.",
   alternates: { canonical: "/guides" },
 };
 

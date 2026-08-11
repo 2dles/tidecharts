@@ -1,4 +1,5 @@
-// California inshore species knowledge base.
+// Inshore species knowledge base (California + Florida).
+import { FL_SPECIES } from "./species-fl";
 
 export interface Species {
   key: string;
@@ -15,7 +16,7 @@ export interface Species {
   tempRangeF: [number, number];
 }
 
-export const SPECIES: Record<string, Species> = {
+const CA_SPECIES: Record<string, Species> = {
   "striped-bass": {
     key: "striped-bass",
     image: "/species/striped-bass.jpg",
@@ -199,6 +200,8 @@ export const SPECIES: Record<string, Species> = {
     tempRangeF: [48, 62],
   },
 };
+
+export const SPECIES: Record<string, Species> = { ...CA_SPECIES, ...FL_SPECIES };
 
 /** Activity level for a species in a given month (1-12). */
 export function speciesActivity(

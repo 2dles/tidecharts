@@ -15,11 +15,14 @@ import { getNearby } from "@/lib/locations";
 import { findLocation, getAllLocations, nearestLocations } from "@/lib/stations";
 import { bestWindows, dayScores, scoreAt, scoreLabel } from "@/lib/score";
 import { SPECIES, speciesActivity } from "@/lib/species";
+import { getState, stateCodeFor } from "@/lib/states";
 import {
   fmtDay,
   fmtTime,
+  locTz,
   naiveDateStr,
-  ptNow,
+  nowInTz,
+  tzAbbrev,
 } from "@/lib/tz";
 import {
   nearestHour,
@@ -32,19 +35,22 @@ import { ARTICLES } from "@/lib/articles";
 export const revalidate = 1800;
 
 export async function generateStaticParams() {
-  return (await getAllLocations()).map((l) => ({ slug: l.slug }));
+  return (await getAllLocations()).map((l) => ({ state: l.state, slug: l.slug }));
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ state: string; slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { state, slug } = await params;
   const loc = await findLocation(slug);
-  if (!loc) return {};
+  // notFound() here (not just in the page body) so the response carries a real
+  // 404 status — by the time the streamed page body throws, 200 is already sent.
+  if (!getState(state) || !loc || loc.state !== state) notFound();
+  const st = stateCodeFor(loc.state);
 
-  const now = ptNow();
+  const now = nowInTz(locTz(loc));
   const dateStr = new Date(now).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
@@ -54,7 +60,7 @@ export async function generateMetadata({
 
   // Meta description with today's ACTUAL tide times — unique per page per day,
   // and exactly what a "[city] tide chart today" searcher wants to see.
-  let description = `Live ${loc.name}, CA tide chart with today's high and low tide times, 7-day tide table, weather, water temperature, and the best times to fish.`;
+  let description = `Live ${loc.name}, ${st} tide chart with today's high and low tide times, 7-day tide table, weather, water temperature, and the best times to fish.`;
   try {
     const data = await getLocationData(loc);
     const dayStart = Math.floor(now / DAY_MS) * DAY_MS;
@@ -66,7 +72,7 @@ export async function generateMetadata({
         (e) =>
           `${e.type === "H" ? "high" : "low"} at ${fmtTime(e.t)} (${e.h.toFixed(1)} ft)`,
       );
-      description = `Today's tides in ${loc.name}, CA: ${parts.join(", ")}. Live NOAA tide chart, 7-day tide table, weather and the best fishing times.${loc.nearCity ? ` Nearest tide station to ${loc.nearCity}, CA.` : ""}`;
+      description = `Today's tides in ${loc.name}, ${st}: ${parts.join(", ")}. Live NOAA tide chart, 7-day tide table, weather and the best fishing times.${loc.nearCity ? ` Nearest tide station to ${loc.nearCity}, ${st}.` : ""}`;
     }
   } catch {
     // keep static fallback description
@@ -74,10 +80,10 @@ export async function generateMetadata({
 
   return {
     title: loc.nearCity
-      ? `${loc.name} (${loc.nearCity}), CA Tide Chart ${dateStr} — Tide Times`
-      : `${loc.name}, CA Tide Chart ${dateStr} — High & Low Tide Times`,
+      ? `${loc.name} (${loc.nearCity}), ${st} Tide Chart ${dateStr} — Tide Times`
+      : `${loc.name}, ${st} Tide Chart ${dateStr} — High & Low Tide Times`,
     description,
-    alternates: { canonical: `/california/${loc.slug}` },
+    alternates: { canonical: `/${loc.state}/${loc.slug}` },
     openGraph: {
       title: `${loc.name} Tide Chart & Fishing Forecast | USTideCharts`,
       description: loc.tagline,
@@ -90,14 +96,16 @@ const DAY_MS = 86_400_000;
 export default async function LocationPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ state: string; slug: string }>;
 }) {
-  const { slug } = await params;
+  const { state, slug } = await params;
+  const stateCfg = getState(state);
   const loc = await findLocation(slug);
-  if (!loc) notFound();
+  if (!stateCfg || !loc || loc.state !== state) notFound();
 
+  const tz = locTz(loc);
   const data = await getLocationData(loc);
-  const now = ptNow();
+  const now = nowInTz(tz);
   const today = naiveDateStr(now);
   const month = new Date(now).getUTCMonth() + 1;
 
@@ -239,7 +247,7 @@ export default async function LocationPage({
       ? [
           {
             q: `Is this the tide chart for ${loc.nearCity}?`,
-            a: `Yes — ${loc.name} (NOAA station ${loc.stationId}) is the closest official tide prediction station to ${loc.nearCity}, California, so these are the tide times anglers and boaters in ${loc.nearCity} plan around.`,
+            a: `Yes — ${loc.name} (NOAA station ${loc.stationId}) is the closest official tide prediction station to ${loc.nearCity}, ${stateCfg.name}, so these are the tide times anglers and boaters in ${loc.nearCity} plan around.`,
           },
         ]
       : []),
@@ -252,10 +260,10 @@ export default async function LocationPage({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Place",
-    name: `${loc.name}, California`,
+    name: `${loc.name}, ${stateCfg.name}`,
     description: loc.tagline,
     geo: { "@type": "GeoCoordinates", latitude: loc.lat, longitude: loc.lon },
-    url: `https://ustidecharts.com/california/${loc.slug}`,
+    url: `https://ustidecharts.com/${loc.state}/${loc.slug}`,
   };
 
   const faqJsonLd = {
@@ -281,8 +289,8 @@ export default async function LocationPage({
       <Breadcrumbs
         crumbs={[
           { name: "Home", href: "/" },
-          { name: "California", href: "/california" },
-          { name: loc.name, href: `/california/${loc.slug}` },
+          { name: stateCfg.name, href: `/${loc.state}` },
+          { name: loc.name, href: `/${loc.state}/${loc.slug}` },
         ]}
       />
 
@@ -307,7 +315,7 @@ export default async function LocationPage({
             )}
           </p>
         </div>
-        <p className="text-xs text-ink-faint">Updated {fmtTime(data.fetchedAt)} PT</p>
+        <p className="text-xs text-ink-faint">Updated {fmtTime(data.fetchedAt)} {tzAbbrev(tz)}</p>
       </header>
 
       {/* TIDE CHART — the centerpiece, first thing on the page */}
@@ -322,6 +330,7 @@ export default async function LocationPage({
           initialNow={data.fetchedAt}
           score={score}
           label={label}
+          tz={tz}
         />
 
         <TideChart
@@ -329,6 +338,7 @@ export default async function LocationPage({
           events={data.events}
           days={data.days}
           initialNow={data.fetchedAt}
+          tz={tz}
         />
         <div className="mt-4 overflow-x-auto border-t border-line pt-4">
           <table className="w-full text-sm">
@@ -554,11 +564,11 @@ export default async function LocationPage({
           Activity ratings reflect typical feeding seasons — <span className="text-ink-dim">not legal seasons</span>.
           Regulations, closures, and size/bag limits change; always check current{" "}
           <a
-            href="https://wildlife.ca.gov/Fishing/Ocean/Regulations"
+            href={stateCfg.regsUrl}
             rel="noopener"
             className="text-sky-300 underline decoration-line underline-offset-2 hover:text-teal-300"
           >
-            CDFW regulations
+            {stateCfg.regsName}
           </a>{" "}
           before keeping any fish.
         </p>
@@ -654,7 +664,7 @@ export default async function LocationPage({
             {nearby.map((n) => (
               <li key={n.slug}>
                 <Link
-                  href={`/california/${n.slug}`}
+                  href={`/${n.state}/${n.slug}`}
                   className="group block rounded-xl border border-line p-3 transition-colors hover:border-line-hi"
                 >
                   <p className="font-medium group-hover:text-sky-300">{n.name}</p>

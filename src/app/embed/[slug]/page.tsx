@@ -8,7 +8,7 @@ import TideChart from "@/components/TideChart";
 import { getLocationData } from "@/lib/data";
 import { findLocation, getAllLocations } from "@/lib/stations";
 import { nextEvents } from "@/lib/noaa";
-import { fmtTime } from "@/lib/tz";
+import { fmtTime, locTz } from "@/lib/tz";
 
 export const revalidate = 1800;
 
@@ -40,7 +40,7 @@ export default async function EmbedPage({
 
   const data = await getLocationData(loc);
   const { nextHigh, nextLow } = nextEvents(data.events, data.fetchedAt);
-  const pageUrl = `https://ustidecharts.com/california/${loc.slug}?utm_source=widget&utm_medium=embed&utm_campaign=${loc.slug}`;
+  const pageUrl = `https://ustidecharts.com/${loc.state}/${loc.slug}?utm_source=widget&utm_medium=embed&utm_campaign=${loc.slug}`;
 
   return (
     <div className="flex min-h-screen flex-col p-3">
@@ -71,6 +71,7 @@ export default async function EmbedPage({
           events={data.events}
           days={data.days}
           initialNow={data.fetchedAt}
+          tz={locTz(loc)}
         />
       </div>
 

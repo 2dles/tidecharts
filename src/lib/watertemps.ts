@@ -3,8 +3,9 @@
 import { getAllLocations } from "./stations";
 import type { Region } from "./locations";
 
+// Ramp spans cold NorCal upwelling (~50°F) to peak-summer Gulf/Keys (~90°F).
 export const T_MIN = 48;
-export const T_MAX = 75;
+export const T_MAX = 90;
 
 /** Sequential sky/cyan ramp: dark (cold) -> bright (warm) on the dark surface. */
 export function tempColor(f: number): string {
@@ -25,6 +26,7 @@ export function tempColor(f: number): string {
 export interface TempPoint {
   slug: string;
   name: string;
+  state: string;
   lat: number;
   lon: number;
   region: Region;
@@ -40,7 +42,11 @@ function hash(s: string): number {
 }
 
 function sampleTemp(region: Region, seed: number): number {
-  const base = region === "socal" ? 67 : region === "central" ? 59 : 55;
+  const WATER: Record<string, number> = {
+    norcal: 55, central: 59, socal: 67,
+    panhandle: 82, gulf: 86, atlantic: 84, keys: 86,
+  };
+  const base = WATER[region] ?? 65;
   return Math.round((base + seed * 4 - 2) * 10) / 10;
 }
 
@@ -89,6 +95,7 @@ export async function getWaterTemps(): Promise<{
     points.push({
       slug: l.slug,
       name: l.name,
+      state: l.state,
       lat: l.lat,
       lon: l.lon,
       region: l.region,
