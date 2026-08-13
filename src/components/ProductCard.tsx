@@ -1,5 +1,12 @@
 import { productUrl, type Product } from "@/lib/gear";
 
+/**
+ * A gear recommendation card.
+ *
+ * Everything shown here — name, price, category, sentence — comes from
+ * lib/gear.ts, which is generated from the store's catalog. Do not add copy
+ * of your own: the card and the page it links to have to say the same thing.
+ */
 export default function ProductCard({ p, reason }: { p: Product; reason?: string }) {
   return (
     <a
@@ -9,16 +16,29 @@ export default function ProductCard({ p, reason }: { p: Product; reason?: string
       rel="noopener"
     >
       <div
-        className="relative flex h-28 items-center justify-center text-4xl"
-        style={{ background: p.gradient }}
-        aria-hidden
+        className="relative flex h-28 items-center justify-center overflow-hidden"
+        style={p.image ? { background: "#fff" } : { background: p.gradient }}
       >
-        <span className="drop-shadow-lg transition-transform duration-300 group-hover:scale-110">
-          {p.icon}
-        </span>
-        {p.badge && (
-          <span className="absolute left-3 top-3 rounded-full bg-abyss/60 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-teal-300 backdrop-blur">
-            {p.badge}
+        {p.image ? (
+          /* Supplier photography is shot on white and comes in every aspect
+             ratio going — a 10 ft rod and a hook pack in the same row. Contain,
+             never cover: cropping a rod to a square makes it unidentifiable.
+             Plain <img> on purpose, so 190-odd static pages don't each push
+             four images through the image optimizer. */
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={p.image}
+            alt={p.name}
+            loading="lazy"
+            decoding="async"
+            className="h-full w-full object-contain p-2 transition-transform duration-300 group-hover:scale-105"
+          />
+        ) : (
+          <span
+            aria-hidden
+            className="text-4xl drop-shadow-lg transition-transform duration-300 group-hover:scale-110"
+          >
+            {p.icon}
           </span>
         )}
       </div>
