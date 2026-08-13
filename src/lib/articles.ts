@@ -56,7 +56,10 @@ export const ARTICLES: Article[] = [
         heading: "Putting it together",
         paragraphs: [
           "Before any trip, look at three things on the tide chart: when the water is moving (fish then), which direction it is moving (pick your spot to match), and how big the swing is (set your expectations). Pair a moving tide with dawn or dusk and you have stacked the two most powerful factors in inshore fishing on top of each other.",
-          "Gear-wise, moving water rewards tackle that stays in touch with the bottom. A long surf rod keeps your line above the shorebreak, braided line telegraphs every tick through the current, and a Carolina rig with a sliding sinker lets a perch or corbina pick up the bait without feeling the weight. You'll find our field-tested versions of all three at TheAnglerStore.",
+          // Named the store's own "Carolina rig kit" and called all three items
+          // "field-tested" — the kit was never a real product, and nobody here
+          // has field-tested anything. Only name what we actually stock.
+          "Gear-wise, moving water rewards tackle that stays in touch with the bottom. A long surf rod keeps your line above the shorebreak, braided line telegraphs every tick through the current, and a sliding sinker running above a swivel lets a perch or corbina pick up the bait without feeling the weight. The rod, the braid and the swivel are in the cards below — the sinker is the one piece you'll still want to pick up locally.",
         ],
       },
     ],
@@ -93,7 +96,9 @@ export const ARTICLES: Article[] = [
         heading: "A 60-second planning routine",
         paragraphs: [
           "First, find today's swings: two highs and two lows, unequal in size. Second, circle the mid-tide hours on each side of the biggest swing — that's your moving water. Third, check whether either window overlaps dawn or dusk; if it does, that's the trip. Fourth, glance at the low-tide height: a minus low means exposed structure at low water and a fast, fishy flood behind it.",
-          "If your best window lands before sunrise — and the good ones often do — a red-beam headlamp keeps your hands free and the shallows unspooked, and a good pair of saltwater pliers is worth its weight when you're unhooking fish in the dark. Both live in the accessories aisle at TheAnglerStore.",
+          // "Both live in the accessories aisle at TheAnglerStore" — there is
+          // no headlamp in the catalog, so "both" was one.
+          "If your best window lands before sunrise — and the good ones often do — plan for the dark as well as the tide. A hands-free light matters more than most people expect, and a good pair of saltwater pliers earns its keep when you're unhooking a fish by feel. The pliers are in the cards below.",
         ],
       },
     ],
@@ -129,7 +134,10 @@ export const ARTICLES: Article[] = [
         heading: "How to actually plan with it",
         paragraphs: [
           "Don't cancel a trip because the calendar shows a quarter moon — a mid-tide dawn on a neap week beats a slack-water noon on a spring week, every time. Use the moon as a tiebreaker: when you can choose your day, choose the one within a few days of new or full. When you can't, fish the best tide window your day offers and let the score do the math.",
-          "Spring-tide fishing is fast fishing: more current means more casts, more grabs, and better odds of a limit hitting the sand. A loaded swimbait kit covers the reaction bite when the water is ripping, and if the plan comes together you'll want a real cooler on the beach — the ColdCatch at TheAnglerStore holds ice through the longest minus-tide morning.",
+          // Named "the ColdCatch at TheAnglerStore" — a brand that does not
+          // exist, attached to a cooler we do not sell. Describe the job, and
+          // let the cards name the product.
+          "Spring-tide fishing is fast fishing: more current means more casts, more grabs, and better odds of a limit hitting the sand. A soft jerkbait covers the reaction bite when the water is ripping, and if the plan comes together you'll want a cooler that holds ice through a long minus-tide morning. Both are in the cards below.",
         ],
       },
     ],
