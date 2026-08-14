@@ -149,6 +149,27 @@ export function weatherEmoji(code: number | null): string {
   return "🌤️";
 }
 
+/** Angler-friendly wind rating, based on the Beaufort scale. Colors run
+ * fishable-green → stay-home-red on the dark surface. */
+export function windRating(
+  mph: number | null,
+): { label: string; color: string; note: string } | null {
+  if (mph == null) return null;
+  if (mph < 4)
+    return { label: "Calm", color: "#34d399", note: "Glass — perfect for topwater" };
+  if (mph < 9)
+    return { label: "Light breeze", color: "#34d399", note: "Great fishing conditions" };
+  if (mph < 14)
+    return { label: "Moderate breeze", color: "#a3e635", note: "A little chop — very fishable" };
+  if (mph < 19)
+    return { label: "Fresh breeze", color: "#fbbf24", note: "Casting gets harder — fish the lee" };
+  if (mph < 25)
+    return { label: "Strong breeze", color: "#fb923c", note: "Tough — sheltered water only" };
+  if (mph < 32)
+    return { label: "Near gale", color: "#f87171", note: "Small-craft caution — most anglers stay in" };
+  return { label: "Gale", color: "#f87171", note: "Dangerous — don't go" };
+}
+
 export function windCompass(deg: number | null): string {
   if (deg == null) return "—";
   const dirs = [
