@@ -29,6 +29,7 @@ import {
   weatherEmoji,
   weatherLabel,
   windCompass,
+  windRating,
 } from "@/lib/weather";
 import { ARTICLES } from "@/lib/articles";
 
@@ -336,6 +337,9 @@ export default async function LocationPage({
           score={score}
           label={label}
           tz={tz}
+          windMph={wx?.windMph ?? null}
+          gustMph={wx?.gustMph ?? null}
+          windDir={wx?.windDir ?? null}
         />
 
         <TideChart
@@ -495,6 +499,14 @@ export default async function LocationPage({
                 )}
               </dd>
             </div>
+            {(() => {
+              const wr = windRating(wx?.windMph ?? null);
+              return wr ? (
+                <p className="-mt-1 text-right text-xs" style={{ color: wr.color }}>
+                  {wr.label} — {wr.note}
+                </p>
+              ) : null;
+            })()}
             <div className="flex items-center justify-between">
               <dt className="text-ink-faint">Waves</dt>
               <dd className="font-medium tabular-nums">

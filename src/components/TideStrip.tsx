@@ -11,6 +11,7 @@ import type { ScoreLabel, TideEvent, TidePoint } from "@/lib/types";
 import { nextEvents, tideHeightAt, tideRateAt } from "@/lib/noaa";
 import { SCORE_COLORS } from "@/lib/score";
 import { fmtRelative, fmtTime, nowInTz } from "@/lib/tz";
+import { windCompass, windRating } from "@/lib/weather";
 
 interface Props {
   points: TidePoint[];
@@ -20,6 +21,10 @@ interface Props {
   label: ScoreLabel;
   /** IANA timezone of the station (client clock ticks in this zone). */
   tz?: string;
+  /** Current wind (from the server-fetched forecast hour). */
+  windMph?: number | null;
+  gustMph?: number | null;
+  windDir?: number | null;
 }
 
 export default function TideStrip({
@@ -29,6 +34,9 @@ export default function TideStrip({
   score,
   label,
   tz = "America/Los_Angeles",
+  windMph = null,
+  gustMph = null,
+  windDir = null,
 }: Props) {
   const [now, setNow] = useState(initialNow);
   useEffect(() => {
@@ -52,8 +60,14 @@ export default function TideStrip({
           ? "falling"
           : "slack";
 
+  const wind = windRating(windMph);
+
   return (
-    <div className="mb-4 grid grid-cols-2 gap-x-4 gap-y-3 border-b border-line pb-4 sm:grid-cols-4">
+    <div
+      className={`mb-4 grid grid-cols-2 gap-x-4 gap-y-3 border-b border-line pb-4 ${
+        wind ? "sm:grid-cols-3 lg:grid-cols-5" : "sm:grid-cols-4"
+      }`}
+    >
       <div>
         <p className="text-[10px] font-semibold uppercase tracking-widest text-ink-faint">
           Tide now
@@ -99,6 +113,29 @@ export default function TideStrip({
             : ""}
         </p>
       </div>
+      {wind && (
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-ink-faint">
+            Wind
+          </p>
+          <p className="mt-1 text-xl font-bold leading-none tabular-nums">
+            {Math.round(windMph!)}
+            <span className="text-xs font-medium text-ink-faint"> mph</span>
+            {windDir != null && (
+              <span className="text-xs font-medium text-ink-dim">
+                {" "}
+                {windCompass(windDir)}
+              </span>
+            )}
+          </p>
+          <p className="mt-1 text-xs font-medium" style={{ color: wind.color }}>
+            {wind.label}
+            {gustMph != null && gustMph >= (windMph ?? 0) + 5 && (
+              <span className="text-ink-faint"> · gusts {Math.round(gustMph)}</span>
+            )}
+          </p>
+        </div>
+      )}
       <div>
         <p className="text-[10px] font-semibold uppercase tracking-widest text-ink-faint">
           Fishing score
