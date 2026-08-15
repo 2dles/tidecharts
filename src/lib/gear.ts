@@ -180,6 +180,16 @@ export const PRODUCTS: Record<string, Product> = {
     gradient: "linear-gradient(135deg,#0d4a4a,#137a6e)",
     icon: "🎣",
   },
+  "bank-sinker-4oz": {
+    key: "bank-sinker-4oz",
+    name: "MO's Bank Sinkers — 4 oz, 20-Pack",
+    category: "Terminal Tackle",
+    price: 32.99,
+    blurb:
+      "Four ounces is the weight most 9 to 11 foot surf rods are built to throw, and the one to reach for when the water is moving hard enough that a 3 oz starts walking.",
+    gradient: "linear-gradient(135deg,#3a2e59,#5d4a8f)",
+    icon: "🪝",
+  },
   "dipsy-mid": {
     key: "dipsy-mid",
     name: "Luhr-Jensen 3¼″ Dipsy Diver — Clear UV",
@@ -201,6 +211,16 @@ export const PRODUCTS: Record<string, Product> = {
     image: "https://cdn.shopify.com/s/files/1/0033/5442/7456/files/533342.jpg",
     gradient: "linear-gradient(135deg,#0e3a5c,#155e88)",
     icon: "🎣",
+  },
+  "bank-sinker-3oz": {
+    key: "bank-sinker-3oz",
+    name: "MO's Bank Sinkers — 3 oz, 26-Pack",
+    category: "Terminal Tackle",
+    price: 29.99,
+    blurb:
+      "The everyday surf weight for moderate current — heavy enough to hold a bait through a push, light enough to cast on a medium rod all morning.",
+    gradient: "linear-gradient(135deg,#3a2e59,#5d4a8f)",
+    icon: "🪝",
   },
   "dwave-combo-7": {
     key: "dwave-combo-7",
@@ -271,111 +291,111 @@ export const BY_SPECIES: Record<string, string[]> = {
     "dwave-combo-8",
     "braided-line",
     "circle-hooks",
+    "bank-sinker-4oz",
     "jig-assort",
     "landing-net",
     "pliers",
-    "dipsy-mid",
-    "tackle-bag"
+    "dipsy-mid"
   ],
   "halibut": [
     "dwave-combo-8",
     "braided-line",
     "circle-hooks",
+    "bank-sinker-4oz",
     "jig-assort",
     "landing-net",
     "pliers",
-    "dipsy-mid",
-    "tackle-bag"
+    "dipsy-mid"
   ],
   "rockfish": [
     "daiwa-ft-surf-9",
     "braided-line",
     "circle-hooks",
+    "bank-sinker-3oz",
     "jig-assort",
     "landing-net",
     "pliers",
-    "dipsy-mid",
-    "tackle-bag"
+    "dipsy-mid"
   ],
   "lingcod": [
     "daiwa-ft-surf-9",
     "braided-line",
     "circle-hooks",
+    "bank-sinker-3oz",
     "jig-assort",
     "landing-net",
     "pliers",
-    "dipsy-mid",
-    "tackle-bag"
+    "dipsy-mid"
   ],
   "surfperch": [
     "dwave-combo-8",
     "braided-line",
     "circle-hooks",
+    "bank-sinker-4oz",
     "jig-assort",
     "landing-net",
     "pliers",
-    "dipsy-mid",
-    "tackle-bag"
+    "dipsy-mid"
   ],
   "salmon": [
     "dwave-combo-7",
     "lead-core",
     "mustad-barrel-swivel-2-0",
+    "bank-sinker-3oz",
     "xrap-magnum",
     "landing-net",
     "pliers",
-    "dipsy-mid",
-    "tackle-bag"
+    "dipsy-mid"
   ],
   "yellowtail": [
     "dwave-combo-7",
     "braided-line",
     "circle-hooks",
+    "bank-sinker-3oz",
     "jig-assort",
     "landing-net",
     "pliers",
-    "dipsy-mid",
-    "tackle-bag"
+    "dipsy-mid"
   ],
   "calico-bass": [
     "daiwa-ft-surf-9",
     "braided-line",
     "circle-hooks",
+    "bank-sinker-3oz",
     "jig-assort",
     "landing-net",
     "pliers",
-    "dipsy-mid",
-    "tackle-bag"
+    "dipsy-mid"
   ],
   "corbina": [
     "dwave-combo-8",
     "braided-line",
     "circle-hooks",
+    "bank-sinker-4oz",
     "jig-assort",
     "landing-net",
     "pliers",
-    "dipsy-mid",
-    "tackle-bag"
+    "dipsy-mid"
   ],
   "spotted-bay-bass": [
     "daiwa-ft-surf-9",
     "braided-line",
     "circle-hooks",
+    "bank-sinker-3oz",
     "jig-assort",
     "landing-net",
     "pliers",
-    "dipsy-mid",
-    "tackle-bag"
+    "dipsy-mid"
   ],
   "leopard-shark": [
     "dwave-combo-8",
     "braided-line",
     "circle-hooks",
+    "bank-sinker-4oz",
     "jig-assort",
     "landing-net",
     "pliers",
-    "dipsy-mid",
-    "tackle-bag"
+    "dipsy-mid"
   ]
 };
 
