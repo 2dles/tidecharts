@@ -42,7 +42,9 @@ export const FL_SPECIES: Record<string, Species> = {
     bait: ["Live shrimp under a popping cork", "Soft plastics", "Topwaters"],
     techniques:
       "Drift grass flats in 2–6 feet with a popping cork ahead of the drift. Gator trout hunt alone in skinny water at dawn.",
-    gearKeys: ["inshore-combo", "fluoro-leader", "swimbait-kit", "landing-net"],
+    // Universal-only: the store has nothing targeted at this species yet, so
+    // recommend honest anywhere-saltwater gear rather than fake a match.
+    gearKeys: ["braided-line", "fluoro-leader", "pliers", "landing-net"],
     tempRangeF: [58, 80],
   },
   tarpon: {
@@ -70,7 +72,8 @@ export const FL_SPECIES: Record<string, Species> = {
     bait: ["Live shrimp", "Pilchards", "Cut bait on light leader"],
     techniques:
       "Fish structure — docks, bridges, mangrove roots — with the lightest leader you can get away with. They see everything.",
-    gearKeys: ["inshore-combo", "fluoro-leader", "circle-hooks", "tackle-bag"],
+    // Universal-only: no targeted stock for this species (see gear-keys.ts).
+    gearKeys: ["braided-line", "fluoro-leader", "pliers", "landing-net"],
     tempRangeF: [70, 88],
   },
   pompano: {
@@ -112,7 +115,8 @@ export const FL_SPECIES: Record<string, Species> = {
     bait: ["Silver spoons", "Gotcha plugs", "Live pilchards"],
     techniques:
       "Find birds working bait and cast fast-moving metal through the frenzy. Wire or heavy fluoro — their teeth are scissors.",
-    gearKeys: ["inshore-combo", "jig-assort", "braided-line", "pliers"],
+    // Universal-only: no targeted stock for this species (see gear-keys.ts).
+    gearKeys: ["braided-line", "fluoro-leader", "pliers", "landing-net"],
     tempRangeF: [68, 82],
   },
   "flounder-gulf": {
@@ -126,7 +130,8 @@ export const FL_SPECIES: Record<string, Species> = {
     bait: ["Bull minnows", "Live shrimp", "Gulp on a jighead"],
     techniques:
       "Drag baits slowly across sandy potholes and channel edges. Count to three on the bite before setting — they chew first.",
-    gearKeys: ["inshore-combo", "circle-hooks", "landing-net", "fluoro-leader"],
+    // Universal-only: no targeted stock for this species (see gear-keys.ts).
+    gearKeys: ["braided-line", "fluoro-leader", "pliers", "landing-net"],
     tempRangeF: [62, 80],
   },
   "bonefish-fl": {
@@ -140,7 +145,8 @@ export const FL_SPECIES: Record<string, Species> = {
     bait: ["Live shrimp", "Small crabs", "Bonefish jigs"],
     techniques:
       "Pole or wade the flats on a flooding tide and look for tails and nervous water. Long, quiet casts — the gray ghost spooks at shadows.",
-    gearKeys: ["inshore-combo", "fluoro-leader", "pliers", "tackle-bag"],
+    // Universal-only: no targeted stock for this species (see gear-keys.ts).
+    gearKeys: ["braided-line", "fluoro-leader", "pliers", "landing-net"],
     tempRangeF: [72, 88],
   },
   permit: {

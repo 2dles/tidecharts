@@ -11,6 +11,7 @@ import AdSlot from "@/components/AdSlot";
 import SpeciesImage from "@/components/SpeciesImage";
 import { getLocationData } from "@/lib/data";
 import { getProducts } from "@/lib/gear";
+import { UNIVERSAL_KEYS } from "@/lib/gear-keys";
 import { getNearby } from "@/lib/locations";
 import { findLocation, nearestLocations } from "@/lib/stations";
 import { bestWindows, dayScores, scoreAt, scoreLabel } from "@/lib/score";
@@ -149,6 +150,10 @@ export default async function LocationPage({
     .filter(({ activity }) => activity !== "low")
     .flatMap(({ s }) => s.gearKeys);
   const gear = getProducts(gearKeys).slice(0, 4);
+  // Only claim gear was "matched to the species" if at least one key was
+  // actually species-targeted — universal-only pools (e.g. FL species the
+  // store has no targeted stock for) get honest generic copy instead.
+  const gearIsSpeciesMatched = gearKeys.some((k) => !UNIVERSAL_KEYS.has(k));
 
   const relatedArticles = ARTICLES.slice(0, 3);
   const nearby =
@@ -640,7 +645,9 @@ export default async function LocationPage({
           </a>
         </div>
         <p className="mt-1 text-sm text-ink-dim">
-          Matched to the species feeding at {loc.name} right now.
+          {gearIsSpeciesMatched
+            ? `Matched to the species feeding at ${loc.name} right now.`
+            : "Saltwater essentials that belong in any bag, wherever you fish."}
         </p>
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {gear.map((p) => (
