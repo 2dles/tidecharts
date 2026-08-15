@@ -10,7 +10,7 @@
 // version of this file drifted from the catalog and advertised prices and
 // product names that did not exist — do not reintroduce that by editing here.
 //
-// Last generated 2026-08-13.
+// Last generated 2026-08-15.
 // ─────────────────────────────────────────────────────────────────────────────
 
 export interface Product {
@@ -170,6 +170,81 @@ export const PRODUCTS: Record<string, Product> = {
     gradient: "linear-gradient(135deg,#3a2e59,#5d4a8f)",
     icon: "🪝",
   },
+  "dwave-combo-8": {
+    key: "dwave-combo-8",
+    name: "Daiwa D-Wave Saltwater Spinning Combo — 8 ft, 2-Piece Medium",
+    category: "Rod & Reel Combos",
+    price: 59.99,
+    blurb:
+      "Eight feet is the honest middle: long enough to keep line above the wash on a gentle beach, short enough to fish from a pier or a boat without apologising to anyone.",
+    gradient: "linear-gradient(135deg,#0d4a4a,#137a6e)",
+    icon: "🎣",
+  },
+  "dipsy-mid": {
+    key: "dipsy-mid",
+    name: "Luhr-Jensen 3¼″ Dipsy Diver — Clear UV",
+    category: "Trolling & Rigging",
+    price: 16.99,
+    blurb:
+      "The size most trollers reach for first. Deeper and further out than the 2¼, without the pull of the largest.",
+    image: "https://productimageserver.com/product/xl/102268XL.jpg",
+    gradient: "linear-gradient(135deg,#1e293b,#334155)",
+    icon: "🎣",
+  },
+  "daiwa-ft-surf-9": {
+    key: "daiwa-ft-surf-9",
+    name: "Daiwa FT Surf Spinning Rod — 9', 2-Piece Medium",
+    category: "Surf Rods",
+    price: 34.99,
+    blurb:
+      "The short one, for jetties, piers and beaches where you don't need to reach the horizon. Easier to control in a crowd and easier to fit in a car.",
+    image: "https://cdn.shopify.com/s/files/1/0033/5442/7456/files/533342.jpg",
+    gradient: "linear-gradient(135deg,#0e3a5c,#155e88)",
+    icon: "🎣",
+  },
+  "dwave-combo-7": {
+    key: "dwave-combo-7",
+    name: "Daiwa D-Wave Saltwater Spinning Combo — 7 ft, 2-Piece Medium",
+    category: "Rod & Reel Combos",
+    price: 59.99,
+    blurb:
+      "The inshore length of the D-Wave range: seven feet of medium fiberglass on a 40-size reel, rated by Daiwa for saltwater as well as heavy freshwater.",
+    gradient: "linear-gradient(135deg,#0d4a4a,#137a6e)",
+    icon: "🎣",
+  },
+  "lead-core": {
+    key: "lead-core",
+    name: "Sufix Performance Lead Core — 18 lb, 200 yd",
+    category: "Line & Leader",
+    price: 31.99,
+    blurb:
+      "Lead core sinks, and it changes color every ten yards so you can count exactly how much you have out.",
+    image: "https://productimageserver.com/product/xl/96824XL.jpg",
+    gradient: "linear-gradient(135deg,#233a5e,#3b5fa0)",
+    icon: "🧵",
+  },
+  "mustad-barrel-swivel-2-0": {
+    key: "mustad-barrel-swivel-2-0",
+    name: "Mustad High-Speed Multi-Link Swivel — Size 2/0, 4-Pack, 72 lb",
+    category: "Terminal Tackle",
+    price: 7.49,
+    blurb:
+      "A spinning bait or a trolled lure puts twist into your line every second it's in the water, and twist is what turns a good spool into a bird's nest.",
+    image: "https://cdn.shopify.com/s/files/1/0033/5442/7456/files/6544.jpg",
+    gradient: "linear-gradient(135deg,#3a2e59,#5d4a8f)",
+    icon: "🪝",
+  },
+  "xrap-magnum": {
+    key: "xrap-magnum",
+    name: "Rapala X-Rap Magnum 15 — Hot Pink UV",
+    category: "Lures",
+    price: 21.99,
+    blurb:
+      "A trolling minnow that runs at fifteen feet without weight or a downrigger — the lip does the work.",
+    image: "https://productimageserver.com/product/xl/89811XL.jpg",
+    gradient: "linear-gradient(135deg,#52340e,#8a5a1d)",
+    icon: "⚓",
+  },
 };
 
 /**
@@ -180,6 +255,129 @@ export const PRODUCTS: Record<string, Product> = {
  * · headlamp — no headlamp in the catalog — the only light that fits is 12V boat-powered
  */
 export const UNAVAILABLE: readonly string[] = ["sand-spike","headlamp"];
+
+/**
+ * Species slug -> product keys, ordered as a KIT: rod, line, terminal, lure,
+ * then the rest. Derived from the store's own per-product species tagging, not
+ * hand-picked here.
+ *
+ * A species absent from this map has nothing in the catalog tagged for it —
+ * the eleven Florida species, plus white seabass and cabezon. Those fall back
+ * to USTideCharts' own lists rather than being handed a NorCal surf rod and
+ * told it was chosen for bonefish.
+ */
+export const BY_SPECIES: Record<string, string[]> = {
+  "striped-bass": [
+    "dwave-combo-8",
+    "braided-line",
+    "circle-hooks",
+    "jig-assort",
+    "landing-net",
+    "pliers",
+    "dipsy-mid",
+    "tackle-bag"
+  ],
+  "halibut": [
+    "dwave-combo-8",
+    "braided-line",
+    "circle-hooks",
+    "jig-assort",
+    "landing-net",
+    "pliers",
+    "dipsy-mid",
+    "tackle-bag"
+  ],
+  "rockfish": [
+    "daiwa-ft-surf-9",
+    "braided-line",
+    "circle-hooks",
+    "jig-assort",
+    "landing-net",
+    "pliers",
+    "dipsy-mid",
+    "tackle-bag"
+  ],
+  "lingcod": [
+    "daiwa-ft-surf-9",
+    "braided-line",
+    "circle-hooks",
+    "jig-assort",
+    "landing-net",
+    "pliers",
+    "dipsy-mid",
+    "tackle-bag"
+  ],
+  "surfperch": [
+    "dwave-combo-8",
+    "braided-line",
+    "circle-hooks",
+    "jig-assort",
+    "landing-net",
+    "pliers",
+    "dipsy-mid",
+    "tackle-bag"
+  ],
+  "salmon": [
+    "dwave-combo-7",
+    "lead-core",
+    "mustad-barrel-swivel-2-0",
+    "xrap-magnum",
+    "landing-net",
+    "pliers",
+    "dipsy-mid",
+    "tackle-bag"
+  ],
+  "yellowtail": [
+    "dwave-combo-7",
+    "braided-line",
+    "circle-hooks",
+    "jig-assort",
+    "landing-net",
+    "pliers",
+    "dipsy-mid",
+    "tackle-bag"
+  ],
+  "calico-bass": [
+    "daiwa-ft-surf-9",
+    "braided-line",
+    "circle-hooks",
+    "jig-assort",
+    "landing-net",
+    "pliers",
+    "dipsy-mid",
+    "tackle-bag"
+  ],
+  "corbina": [
+    "dwave-combo-8",
+    "braided-line",
+    "circle-hooks",
+    "jig-assort",
+    "landing-net",
+    "pliers",
+    "dipsy-mid",
+    "tackle-bag"
+  ],
+  "spotted-bay-bass": [
+    "daiwa-ft-surf-9",
+    "braided-line",
+    "circle-hooks",
+    "jig-assort",
+    "landing-net",
+    "pliers",
+    "dipsy-mid",
+    "tackle-bag"
+  ],
+  "leopard-shark": [
+    "dwave-combo-8",
+    "braided-line",
+    "circle-hooks",
+    "jig-assort",
+    "landing-net",
+    "pliers",
+    "dipsy-mid",
+    "tackle-bag"
+  ]
+};
 
 /** Relevant almost anywhere saltwater; tops a list back up when one drops out. */
 const BACKFILL: readonly string[] = ["braided-line","pliers","landing-net","circle-hooks","tackle-bag"];
