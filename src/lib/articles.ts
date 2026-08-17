@@ -142,6 +142,138 @@ export const ARTICLES: Article[] = [
       },
     ],
   },
+  {
+    slug: "how-the-fishing-score-works",
+    title: "How the USTideCharts Fishing Score Works",
+    description:
+      "Exactly what goes into the 0–100 fishing score on every location page — the six factors, how they're weighted, and what the score can and can't tell you.",
+    readMinutes: 6,
+    gearKeys: ["braided-line", "pliers", "tackle-bag"],
+    relatedSlugs: ["how-tides-affect-fishing", "best-moon-phase-for-fishing"],
+    sections: [
+      {
+        paragraphs: [
+          "Every location page on USTideCharts shows a fishing score from 0 to 100, updated continuously through the day. It isn't a guess and it isn't magic — it's a weighted blend of six measurable conditions, computed the same way for every hour at every station. This page explains the formula, because a score you can't interrogate is a score you shouldn't trust.",
+          "The single heaviest factor is tide movement, at roughly a third of the score. We compute the rate of change of the tide — how many feet per hour the water is rising or falling right now — from NOAA's own harmonic predictions. Fast-moving water moves bait and turns predators on; slack water turns them off. A ripping mid-tide scores high whether the water is coming in or going out, because both directions concentrate feeding, just at different kinds of spots.",
+        ],
+      },
+      {
+        heading: "The other five factors",
+        paragraphs: [
+          "Light is next, at about a quarter of the score. Dawn and dusk are the most reliable bite windows in inshore fishing, so hours near sunrise and sunset get a strong boost, computed from the actual sun times at that station's coordinates — not a generic clock.",
+          "Moon phase contributes the solunar component: days near new and full moons score higher because the same alignment that creates spring tides is associated with stronger feeding activity. Wind matters at about fifteen percent — a light breeze is neutral-to-good, but as wind climbs past fresh into strong, casting, boat control, and water clarity all degrade, and the score reflects it. The last slices go to general weather (a front or thunderstorm knocks points off) and water temperature, which is scored against the preferred range of the species typical for that region.",
+          "The 'Best windows today' list is the same math run for every hour of the day, then grouped into the stretches that score highest. A day's headline number is its best window, not its average — a day with one excellent dawn window and a dead afternoon is still a day worth fishing, and the score says so.",
+        ],
+      },
+      {
+        heading: "What the score is not",
+        paragraphs: [
+          "The score doesn't know what you fish for, and it can't see bait in the water, boat traffic, or the school of fish that showed up for no reason at all. Treat it the way you'd treat a strong weather forecast: an honest summary of the conditions that are knowable in advance. It stacks the odds; it doesn't guarantee the outcome. If the score says 85 and your local knowledge says the spot needs a west swell to fish well, believe your local knowledge.",
+          "Everything feeding the score is public, primary-source data: tide predictions from NOAA CO-OPS harmonic stations, weather and marine conditions from the Open-Meteo forecast models, and astronomical calculations for sun and moon. When a live feed is unreachable we say so on the page with a visible 'sample data' badge rather than quietly showing stale numbers.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "incoming-vs-outgoing-tide",
+    title: "Incoming vs. Outgoing Tide: Which Is Actually Better for Fishing?",
+    description:
+      "The honest answer to fishing's oldest argument — why the flood wins on flats and beaches, the ebb wins at creek mouths and jetties, and movement beats both.",
+    readMinutes: 6,
+    gearKeys: ["surf-rod", "braided-line", "circle-hooks", "landing-net"],
+    relatedSlugs: ["how-tides-affect-fishing", "minus-tides-explained"],
+    sections: [
+      {
+        paragraphs: [
+          "Ask this question on any pier and you'll start an argument. Half the crowd swears by the incoming — 'fish follow the water in.' The other half wants the outgoing — 'the drain brings the bait to you.' Both halves are right, because the real answer is that direction matters less than location, and neither matters as much as movement itself.",
+          "Start with the physics. An incoming (flood) tide pushes water onto ground that was shallow or dry an hour ago. That rising water is a dinner bell: sand crabs get churned loose in the shorebreak, shrimp and baitfish spread onto flooding flats, and predators follow them shallow with the security of deepening water over their backs. This is why the flood is king on beaches, flats, and estuary shallows — the fish are literally arriving with the water under your feet.",
+        ],
+      },
+      {
+        heading: "Where the outgoing wins",
+        paragraphs: [
+          "An outgoing (ebb) tide runs the same movie in reverse, and the geometry changes everything. All the water that spread across a marsh or lagoon at high tide has to funnel back out through a handful of channels, creek mouths, and harbor entrances — and it takes the food with it. Predators know this. Stripers, halibut, snook, and redfish stack up on the down-current side of these drains and let the tide deliver every shrimp and baitfish the marsh grew that day.",
+          "That's why a marsh creek station can genuinely fish best on a strong ebb, while the open beach a mile away fishes best on the flood. In San Francisco Bay, the creek mouths and sloughs of San Pablo Bay are classic outgoing-tide water; the ocean beaches on the same day want the incoming. Neither rule transfers — the spot decides.",
+          "The last of the incoming and the first of the outgoing — the two hours bracketing high tide — deserve a special mention. Bait gets pushed to its shallowest, most vulnerable position at the top of the tide, then the reversal drags it back out through the funnels. Many veteran anglers plan entire trips around nothing but that window.",
+        ],
+      },
+      {
+        heading: "So what should you actually do?",
+        paragraphs: [
+          "Pick the structure first, then the tide stage that activates it. Fishing a beach or a flat? Arrive two hours before high and fish the flood up. Fishing a creek mouth, jetty tip, or channel edge? Fish the middle hours of the outgoing, when the drain runs hardest. Can't choose your spot? Then just fish whenever the water is moving fastest — the middle third of any swing — and avoid the slack hour around each extreme.",
+          "Our fishing score deliberately rewards tide movement in both directions rather than picking a side, precisely because the 'right' direction is a property of your spot, not of the tide. The score tells you when the water will move; the sections above tell you where to stand when it does.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "minus-tides-explained",
+    title: "Minus Tides Explained: The Best Low Tides of the Year",
+    description:
+      "What a negative tide is, why the biggest minus tides cluster around new and full moons, and how anglers, clammers, and tidepoolers should plan around them.",
+    readMinutes: 5,
+    gearKeys: ["tackle-bag", "pliers", "cooler"],
+    relatedSlugs: ["how-to-read-tide-charts", "incoming-vs-outgoing-tide"],
+    sections: [
+      {
+        paragraphs: [
+          "Scan a tide table and you'll occasionally see a low tide with a minus sign — -0.8 ft, -1.5 ft. That negative number means the water will drop below the average of the lowest low tides (a reference level called MLLW, mean lower low water). In plain terms: the ocean pulls back farther than it does on an ordinary day, exposing ground that spends most of the year underwater.",
+          "Minus tides aren't random. They arrive in clusters of three to five days around new and full moons — the same spring-tide alignment that produces the biggest highs also produces the deepest lows. The most dramatic minus tides of the year tend to come when a spring cycle coincides with the moon's closest approach to Earth, and in daylight they're an event: reefs, boulder fields, and sand flats you've never seen stand exposed for an hour or two.",
+        ],
+      },
+      {
+        heading: "Why anglers care",
+        paragraphs: [
+          "A minus tide is a scouting session no map can match. The trough that holds perch, the channel a halibut ambushes from, the boulder a big lingcod lives under — at a strong minus tide you can walk out and look at them. Photograph the structure at dead low, and you'll fish that spot with x-ray vision at every tide for the rest of the year.",
+          "The fishing around a minus tide is its own reward. A deep low means an enormous volume of water has to return on the following flood, so the incoming after a minus tide runs harder than usual — often the strongest, fishiest incoming of the month. Poke-polers work the exposed rocks at dead low; surf anglers fish the trough as it refills; clammers and tidepoolers get their only legal shot at ground that's normally three feet under.",
+          "Two safety notes that experienced coast walkers treat as law: know when the tide turns, because water that left over two hours can come back over flats faster than a casual walk — and never turn your back on the ocean on exposed rock. The chart on every location page shows exactly when the low bottoms out and how fast the water returns.",
+        ],
+      },
+      {
+        heading: "Finding them",
+        paragraphs: [
+          "Any location page on USTideCharts shows negative lows directly in the tide table — they're the entries below 0 ft — and pages call out when today includes a minus tide. Look at the 7-day view around the next new or full moon and you'll usually find the cluster. West Coast minus tides favor early morning in winter and spring; the best daylight minus tides in California typically land in May, June, and July.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "florida-tide-fishing",
+    title: "Tide Fishing in Florida: Gulf, Atlantic, and the Keys",
+    description:
+      "Florida's three coasts run on three different tide regimes. How tides work on the Gulf, the Atlantic, and the Keys — and how snook, redfish, and tarpon use them.",
+    readMinutes: 7,
+    gearKeys: ["braided-line", "fluoro-leader", "circle-hooks", "landing-net"],
+    relatedSlugs: ["how-tides-affect-fishing", "incoming-vs-outgoing-tide"],
+    sections: [
+      {
+        paragraphs: [
+          "Florida looks like one fishery on a map and fishes like three. The Atlantic coast gets two solid tides a day. The Gulf coast gets a mixed, often lopsided schedule where one of the day's tides may barely move. And the Keys sit between two ocean basins whose tides disagree with each other, producing currents that matter more than the height change itself. If you learn tides in one region and move to another, relearn them — the rules genuinely change.",
+          "What doesn't change: Florida's inshore fish are as tide-driven as fish anywhere on Earth. Snook, redfish, seatrout, and tarpon all organize their day around moving water. The state's shallow flats and mangrove shorelines make tide height a matter of access too — a redfish flat that's perfect at high tide is a mud field at low.",
+        ],
+      },
+      {
+        heading: "The Atlantic coast",
+        paragraphs: [
+          "From Jacksonville to Miami, tides are semidiurnal — two highs and two lows of similar size, roughly six hours apart, with a range of two to six feet. That regularity makes planning easy: inlets and their bridges are the great fish concentrators here, and the outgoing tide through an inlet is the classic bite, flushing bait from the Intracoastal out to waiting snook and tarpon. Beach fishing for pompano and whiting favors the incoming, especially the first hours of light.",
+        ],
+      },
+      {
+        heading: "The Gulf coast",
+        paragraphs: [
+          "Tampa Bay south through the Ten Thousand Islands runs on mixed tides with a smaller range — often a foot or two — and some days effectively deliver one long tide. With less vertical range, wind matters enormously: a stiff onshore blow can hold a 'low' tide up for hours, and a hard east wind can empty a flat the chart says should be wet. Gulf anglers learn to read the chart and the wind together.",
+          "The payoff of the small range is that when the water does move, it's predictable where: passes, creek mouths, and the edges of flats. A negative low on the Gulf side pulls fish off the flats into potholes and channels, where they're concentrated and catchable. The flood that follows spreads redfish back onto the flats to tail — the sight-fishing window Florida is famous for.",
+        ],
+      },
+      {
+        heading: "The Keys",
+        paragraphs: [
+          "The Keys are a chain of dams between the Atlantic and the Gulf, and every channel between islands is a spillway where the two basins try to equalize. Tide height changes are modest, but current through the channels can be fierce — and current, not height, is what turns on tarpon in the passes and puts bonefish and permit on the flats. Flats guides plan almost entirely around water movement and depth-over-the-flat: bonefish push onto a flat on the flood, feed up-current, and slide off as it drains.",
+          "One practical note for reading charts in the Keys and the western Panhandle: Florida spans two time zones, and every USTideCharts page shows times in the station's own local time — Eastern for most of the state, Central west of the Apalachicola area — so the time on the page is the time on your phone when you're standing there.",
+        ],
+      },
+    ],
+  },
 ];
 
 export function getArticle(slug: string): Article | undefined {

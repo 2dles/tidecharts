@@ -56,6 +56,8 @@ export default function SiteLayout({
                 <Link href="/guides" className="hover:text-ink-dim">Fishing Guides</Link>
                 <Link href="/water-temps" className="hover:text-ink-dim">Water Temperatures</Link>
                 <Link href="/widget" className="hover:text-ink-dim">Free Tide Widget</Link>
+                <Link href="/about" className="hover:text-ink-dim">About</Link>
+                <Link href="/contact" className="hover:text-ink-dim">Contact</Link>
               </div>
               <div className="flex flex-col gap-2">
                 <p className="font-medium text-ink-dim">Shop</p>
