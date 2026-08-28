@@ -155,7 +155,10 @@ export default async function LocationPage({
   // store has no targeted stock for) get honest generic copy instead.
   const gearIsSpeciesMatched = gearKeys.some((k) => !UNIVERSAL_KEYS.has(k));
 
-  const relatedArticles = ARTICLES.slice(0, 3);
+  // Prefer guides written for this location's state, then general guides.
+  const stateArticles = ARTICLES.filter((a) => a.states?.includes(loc.state));
+  const generalArticles = ARTICLES.filter((a) => !a.states);
+  const relatedArticles = [...stateArticles, ...generalArticles].slice(0, 3);
   const nearby =
     loc.tier === "station" ? await nearestLocations(loc) : getNearby(loc);
 

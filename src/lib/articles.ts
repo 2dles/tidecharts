@@ -13,6 +13,8 @@ export interface Article {
   gearKeys: string[];
   sections: ArticleSection[];
   relatedSlugs: string[];
+  /** State slugs this guide is specific to; omit for general guides. */
+  states?: string[];
 }
 
 export const ARTICLES: Article[] = [
@@ -239,6 +241,7 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: "florida-tide-fishing",
+    states: ["florida"],
     title: "Tide Fishing in Florida: Gulf, Atlantic, and the Keys",
     description:
       "Florida's three coasts run on three different tide regimes. How tides work on the Gulf, the Atlantic, and the Keys — and how snook, redfish, and tarpon use them.",
@@ -270,6 +273,142 @@ export const ARTICLES: Article[] = [
         paragraphs: [
           "The Keys are a chain of dams between the Atlantic and the Gulf, and every channel between islands is a spillway where the two basins try to equalize. Tide height changes are modest, but current through the channels can be fierce — and current, not height, is what turns on tarpon in the passes and puts bonefish and permit on the flats. Flats guides plan almost entirely around water movement and depth-over-the-flat: bonefish push onto a flat on the flood, feed up-current, and slide off as it drains.",
           "One practical note for reading charts in the Keys and the western Panhandle: Florida spans two time zones, and every USTideCharts page shows times in the station's own local time — Eastern for most of the state, Central west of the Apalachicola area — so the time on the page is the time on your phone when you're standing there.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "surf-fishing-san-diego",
+    states: ["california"],
+    title: "Surf Fishing San Diego: Beaches, Seasons, and the Sand Crab Rule",
+    description:
+      "Where and when to surf fish in San Diego — from Imperial Beach to Torrey Pines — plus the one bait rule that outfishes everything else.",
+    readMinutes: 8,
+    gearKeys: ["surf-rod", "braided-line", "carolina-kit", "pliers"],
+    relatedSlugs: ["california-pier-fishing", "how-tides-affect-fishing", "incoming-vs-outgoing-tide"],
+    sections: [
+      {
+        paragraphs: [
+          "San Diego might be the easiest place in California to learn surf fishing. The waves are gentler than up north, the water is warmer, the fish bite most of the year, and there are seventy-odd miles of sand between the border and Oceanside where you can walk on and cast. You don't need a boat, you don't need to wake up at 3 a.m. (though it helps), and the whole kit fits in one hand.",
+          "The fish you're most likely to meet are barred surfperch — the bread and butter, willing nearly year-round — yellowfin croaker and spotfin croaker in the warm months, California corbina cruising the shallows in summer, and the occasional halibut lying ambushed near a rip or river mouth from spring through early fall. None of them require heavy gear. A light 7-to-9-foot rod, 15–20 lb braid, and a small box of terminal tackle covers everything on this list.",
+        ],
+      },
+      {
+        heading: "The sand crab rule",
+        paragraphs: [
+          "Here's the rule that will outfish any lure recommendation: fish what the beach feeds them. Everything in the San Diego surf eats sand crabs, and you can gather your bait for free at your feet. Watch the wet sand as a wave recedes — the little V-shaped ripples are sand crab colonies breathing. Scoop with your hand or a small rake, keep a dozen soft-shelled ones (the molting, grayish ones are candy), and pin one on a size 2 or 4 hook. When crabs are scarce, a two-inch motor-oil colored grub or a fresh mussel does honest work.",
+          "Rig them Carolina style: a sliding egg sinker on the main line, a small swivel, then eighteen inches of lighter fluorocarbon to the hook. The sliding weight lets a perch pick up the bait and swim without feeling resistance — with fish this size, that half-second of trust is the whole game.",
+        ],
+      },
+      {
+        heading: "Reading the beaches",
+        paragraphs: [
+          "Every good surf beach in San Diego is really a series of underwater neighborhoods: troughs (the deeper lanes that run parallel to shore — look for darker water and waves that don't break), rips (the churned, foamy rivers running out to sea, which dig holes fish sit in), and the flat sandy shelves in between. Fish the edges of structure, not the middle of nowhere. At low tide, walk the beach and photograph the exposed troughs and holes; at the next high tide you'll be casting into a map instead of guessing.",
+          "As for which beaches: Torrey Pines and Blacks Beach fish beautifully and feel wild for being inside a city. Del Mar and Solana Beach have classic trough structure. Coronado's Silver Strand is long, lonely, and full of perch. Imperial Beach, near the border, gets less pressure than anywhere and gives up corbina all summer. Honestly, though, the specific beach matters less than the structure in front of you — a good rip at an average beach beats dead-flat sand at a famous one.",
+        ],
+      },
+      {
+        heading: "Timing it",
+        paragraphs: [
+          "The tide matters more than the calendar. The classic San Diego surf window is the incoming tide, especially the last two hours before high — rising water pushes sand crabs loose and brings the fish within a short cast of dry sand. Dawn stacks the odds further; corbina in particular feed shockingly shallow in the first low light, sometimes with their backs out of the water. Check your beach's tide chart on this site, find a morning where the incoming crosses sunrise, and go.",
+          "One legal note: unlike California's public piers, fishing from the beach requires a sport fishing license if you're 16 or older, and regulations change — check the CDFW site before you keep anything. Surfperch have a size and bag limit, and there's a spring closure for keeping them in some years. Ten minutes of reading saves an expensive conversation with a warden.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "san-francisco-bay-fishing",
+    states: ["california"],
+    title: "Fishing San Francisco Bay: Stripers, Halibut, and Serious Tides",
+    description:
+      "A shore angler's guide to San Francisco Bay — where the stripers and halibut are, why the Bay's huge tides decide everything, and the spots you can fish on foot.",
+    readMinutes: 8,
+    gearKeys: ["surf-rod", "braided-line", "circle-hooks", "landing-net"],
+    relatedSlugs: ["incoming-vs-outgoing-tide", "how-tides-affect-fishing", "minus-tides-explained"],
+    sections: [
+      {
+        paragraphs: [
+          "San Francisco Bay is the biggest estuary on the West Coast, and it fishes like one: a vast machine of moving water, mudflats, channels, and creek mouths where the tide is not one factor among many — it is the whole schedule. The Golden Gate squeezes enormous volumes of the Pacific in and out twice a day, and every fish in the Bay organizes its life around that pump.",
+          "For a shore angler the headliners are striped bass and California halibut. Stripers run the Bay from spring into fall, hunting the shorelines and creek mouths hardest at dawn, dusk, and any time the current runs. Halibut slide onto the flats from late spring through summer, laying flat on sand and mud waiting for anything shiny to swim past. Behind them: leopard sharks and bat rays all year (great fun on medium gear), jacksmelt for the light-tackle crowd, and white sturgeon in the winter for the patient few.",
+        ],
+      },
+      {
+        heading: "The tide is the strategy",
+        paragraphs: [
+          "The Bay's tide swings routinely run five and six feet, which means ferocious current in the channels and a bite that switches on and off like a light. The rule that organizes everything: fish the moving water, and match the direction to the spot. Beaches and flats — Crissy Field is the classic — fish best on the flood, as bait and stripers push shallow with the rising water. Creek and slough mouths — the Petaluma River, Gallinas Creek, the San Pablo Bay drains — fish best on the ebb, when everything the marsh grew that day funnels out past waiting mouths.",
+          "San Pablo Bay deserves a special word. The Bay's northern lobe is shallow, muddy, and unglamorous, and it is stuffed with fish. Its sloughs drain warm, food-rich marsh on every outgoing tide, and the stripers know the schedule better than you do. If you live in Marin or the East Bay, the water fifteen minutes from your door is better than you think.",
+        ],
+      },
+      {
+        heading: "Fishing it on foot",
+        paragraphs: [
+          "You can fish a remarkable amount of this Bay without a boat. In the city, Crissy Field and Fort Point put you on the parade route between the Gate and the flats. In Marin, Fort Baker, McNears Beach, and the China Camp shoreline cover the deep and the shallow ends of the game. The East Bay has Point Pinole and the Emeryville and Alameda shorelines — the Alameda rock walls are a halibut spot hiding in plain sight. (A note of respect for a fallen giant: the Berkeley Pier, once the Bay's great free fishing platform, has been closed for years — don't plan a trip around old internet posts.)",
+          "Bait and methods stay simple. For stripers: cut anchovy or sardine soaked on the bottom, or better, walk and cast — a white swimbait or a topwater plug at first light along any riprap bank. For halibut: a live smelt or a slowly retrieved swimbait dragged across the flats. For sharks and rays: squid on a circle hook, and a real hook-remover, not your fingers.",
+          "Two honest cautions. The Bay's currents are strong enough to sweep gear and people; respect the water around channels and jetties, especially on big spring tides. And the wind machine turns on most afternoons from spring through summer — the glassy magic hours are dawn and dusk, which conveniently are also when the fish agree to eat. A license is required from shore here (piers are the exception), and striper and halibut regulations have size and bag limits — check CDFW before you keep anything.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "tampa-bay-fishing",
+    states: ["florida"],
+    title: "Tampa Bay Fishing: Snook, Redfish, and Reading a Wind-Blown Tide",
+    description:
+      "How to fish Tampa Bay — the flats, the mangroves, the famous pier — and why the Bay's small, wind-bent tides reward anglers who read water instead of clocks.",
+    readMinutes: 8,
+    gearKeys: ["braided-line", "fluoro-leader", "circle-hooks", "landing-net"],
+    relatedSlugs: ["florida-tide-fishing", "incoming-vs-outgoing-tide", "how-tides-affect-fishing"],
+    sections: [
+      {
+        paragraphs: [
+          "Tampa Bay is four hundred square miles of the best inshore fishing in Florida, wrapped around two cities that mostly don't notice. Under the flight paths and past the container ships are grass flats, mangrove shorelines, oyster bars, and channel edges holding the Gulf coast's big four: snook, redfish, spotted seatrout, and — in early summer — tarpon the size of doors.",
+          "What makes the Bay a thinking angler's fishery is its water. Tides here are small, often a foot or two, and some days effectively deliver one long tide instead of the tidy two-a-day rhythm of the Atlantic side. Wind bends the schedule further: a stiff onshore blow can hold water on the flats for hours past the chart's promised low, and a hard east wind can drain them early. The chart tells you the plan; the wind edits it. Read both together and you're ahead of most of the boats.",
+        ],
+      },
+      {
+        heading: "The big four, in their seasons",
+        paragraphs: [
+          "Snook are the Bay's glamour fish — ambush predators that stack along mangrove roots, dock lights, and pass edges, inhaling whitebait and shrimp on moving water. They're a warm-weather fish, best from spring through fall, and they're heavily protected: closed seasons, a required snook permit, and slot limits, so check FWC's current rules before you dream about dinner. Most locals release them all anyway.",
+          "Redfish are the flats' honest workers. On higher water they push onto shin-deep grass and root out crabs, sometimes with their copper tails waving in the air — 'tailing' fish, the Gulf coast's signature sight. Fall is prime, when they school big. Spotted seatrout hold over grass in slightly deeper water year-round and are the most democratic bite in the Bay — a popping cork with a shrimp fools them a hundred years running. And from roughly May through July, migrating tarpon pour through the passes and along the beaches; even if you never hook one, watching a 120-pound fish roll at sunrise recalibrates your idea of what inshore means.",
+        ],
+      },
+      {
+        heading: "Where to start on foot or by kayak",
+        paragraphs: [
+          "Fort De Soto Park, at the Bay's mouth, is the everything-spot: wadeable flats, mangrove edges, beach access, and its own piers. Weedon Island and Cockroach Bay are the kayak sanctuaries — shallow, protected, full of tailing reds. And the Sunshine Skyway Fishing Piers are a Florida institution: the repurposed spans of the old bridge run far out over real depth, and the pier operation covers your fishing license while you're on it (entry and rules on the state park's site). Deep water, big current, and grouper-to-tarpon possibilities, all from a walkway.",
+          "One seasonal wrinkle worth planning around: winter negative lows. Cold-season minus tides drain the flats almost dry, which sounds like a disaster and is actually a gift — every fish that was spread across a mile of grass is now concentrated in the potholes and channels, and the warming incoming that follows puts them back on the flats hungry. Watch this site's tide pages for the negative numbers, then fish the refill.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "california-pier-fishing",
+    states: ["california"],
+    title: "Pier Fishing in California: No License, No Boat, No Excuses",
+    description:
+      "California's public piers are free to fish — no license required. What to catch, how to rig, which piers shine, and the two-rod rule everyone should know.",
+    readMinutes: 7,
+    gearKeys: ["inshore-combo", "braided-line", "circle-hooks", "tackle-bag"],
+    relatedSlugs: ["surf-fishing-san-diego", "how-to-read-tide-charts", "how-tides-affect-fishing"],
+    sections: [
+      {
+        paragraphs: [
+          "Here is the best-kept open secret in California fishing: on a public ocean pier, you don't need a fishing license. Not a day pass, not anything — it's one of the few places in the state where anyone can legally wet a line for free. That single rule has made piers the great classroom of California angling, where kids, newcomers, and old-timers stand shoulder to shoulder over the same water.",
+          "The fine print is short but real: the pier must be a public pier in ocean or bay waters, all the normal size and bag limits still apply, and the regulations allow no more than two rods per person while you're on it. (From beaches and rocks, by contrast, a license is required at 16 and up.) Rules change year to year, so give the CDFW regulations a skim before you go — it costs five minutes.",
+        ],
+      },
+      {
+        heading: "What actually bites at a pier",
+        paragraphs: [
+          "Piers put you over deeper, structure-rich water than any beach cast can reach, and the cast of characters shows it. The reliable year-round crowd: walleye and barred surfperch around the pilings, jacksmelt in the mid-water, and small sharks and rays for anyone soaking bait on the bottom. Warm months add Pacific mackerel and jack crevalle-fast bonito runs in some years, plus halibut lying in the sand between pilings — a legal halibut from a pier is a genuine trophy. NorCal piers add the winter possibility of Dungeness crab in a hoop net where crabbing is allowed.",
+          "The single most useful pier technique is the sabiki rig: a string of six tiny flies dropped straight down that catches smelt, anchovies, and small mackerel almost on command. That's an afternoon of fun on its own — and it's how you get live bait. A lively smelt sent back down on a sliding rig, swimming near the bottom, is exactly how those pier halibut and bigger bass get caught.",
+        ],
+      },
+      {
+        heading: "Choosing your pier, and your moment",
+        paragraphs: [
+          "Nearly every coastal town has one, and they all fish. Pacifica's pier is a NorCal workhorse with crab and perch pedigree. The Santa Cruz Wharf puts you over deep water in Monterey Bay. Down south, Balboa, Huntington Beach, and San Clemente's piers are classic SoCal platforms with mackerel runs and summer bonito, and Crystal Pier in San Diego lets you fish practically over the surf zone. Piers do close periodically for storm damage and repairs — check the city or harbor's page before driving far.",
+          "Timing works the same as everywhere else in this sport: moving water beats slack, and the hours around a tide change concentrate the bite around the pilings. Dawn and dusk stack the deck further, and evening piers have their own pleasures — lights, mackerel swirling in the glow, and the kind of conversations that only happen over a rail. Bring a small cooler, a rag, pliers you can find in the dark, and a rig or two more than you think you'll lose to the pilings. You'll lose them. Everyone does.",
         ],
       },
     ],

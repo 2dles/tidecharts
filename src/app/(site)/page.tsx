@@ -155,7 +155,7 @@ export default async function Home() {
           </Link>
         </div>
         <div className="grid gap-4 md:grid-cols-3">
-          {ARTICLES.map((a) => (
+          {ARTICLES.slice(0, 6).map((a) => (
             <Link key={a.slug} href={`/guides/${a.slug}`} className="card card-hover p-6">
               <p className="text-xs font-medium uppercase tracking-wider text-teal-300/80">
                 Guide · {a.readMinutes} min
