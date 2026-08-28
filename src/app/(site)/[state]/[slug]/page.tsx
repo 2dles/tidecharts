@@ -326,7 +326,12 @@ export default async function LocationPage({
             )}
           </p>
         </div>
-        <p className="text-xs text-ink-faint">Updated {fmtTime(data.fetchedAt)} {tzAbbrev(tz)}</p>
+        <p
+          className="text-xs text-ink-faint"
+          title="When this page last pulled fresh weather data. NOAA tide predictions are computed years in advance, and the tide clock, countdowns, and now-line update live in your browser regardless of this time."
+        >
+          Tides live · forecast as of {fmtTime(data.fetchedAt)} {tzAbbrev(tz)}
+        </p>
       </header>
 
       {/* TIDE CHART — the centerpiece, first thing on the page */}
