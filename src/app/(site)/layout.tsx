@@ -60,6 +60,16 @@ export default function SiteLayout({
                 <Link href="/contact" className="hover:text-ink-dim">Contact</Link>
               </div>
               <div className="flex flex-col gap-2">
+                <p className="font-medium text-ink-dim">Popular Tide Charts</p>
+                <Link href="/california/san-diego" className="hover:text-ink-dim">San Diego Tides</Link>
+                <Link href="/california/los-angeles" className="hover:text-ink-dim">Los Angeles Tides</Link>
+                <Link href="/california/san-francisco" className="hover:text-ink-dim">San Francisco Tides</Link>
+                <Link href="/california/monterey" className="hover:text-ink-dim">Monterey Tides</Link>
+                <Link href="/florida/tampa-bay" className="hover:text-ink-dim">Tampa Bay Tides</Link>
+                <Link href="/florida/miami" className="hover:text-ink-dim">Miami Tides</Link>
+                <Link href="/florida/key-west" className="hover:text-ink-dim">Key West Tides</Link>
+              </div>
+              <div className="flex flex-col gap-2">
                 <p className="font-medium text-ink-dim">Shop</p>
                 <a href="https://theanglerstore.com?utm_source=ustidecharts&utm_medium=footer" className="hover:text-ink-dim">
                   TheAnglerStore

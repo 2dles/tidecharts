@@ -20,7 +20,7 @@ export const ARTICLES: Article[] = [
     slug: "how-tides-affect-fishing",
     title: "How Tides Affect Fishing: The Complete Guide",
     description:
-      "Why moving water catches fish, which tide stages actually matter, and how to plan a trip around the tide instead of the clock.",
+      "The complete guide to fishing tides: why moving water catches fish, which tide stages actually matter, and the best time to fish any tide — planned around the water, not the clock.",
     readMinutes: 7,
     gearKeys: ["surf-rod", "braided-line", "carolina-kit", "tackle-bag"],
     relatedSlugs: ["how-to-read-tide-charts", "best-moon-phase-for-fishing"],
