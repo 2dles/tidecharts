@@ -541,6 +541,133 @@ export const ARTICLES: Article[] = [
       },
     ],
   },
+  {
+    slug: "surf-fishing-los-angeles",
+    states: ["california"],
+    title: "Surf Fishing Los Angeles: Good Water Hiding in Plain Sight",
+    description:
+      "Where to surf fish in LA — from Malibu to Cabrillo — what bites through the seasons, and the grunion-run spectacle every Angeleno should see once.",
+    readMinutes: 7,
+    gearKeys: ["surf-rod", "braided-line", "carolina-kit", "pliers"],
+    relatedSlugs: ["surf-fishing-san-diego", "california-halibut-fishing", "how-tides-affect-fishing"],
+    sections: [
+      {
+        paragraphs: [
+          "Los Angeles hides its fishing the way it hides everything else — in plain sight, behind traffic. The same beaches that host ten million towels a year hold barred surfperch all winter, corbina and yellowfin croaker all summer, and halibut wherever a creek mouth or rock pile interrupts the sand. Dawn belongs to the anglers; by the time the crowds arrive, the morning bite is done and you're packing up with a story.",
+          "The geography sorts itself into three stretches. Malibu's beaches — Zuma especially — are classic steep-and-trough surfperch water with a wilder feel. The middle bay, Santa Monica through Dockweiler to El Segundo, is gentler, family-scaled sand where croaker and perch work the shallow troughs (and where a long walk away from the parking lot doubles your odds). The south end, from Torrance Beach around to Cabrillo Beach in San Pedro, adds structure — rocks, jetties, and the harbor's influence — which is exactly where the halibut and bigger bass want to be.",
+        ],
+      },
+      {
+        heading: "Seasons and the LA specialty",
+        paragraphs: [
+          "The calendar here is generous. Winter through spring is surfperch season, when the biggest barred perch of the year ride the storm-stirred water — a sand crab or motor-oil grub in the trough is all it takes. Summer flips the cast to croaker and corbina, sight-fishing in inches of water on the flooding tide, with halibut lurking near any structure into early fall. There is no month when the LA surf has nothing to offer.",
+          "And then there's the spectacle nowhere else can match: the grunion run. On certain nights after the higher tides of a full or new moon, thousands of small silver fish ride waves onto LA's beaches to spawn in the wet sand. During open season you may take them — by hand only, no nets, no digging tools, license required — and some months are watch-only to protect the spawn. CDFW publishes the expected run schedule each year; check it, go once, and you'll understand why people plan their month around small fish dancing in the moonlight. Practical anglers also note what a grunion run means: every predator in the surf knows the schedule too, and the nights around a run can be the best bait-soaking of the summer.",
+        ],
+      },
+      {
+        heading: "Making it work",
+        paragraphs: [
+          "The technique is the standard SoCal surf kit: a light 7-to-9-foot rod, a Carolina rig with a sliding sinker, sand crabs gathered at your feet or a two-inch grub when they're scarce. Read the beach at low tide — troughs, rip edges, crab beds — then fish the incoming, ideally where it crosses dawn. A license is required from the sand at 16 and up (piers are the free exception), and perch and halibut carry size and bag rules worth two minutes on the CDFW site.",
+          "The honest local advice: distance from access points is the best lure in Los Angeles. The fish are pressured near every stairway and parking lot; fifteen minutes of walking puts you on water that gets fished a tenth as often. Pick your beach's tide page on this site, find the morning the incoming crosses first light, and let the city sleep in.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "monterey-bay-fishing",
+    states: ["california"],
+    title: "Fishing Monterey Bay: Cold Water, Deep Canyon, Big Rewards",
+    description:
+      "A shore and kayak guide to Monterey Bay — rockfish on the kelp edges, perch on the beaches, halibut on the flats, and why the underwater canyon changes everything.",
+    readMinutes: 7,
+    gearKeys: ["surf-rod", "jig-assort", "braided-line", "landing-net"],
+    relatedSlugs: ["california-halibut-fishing", "california-pier-fishing", "minus-tides-explained"],
+    sections: [
+      {
+        paragraphs: [
+          "Monterey Bay is what happens when one of the deepest submarine canyons on the planet runs almost to the beach. The Monterey Canyon funnels cold, nutrient-rich water toward shore, and that upwelling feeds everything — the kelp forests, the bait schools, the whales the tourists come for, and a shore fishery as rich as any in California. You are never fishing far from deep, living water here.",
+          "The bay splits into two personalities. The southern rim — Monterey, Pacific Grove, toward Carmel — is rock and kelp country, home to rockfish, cabezon, lingcod, and greenling within casting distance of shore. The long eastern crescent — Del Monte Beach up through Sand City, Marina, and Moss Landing — is open sand: surfperch water mile after mile, with halibut on the flats in the warm half of the year and the harbor at Moss Landing sitting right on the canyon's head.",
+        ],
+      },
+      {
+        heading: "Rock, sand, and the kayak option",
+        paragraphs: [
+          "The rocky side fishes like a jig-and-bait sport: cast metal or drop shrimp flies along the kelp edges, keep the bait moving to dodge snags, and let the minus tides show you the structure you're fishing blind the rest of the month. Respect the closures — parts of this coast are marine protected areas where take is restricted or prohibited, and the boundaries are mapped on CDFW's site. The rules are strict because the place is special; know your spot's status before your first cast.",
+          "The sandy side is classic Carolina-rig surfperch fishing, best in winter and spring, with the Salinas River mouth area and the troughs off Marina drawing the crowds who know. Halibut prowl the same sand from late spring on. And Monterey is one of California's great kayak fisheries — protected morning water, rockfish and lingcod a paddle from the launch, and halibut on the flats — with the standing local rules: go early before the wind, wear the layers cold water demands, and never share a bait ball with the sea lions.",
+        ],
+      },
+      {
+        heading: "Piers, safety, and timing",
+        paragraphs: [
+          "For the boatless and license-less, the Monterey Wharf and the Santa Cruz Wharf across the bay both offer free public-pier fishing over deep water — jacksmelt, perch, mackerel in season, and the occasional surprise from the canyon's food chain. The same two-rod pier rule and normal limits apply.",
+          "Two safety notes belong in every Monterey guide. This is sneaker-wave and cold-water coast: never turn your back on the ocean from the rocks, and treat any water entry as a wetsuit conversation. And the afternoon wind is nearly a law of physics here — the glassy window is dawn until late morning, which happens to be when the tide-and-light math on this site's Monterey page usually points anyway. Fish the morning flood, watch for whale spouts on the horizon, and remember you're fishing the edge of a mile-deep canyon from dry sand — there's nowhere else quite like it.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "miami-shore-fishing",
+    states: ["florida"],
+    title: "Shore Fishing Miami: Tarpon Under the Causeways, Pompano in the Surf",
+    description:
+      "Where to fish Miami without a boat — Government Cut and South Pointe, the Key Biscayne causeways, beach pompano season, and the night tarpon game.",
+    readMinutes: 7,
+    gearKeys: ["braided-line", "fluoro-leader", "circle-hooks", "landing-net"],
+    relatedSlugs: ["florida-tide-fishing", "florida-keys-bridge-fishing", "night-fishing-tides"],
+    sections: [
+      {
+        paragraphs: [
+          "Miami is a world-class fishery wearing a nightclub's clothes. Between the cruise ships and the condo glass, an ocean inlet, a chain of causeway bridges, and miles of open beach put more legitimate shore fishing inside one city than almost anywhere in Florida. The fish commute through downtown; you just have to stand in the right places.",
+          "The anchor is Government Cut, the deep shipping inlet between South Beach and Fisher Island. Every tide pushes ocean water — and everything that swims in it — through that funnel, and South Pointe Park's jetty and pier let you fish the north side of the show: jacks and snapper on the rocks, mackerel and blue runners in the current, snook along the shadow lines, and tarpon rolling through like they own the lease. Moving water is everything at an inlet; time your session to the tide chart, not the parking meter.",
+        ],
+      },
+      {
+        heading: "The causeways and the flats",
+        paragraphs: [
+          "The Rickenbacker Causeway to Key Biscayne is Miami's free fishing highway: legal bridge and shoreline access, wadeable grass flats along the roadside, and a night scene all its own. Dawn on the flats means bonefish tailing within sight of the skyline — one of sport fishing's strangest juxtapositions — plus snook and the odd permit for the persistent. After dark, the causeway shadow lines turn on: tarpon and snook hunt the light edges, and a live shrimp drifted down-current along a bridge shadow is as close to a Miami guarantee as shore fishing offers.",
+          "North of the city, Haulover's inlet and pier run the same tidal game as Government Cut with a little less glamour and often better parking. Everywhere, the rule is the Keys rule: fish the current seams and shadow edges on a moving tide, uptide casts drifting naturally to the structure, and slack water is for re-rigging and cafecito.",
+        ],
+      },
+      {
+        heading: "Beach season and the paperwork",
+        paragraphs: [
+          "Miami's beaches have their own calendar. Winter through spring is pompano season — the surf angler's payday — when a sand flea or a piece of shrimp on a small hook, cast past the bar on an incoming tide, produces the best-eating fish on this coast. Whiting fill the slow days, jacks crash bait at dawn year-round, and summer brings snook into the trough within a rod's length of the towels. Light surf gear is enough; Florida's beaches rarely demand the heavy artillery.",
+          "The paperwork, because Florida differs from California: shore fishing here isn't automatically free. Florida residents can register for a no-cost shoreline license; visitors need a regular non-resident license (cheap, online, minutes). Snook require their own stamp and observe closed seasons, tarpon over 40 inches must stay in the water, and FWC's rules are the living document to check. Sort it once and the whole city opens up — the skyline makes a strange, spectacular backdrop for a bent rod.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "sand-crabs-best-free-bait",
+    title: "Sand Crabs: How to Find, Catch, and Rig the Beach's Best Free Bait",
+    description:
+      "The complete guide to sand crabs (sand fleas) — reading the swash for colonies, gathering them legally, keeping them lively, and rigging them for surfperch, corbina, and pompano.",
+    readMinutes: 6,
+    gearKeys: ["carolina-kit", "circle-hooks", "tackle-bag", "surf-rod"],
+    relatedSlugs: ["surf-fishing-san-diego", "surf-fishing-los-angeles", "how-tides-affect-fishing"],
+    sections: [
+      {
+        paragraphs: [
+          "The best surf bait in America is free, lives under your feet, and most beachgoers have never seen one. The sand crab — Pacific mole crab on the West Coast, 'sand flea' to the Atlantic and Gulf crowd — is a thumb-sized burrowing crustacean that filters the swash zone in colonies of thousands. It is the number-one natural food of barred surfperch and California corbina, and the bait that built the Florida pompano fishery. When you fish a sand crab, you aren't imitating the forage. You are the forage.",
+          "Finding them is a reading skill. As a wave recedes, watch the glassy wet sand: a colony reveals itself as a patch of small V-shaped ripples — hundreds of tiny antennae combing the backwash — or as pea-sized bubbling holes as the crabs rebury. Colonies move with the tide and the season, so walk the swash until you find the V's rather than digging at random.",
+        ],
+      },
+      {
+        heading: "Gathering and keeping them",
+        paragraphs: [
+          "The technique is almost embarrassing: as a wave pulls back over a colony, scoop a double handful of sand and let the water sieve it through your fingers — the crabs are the things kicking. A cheap mesh bait rake speeds it up, but hands genuinely work. Store them in a small bucket of damp sand (not standing water, which suffocates them) kept cool and shaded, and they'll stay lively all session.",
+          "Two sorting tips separate the pros. First, softshells are gold: crabs that have just molted feel leathery instead of crunchy, and fish prefer them so strongly that many veterans fish nothing else. Second, the orange ones matter: females carrying bright orange eggs under the tail are corbina and pompano candy. And a legal note — in California, sand crabs for personal bait are fair game with a fishing license where gathering is allowed, but state parks and marine protected areas can restrict collecting anything; a glance at local rules beats a ranger conversation. Take what you'll use, and the colony replaces itself.",
+        ],
+      },
+      {
+        heading: "Rigging the forage",
+        paragraphs: [
+          "The rig is the surf standard: Carolina style, sliding egg sinker on the main line, small swivel, eighteen inches of light fluorocarbon, and a size 2 to 6 hook — smaller than beginners expect, because the bait is small and the fish are wary. Hook the crab from underneath up through the digger flap at the tail end, leaving the point exposed. It stays alive, sits naturally on the bottom, and kicks — and the kicking is the advertisement.",
+          "Then fish it where you found it: the same swash zone and first trough the colony lives in, on an incoming tide that's churning crabs loose and ringing the dinner bell. Cast beyond the trough, let the rig settle, and keep just enough tension to feel the tap-tap of a perch or the slow pull of a corbina picking it up. When a beach's crab beds, an incoming tide, and first light all line up — that's not luck, that's the pattern. The tide pages on this site will tell you when; the V's in the sand will tell you where.",
+        ],
+      },
+    ],
+  },
 ];
 
 export function getArticle(slug: string): Article | undefined {
