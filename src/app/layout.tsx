@@ -28,6 +28,7 @@ const siteJsonLd = {
       "@type": "Organization",
       "@id": "https://ustidecharts.com/#org",
       name: "USTideCharts",
+      alternateName: ["US Tide Charts", "USTideCharts.com"],
       url: "https://ustidecharts.com",
       description:
         "America's fishing dashboard — live NOAA tide charts, weather, and fishing forecasts.",
@@ -36,6 +37,7 @@ const siteJsonLd = {
       "@type": "WebSite",
       "@id": "https://ustidecharts.com/#site",
       name: "USTideCharts",
+      alternateName: ["US Tide Charts", "USTideCharts.com"],
       url: "https://ustidecharts.com",
       publisher: { "@id": "https://ustidecharts.com/#org" },
       potentialAction: {
