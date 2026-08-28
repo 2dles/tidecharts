@@ -83,7 +83,7 @@ foreach ($key in $species.Keys) {
     Remove-Item $tmp -ErrorAction SilentlyContinue
 
     $fileName = [Uri]::UnescapeDataString(($imgUrl -split "/")[-1]) -replace "^\d+px-", ""
-    $attribution += "- **$key.jpg** — $($j.title) — https://commons.wikimedia.org/wiki/File:$fileName"
+    $attribution += "- **$key.jpg** - $($j.title) - https://commons.wikimedia.org/wiki/File:$fileName"
     $ok++
     Write-Host "OK    $key  <-  $title"
   } catch {
