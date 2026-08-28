@@ -413,6 +413,134 @@ export const ARTICLES: Article[] = [
       },
     ],
   },
+  {
+    slug: "free-fishing-piers-san-diego",
+    states: ["california"],
+    title: "Free Fishing Piers in San Diego: Where to Cast Without a License",
+    description:
+      "Every public pier in San Diego where you can fish free with no license — ocean piers, bay piers, what bites at each, and which piers to check before you drive.",
+    readMinutes: 7,
+    gearKeys: ["inshore-combo", "braided-line", "circle-hooks", "tackle-bag"],
+    relatedSlugs: ["california-pier-fishing", "surf-fishing-san-diego", "how-tides-affect-fishing"],
+    sections: [
+      {
+        paragraphs: [
+          "San Diego is one of the best cities in America to fish for free. California law lets anyone fish from a public ocean or bay pier without a license — no day pass, no paperwork, just the normal size and bag limits and a two-rod maximum while you're on the pier. Add a city wrapped around a giant bay and fronted by open ocean, and you get more free fishing platforms than most people ever get around to trying.",
+          "The piers split into two personalities. Ocean piers stand in the surf and the swell, where mackerel, perch, croaker, rays, and the occasional halibut come through with the tide. Bay piers sit on calm, protected water — friendlier for kids and beginners — and fish more like a harbor: smelt and small bass all day, bonefish-fast shortfin corvina for the lucky, and rays and small sharks after dark.",
+        ],
+      },
+      {
+        heading: "The ocean piers",
+        paragraphs: [
+          "Crystal Pier in Pacific Beach is the postcard — a working pier with cottages on it, open to the public during the day, casting you straight over the surf zone where corbina and croaker patrol. Imperial Beach Pier, down by the border, is the sleeper: long, uncrowded, with honest mackerel runs and perch around the pilings, plus one of the best sunset views in the county.",
+          "Two famous names come with an asterisk right now. The Ocean Beach Pier — once the West Coast's longest concrete pier — has been closed for years awaiting its replacement project, and Oceanside's pier has been rebuilding in stages since its 2024 fire. Both cities post current status online; check before you drive rather than trusting an old blog post (this one included — pier status changes, the fish don't).",
+        ],
+      },
+      {
+        heading: "The bay piers",
+        paragraphs: [
+          "San Diego Bay is ringed with free public piers that most tourists walk right past. Shelter Island Pier is the flagship — bait shop nearby, lights at night, and a steady parade of smelt, mackerel, bass, and bonito in warm-water years. Embarcadero Marina Park's pier puts you downtown over deep water; Coronado's Ferry Landing pier fishes the same channel from the other side; and Pepper Park Pier in National City covers the quieter south bay, where the muddy bottom means croaker and rays.",
+          "Bay technique is simple: a sabiki rig straight down for smelt and small mackerel, then send something bigger back down under a sliding sinker and see who's home. Bring a crab-style drop net if you're serious — it's the legal, pier-friendly way to land anything too heavy to crank up the rail, and the day you hook a big bat ray you'll be glad it's there.",
+          "Timing works like everywhere else in this sport: the hours around a tide change beat slack water, dawn and dusk beat midday, and night on a lit pier is its own show — the lights pull in bait, and the bait pulls in everything else. Check the tide page for whichever pier you pick, aim for moving water, and let the free platform do the rest.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "florida-keys-bridge-fishing",
+    states: ["florida"],
+    title: "Bridge Fishing in the Florida Keys: Free Piers Over World-Class Water",
+    description:
+      "The old bridges of the Overseas Highway are free fishing piers standing over tarpon channels. Which spans you can fish, what bites, and how to fish a ripping Keys current.",
+    readMinutes: 7,
+    gearKeys: ["braided-line", "fluoro-leader", "circle-hooks", "landing-net"],
+    relatedSlugs: ["florida-tide-fishing", "tampa-bay-fishing", "incoming-vs-outgoing-tide"],
+    sections: [
+      {
+        paragraphs: [
+          "When Florida replaced the old Overseas Highway bridges, it left many of the original spans standing beside the new road — and turned them into some of the best free fishing piers on Earth. They stand directly over the channels where the Atlantic and the Gulf trade water twice a day, which means the fish don't come to the bridge. The bridge was built over the fish.",
+          "The names to know are the old spans maintained as fishing piers: Long Key, Channel Two and Channel Five near Islamorada, and Tom's Harbor near Duck Key are the classics, with parking and a walk-on deck. (The famous restored stretch of the Old Seven Mile Bridge at Pigeon Key is a pedestrian showpiece where fishing isn't part of the deal — enjoy the walk, carry the rod elsewhere.) Access rules and repairs shift over the years, so glance at current signage and county pages before planning a long drive around one span.",
+        ],
+      },
+      {
+        heading: "What you're standing over",
+        paragraphs: [
+          "The honest everyday catch is mangrove snapper — abundant, delicious, and smarter than they look, demanding small hooks and the lightest leader the current allows. Around them: yellowtail snapper, grunts, jacks that arrive like a street gang, Spanish mackerel in the cooler months, and barracuda that will follow anything shiny to your feet. After dark the channels change owners — big snook hunt the light lines and shadows, and from spring into summer the tarpon come, rolling through the bridge channels like the tide made them.",
+          "A tarpon from a bridge deck is mostly an experience rather than a landing — a hundred-pound fish in ripping current with pilings everywhere wins the argument more often than not. Anglers who do it seriously use heavy leader, a long-handled net or a walk-down plan, and modest expectations. Everyone else just watches them roll at sunset, which costs nothing and is worth the whole trip.",
+        ],
+      },
+      {
+        heading: "Fishing the current",
+        paragraphs: [
+          "Keys bridges are current-fishing school. The tide's vertical range is small here, but the volume moving between the Gulf and the Atlantic through a narrow cut is enormous — the water under your feet can run like a river. The bite tracks that movement: the start and end of each tide run, when current is strong-but-fishable, usually beats the peak rip, and dead slack is nap time. Uptide casts that drift your bait naturally back to the pilings out-fish anchoring a pound of lead against the flow.",
+          "One licensing note, because Florida differs from California: fishing from shore or a bridge here isn't automatically license-free. Florida residents can get a free shoreline fishing license; visitors need a regular non-resident license unless the specific pier holds a blanket license. It's cheap and online — sort it before you go, and check FWC's current rules for snapper sizes and closures while you're there.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "california-halibut-fishing",
+    states: ["california"],
+    title: "California Halibut From Shore: Flat Fish, Sharp Strategy",
+    description:
+      "How to catch California halibut without a boat — the sandy structure they ambush from, the moving-water windows, live bait vs. lures, and the 22-inch rule.",
+    readMinutes: 7,
+    gearKeys: ["surf-rod", "braided-line", "fluoro-leader", "landing-net"],
+    relatedSlugs: ["san-francisco-bay-fishing", "surf-fishing-san-diego", "how-tides-affect-fishing"],
+    sections: [
+      {
+        paragraphs: [
+          "The California halibut is the state's great shore-fishing prize: a fish that can go twenty pounds, tastes like it costs forty dollars a plate, and lives within casting distance of the sand for half the year. It's also a masterclass in ambush. A halibut buries itself flush with the bottom, both eyes up, and waits — sometimes for days — for one baitfish to swim over the wrong square foot of ocean.",
+          "That lifestyle tells you everything about how to catch one. You're not looking for halibut; you're looking for the square feet they'd choose. Sandy bottom next to something — a channel edge, a trough in the surf, the mouth of a harbor or river, the down-current side of a jetty — anywhere moving water funnels baitfish over sand. From spring through early fall they slide shallow to feed, and the back of every bay and the length of every beach becomes a possibility.",
+        ],
+      },
+      {
+        heading: "Two ways to fish for them",
+        paragraphs: [
+          "The bait game: a live smelt, small perch, or anchovy on a sliding sinker rig, cast to the edge of structure and left to swim nervously near the bottom. Nervous is the point — a halibut that's ignored a thousand dead things will rise off the sand for one panicking baitfish. Piers and jetty tips are made for this; catch bait on a sabiki first, then upgrade it into a halibut candidate.",
+          "The lure game covers more water, which matters for an ambush fish you have to find. A three-to-five-inch swimbait on a lead head, retrieved slow and low enough to tick bottom every few cranks, is the classic; so is a jerkbait twitched over the flats of Mission Bay or San Francisco Bay at first light. Cast in a fan, move fifty steps, repeat — shore halibut fishing is a walking sport.",
+          "When you hook one, don't celebrate early. Halibut are notorious for coming in like a wet towel, seeing the shore, and detonating. Keep the rod loaded, walk them onto sand gently or net them — and then check the tape: the legal minimum is 22 inches, measured properly, and shorts must go back healthy. Most shore-caught fish are shorts; the one that isn't is a memory. Bag limits differ north and south of Point Sur, so give the CDFW rules a look before you keep anything.",
+        ],
+      },
+      {
+        heading: "The window that matters",
+        paragraphs: [
+          "Halibut are moving-water feeders like everything else, but they add a twist: they favor the warmer, calmer conditions inside the tide cycle, and the flats they hunt can literally drain at low water. The reliable window is the middle of an incoming tide through the first of the outgoing, when bait streams over freshly flooded sand. Pair that with dawn on a spring or summer morning and you've stacked the deck as high as shore fishing allows. The fishing score on this site's location pages is doing that math for you — a high score on a bay or beach page in May through September is a halibut invitation.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "night-fishing-tides",
+    title: "Night Fishing and Tides: How to Fish After Dark",
+    description:
+      "Fishing at night flips the rules — light becomes structure, big fish come shallow, and the tide matters more than ever. How to plan, rig, and stay safe after sunset.",
+    readMinutes: 6,
+    gearKeys: ["braided-line", "pliers", "landing-net", "tackle-bag"],
+    relatedSlugs: ["how-tides-affect-fishing", "best-moon-phase-for-fishing", "minus-tides-explained"],
+    sections: [
+      {
+        paragraphs: [
+          "Every serious inshore angler eventually discovers the same secret: the water they fish all day becomes a different, better place at night. Predators that spent daylight hours sulking in deep water slide shallow under cover of dark. Bait loses its visual defenses. Fishing pressure disappears. And the tide — which mattered plenty at noon — becomes nearly the whole story, because at night the fish are hunting by feel, scent, and the movement of water.",
+          "The planning is simple once you see it: pick a night when a strong tide swing overlaps the hours after sunset or before dawn. A flood tide arriving in the first hours of darkness pushes bait and predators onto beaches and flats together; an ebb draining a marsh at midnight runs the same conveyor belt of food it runs at noon, minus the boat traffic and the shadows that make fish cautious.",
+        ],
+      },
+      {
+        heading: "Light is structure now",
+        paragraphs: [
+          "At night, any light on the water works like a reef. Pier lights, dock lights, bridge lights — each one grows a glowing ball of plankton, which gathers baitfish, which gathers everything that eats baitfish. The oldest night-fishing rule is to fish the shadow line, not the bright pool: predators hold in the dark edge and raid the lit water. In Florida that's snook and tarpon staged along dock lights; in California it's bass, croaker, and rays circling a lit pier while mackerel swirl in the glow.",
+          "Moon phase adds a layer worth thinking about. Dark nights around the new moon concentrate fish hard on artificial light and give scent-hunters like sharks and rays the advantage they love. Full-moon nights spread the game out — the whole flat is dimly lit, fish roam wider, and topwater in moonlight becomes a real (and unforgettable) option. Neither is wrong; they're different games, and the new-moon nights conveniently coincide with the biggest tide swings of the month.",
+        ],
+      },
+      {
+        heading: "Rigging and staying safe",
+        paragraphs: [
+          "Keep the tackle simpler than your daytime spread — retying in the dark punishes complexity. Scent and vibration beat subtlety: fresh cut bait, lures that thump or rattle, darker lure colors that silhouette against the sky's glow. Rig a rod or two before sunset, and make your headlamp a red-light model — white light kills your night vision and, shined on the water, can kill the bite.",
+          "Safety is part of the skill, not an afterthought. Fish water you already know from daylight, mind the incoming tide behind you on flats and rock, tell someone where you are, and treat every unseen splash with respect. The reward for the discipline is the best fishing of the month with nobody around — check your spot's tide page, find the night the big swing crosses the dark hours, and go meet the other shift.",
+        ],
+      },
+    ],
+  },
 ];
 
 export function getArticle(slug: string): Article | undefined {
