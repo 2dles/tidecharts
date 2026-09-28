@@ -64,7 +64,7 @@ function nearbyCities(
   curatedNames: Set<string>,
   lat: number,
   lon: number,
-): string[] {
+): { name: string; km: number }[] {
   const hits: { name: string; km: number }[] = [];
   for (const [name, cLat, cLon] of cities) {
     if (curatedNames.has(name.toLowerCase())) continue;
@@ -73,10 +73,7 @@ function nearbyCities(
     const km = Math.sqrt(dLat * dLat + dLon * dLon);
     if (km <= 18) hits.push({ name, km });
   }
-  return hits
-    .sort((a, b) => a.km - b.km)
-    .slice(0, 3)
-    .map((h) => h.name);
+  return hits.sort((a, b) => a.km - b.km).slice(0, 3);
 }
 
 // Module-level cache so a single build/render pass fetches the list once.
@@ -108,6 +105,8 @@ export async function getStationLocations(): Promise<Location[]> {
     }
 
     const out: Location[] = [];
+    // Distance from each station to its nearest city, for city-primary picks.
+    const cityDist: { key: string; slug: string; km: number }[] = [];
     // Cap is PER STATE. The mdapi list is ordered by station id, and Florida's
     // ids sort before California's — a global cap would let one big state
     // starve the others (FL alone has ~580 stations).
@@ -133,9 +132,10 @@ export async function getStationLocations(): Promise<Location[]> {
 
       const region = st.regionFor(s.lat, s.lng);
       const curatedNames = curatedNamesByState.get(st.slug) ?? new Set();
-      const cities = nearbyCities(st.cities, curatedNames, s.lat, s.lng).filter(
-        (c) => !fullName.toLowerCase().includes(c.toLowerCase()),
+      const cityHits = nearbyCities(st.cities, curatedNames, s.lat, s.lng).filter(
+        (c) => !fullName.toLowerCase().includes(c.name.toLowerCase()),
       );
+      const cities = cityHits.map((c) => c.name);
       const city = cities[0] ?? null;
       const cityIsNew = city != null;
       let intro = makeIntro(display, fullName, region, s.id);
@@ -162,7 +162,29 @@ export async function getStationLocations(): Promise<Location[]> {
         nearby: [],
         aliases: cities.length ? cities.map((c) => c.toLowerCase()) : undefined,
       });
+      if (cityIsNew) {
+        cityDist.push({
+          key: `${st.slug}|${city.toLowerCase()}`,
+          slug,
+          km: cityHits[0].km,
+        });
+      }
       perState.set(st.slug, (perState.get(st.slug) ?? 0) + 1);
+    }
+    // For each city, the CLOSEST station becomes that city's primary page —
+    // its <title> leads with the city name ("San Rafael Tide Chart — …"),
+    // matching how people actually search. Other nearby stations keep the
+    // station-first title so two pages never compete for the same headline.
+    const bestByCity = new Map<string, { slug: string; km: number }>();
+    for (const c of cityDist) {
+      const cur = bestByCity.get(c.key);
+      if (!cur || c.km < cur.km) bestByCity.set(c.key, { slug: c.slug, km: c.km });
+    }
+    const primarySlugs = new Set(
+      [...bestByCity.values()].map((v) => v.slug),
+    );
+    for (const l of out) {
+      if (l.nearCity && primarySlugs.has(l.slug)) l.cityPrimary = true;
     }
     cached = out;
     return out;
