@@ -65,9 +65,13 @@ export async function generateMetadata({
     timeZone: "UTC",
   });
 
+  // City-primary pages present as THE city's tide chart (that's the query);
+  // the station is the supporting detail.
+  const headName = loc.cityPrimary && loc.nearCity ? loc.nearCity : loc.name;
+
   // Meta description with today's ACTUAL tide times — unique per page per day,
   // and exactly what a "[city] tide chart today" searcher wants to see.
-  let description = `Live ${loc.name}, ${st} tide chart with today's high and low tide times, 7-day tide table, weather, water temperature, and the best times to fish.`;
+  let description = `Live ${headName}, ${st} tide chart with today's high and low tide times, 7-day tide table, weather, water temperature, and the best times to fish.`;
   try {
     const data = await getLocationData(loc);
     const dayStart = Math.floor(now / DAY_MS) * DAY_MS;
@@ -79,20 +83,22 @@ export async function generateMetadata({
         (e) =>
           `${e.type === "H" ? "high" : "low"} at ${fmtTime(e.t)} (${e.h.toFixed(1)} ft)`,
       );
-      description = `Today's tides in ${loc.name}, ${st}: ${parts.join(", ")}. Live NOAA tide chart, 7-day tide table, weather and the best fishing times.${loc.nearCity ? ` Nearest tide station to ${loc.nearCity}, ${st}.` : ""}`;
+      description = `Today's tides in ${headName}, ${st}: ${parts.join(", ")}. Live NOAA tide chart, 7-day tide table, weather and the best fishing times.${loc.nearCity && !loc.cityPrimary ? ` Nearest tide station to ${loc.nearCity}, ${st}.` : ""}${loc.cityPrimary ? ` Measured at the ${loc.name} NOAA station.` : ""}`;
     }
   } catch {
     // keep static fallback description
   }
 
   return {
-    title: loc.nearCity
-      ? `${loc.name} (${loc.nearCity}), ${st} Tide Chart ${dateStr} — Tide Times`
-      : `${loc.name}, ${st} Tide Chart ${dateStr} — High & Low Tide Times`,
+    title: loc.cityPrimary && loc.nearCity
+      ? `${loc.nearCity}, ${st} Tide Chart ${dateStr} — High & Low Tide Times`
+      : loc.nearCity
+        ? `${loc.name} (${loc.nearCity}), ${st} Tide Chart ${dateStr} — Tide Times`
+        : `${loc.name}, ${st} Tide Chart ${dateStr} — High & Low Tide Times`,
     description,
     alternates: { canonical: `/${loc.state}/${loc.slug}` },
     openGraph: {
-      title: `${loc.name} Tide Chart & Fishing Forecast | USTideCharts`,
+      title: `${headName} Tide Chart & Fishing Forecast | USTideCharts`,
       description: loc.tagline,
     },
   };
@@ -111,6 +117,8 @@ export default async function LocationPage({
   if (!stateCfg || !loc || loc.state !== state) notFound();
 
   const tz = locTz(loc);
+  // City-primary station pages headline with the city people search for.
+  const headName = loc.cityPrimary && loc.nearCity ? loc.nearCity : loc.name;
   const data = await getLocationData(loc);
   const now = nowInTz(tz);
   const today = naiveDateStr(now);
@@ -188,7 +196,7 @@ export default async function LocationPage({
       : null;
 
   const proseToday = todaysHL.length
-    ? `Today in ${loc.name}, ${
+    ? `Today in ${headName}, ${
         highs.length
           ? `high tide arrives at ${listTimes(highs)}`
           : "no high tide falls within the calendar day"
@@ -207,7 +215,7 @@ export default async function LocationPage({
             }.`
           : ""
       }`
-    : `Tide predictions for ${loc.name} are refreshed throughout the day from NOAA station ${loc.stationId}.`;
+    : `Tide predictions for ${headName} are refreshed throughout the day from NOAA station ${loc.stationId}.`;
 
   const proseSun = todayAstro
     ? `The sun rises at ${fmtTime(todayAstro.sunrise)} and sets at ${fmtTime(todayAstro.sunset)}, under a ${data.moon.phaseName.toLowerCase()} (${Math.round(data.moon.illumination * 100)}% illuminated). ${
@@ -221,25 +229,25 @@ export default async function LocationPage({
 
   const faq = [
     {
-      q: `What time is high tide in ${loc.name} today?`,
+      q: `What time is high tide in ${headName} today?`,
       a: highs.length
-        ? `High tide in ${loc.name} today is at ${listTimes(highs)}, measured at NOAA station ${loc.stationId} (${loc.stationName}).`
-        : `The next high tide at ${loc.name} is shown live in the tide chart above, from NOAA station ${loc.stationId}.`,
+        ? `High tide in ${headName} today is at ${listTimes(highs)}, measured at NOAA station ${loc.stationId} (${loc.stationName}).`
+        : `The next high tide at ${headName} is shown live in the tide chart above, from NOAA station ${loc.stationId}.`,
     },
     {
-      q: `What time is low tide in ${loc.name} today?`,
+      q: `What time is low tide in ${headName} today?`,
       a: lows.length
-        ? `Low tide in ${loc.name} today is at ${listTimes(lows)}. ${
+        ? `Low tide in ${headName} today is at ${listTimes(lows)}. ${
             lows.some((l) => l.h < 0)
               ? "Today includes a minus tide — a good window for exploring structure that's normally underwater."
               : ""
           }`.trim()
-        : `The next low tide at ${loc.name} is shown live in the tide chart above.`,
+        : `The next low tide at ${headName} is shown live in the tide chart above.`,
     },
     {
-      q: `When is the best time to fish in ${loc.name} today?`,
+      q: `When is the best time to fish in ${headName} today?`,
       a: bestWindow
-        ? `Today's best fishing window at ${loc.name} is ${fmtTime(bestWindow.start)}–${fmtTime(bestWindow.end)} (rated ${scoreLabel(bestWindow.score)}, ${bestWindow.score}/100)${
+        ? `Today's best fishing window at ${headName} is ${fmtTime(bestWindow.start)}–${fmtTime(bestWindow.end)} (rated ${scoreLabel(bestWindow.score)}, ${bestWindow.score}/100)${
             bestWindow.reasons.length
               ? `, driven by ${bestWindow.reasons.join(", ")}`
               : ""
@@ -247,14 +255,14 @@ export default async function LocationPage({
         : `The fishing score above rates every hour of the day from tide movement, light, moon phase, wind, and water temperature.`,
     },
     {
-      q: `What fish are biting in ${loc.name} in ${monthName}?`,
+      q: `What fish are biting in ${headName} in ${monthName}?`,
       a: (() => {
         const active = activeSpecies
           .filter(({ activity }) => activity === "high")
           .map(({ s }) => s.name);
         return active.length
-          ? `In ${monthName}, the most active species at ${loc.name} are ${active.join(", ")}. See the species section above for baits, techniques, and seasons.`
-          : `${monthName} is a slower month at ${loc.name} — check the species section above for what's closest to season.`;
+          ? `In ${monthName}, the most active species at ${headName} are ${active.join(", ")}. See the species section above for baits, techniques, and seasons.`
+          : `${monthName} is a slower month at ${headName} — check the species section above for what's closest to season.`;
       })(),
     },
     ...(loc.nearCity
@@ -266,7 +274,7 @@ export default async function LocationPage({
         ]
       : []),
     {
-      q: `How accurate is this ${loc.name} tide chart?`,
+      q: `How accurate is this ${headName} tide chart?`,
       a: `Predictions come directly from NOAA CO-OPS harmonic predictions for station ${loc.stationId} (${loc.stationName}) and are the same data used in official tide tables. Actual water levels can vary with storms and barometric pressure, so treat predictions as planning guidance, not navigation data.`,
     },
   ];
@@ -274,7 +282,7 @@ export default async function LocationPage({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Place",
-    name: `${loc.name}, ${stateCfg.name}`,
+    name: `${headName}, ${stateCfg.name}`,
     description: loc.tagline,
     geo: { "@type": "GeoCoordinates", latitude: loc.lat, longitude: loc.lon },
     url: `https://ustidecharts.com/${loc.state}/${loc.slug}`,
@@ -312,7 +320,7 @@ export default async function LocationPage({
       <header className="mt-4 flex flex-wrap items-end justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            {loc.name} <span className="text-ink-faint">Tide Charts & Fishing</span>
+            {headName} <span className="text-ink-faint">Tide Charts & Fishing</span>
           </h1>
           <p className="mt-2 text-sm text-ink-dim">
             {new Date(now).toLocaleDateString("en-US", {
@@ -396,7 +404,7 @@ export default async function LocationPage({
       {/* TODAY IN PROSE — crawlable summary of the day's tides */}
       <section className="mt-6" aria-labelledby="today-h">
         <h2 id="today-h" className="text-lg font-semibold tracking-tight">
-          Today&apos;s Tide Times in {loc.name}
+          Today&apos;s Tide Times in {headName}
         </h2>
         <div className="mt-2 max-w-3xl space-y-3 text-sm leading-relaxed text-ink-dim">
           <p>{proseToday}</p>

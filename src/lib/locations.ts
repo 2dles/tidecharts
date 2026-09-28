@@ -20,6 +20,9 @@ export interface Location {
   tier?: "featured" | "station";
   /** Nearest coastal city, when it differs from the station name (auto pages) */
   nearCity?: string;
+  /** True for the ONE station closest to nearCity — its page titles lead with
+   * the city name, targeting "{city} tide chart" searches head-on. */
+  cityPrimary?: boolean;
   tagline: string;
   intro: string;
   speciesKeys: string[];
