@@ -9,7 +9,7 @@
 import { useEffect, useState } from "react";
 import type { ScoreLabel, TideEvent, TidePoint } from "@/lib/types";
 import { nextEvents, tideHeightAt, tideRateAt } from "@/lib/noaa";
-import { SCORE_COLORS } from "@/lib/score";
+import { SCORE_COLORS, scoreLabel } from "@/lib/score";
 import { fmtRelative, fmtTime, nowInTz } from "@/lib/tz";
 import { windCompass, windRating } from "@/lib/weather";
 
@@ -19,6 +19,10 @@ interface Props {
   initialNow: number;
   score: number;
   label: ScoreLabel;
+  /** Hourly scores from scoreStart (naive-local ms) — lets the strip show a
+   * LIVE score even when the cached page shell is hours old. */
+  scoreStart?: number;
+  scoreHours?: number[];
   /** IANA timezone of the station (client clock ticks in this zone). */
   tz?: string;
   /** Current wind (from the server-fetched forecast hour). */
@@ -33,6 +37,8 @@ export default function TideStrip({
   initialNow,
   score,
   label,
+  scoreStart,
+  scoreHours,
   tz = "America/Los_Angeles",
   windMph = null,
   gustMph = null,
@@ -61,6 +67,18 @@ export default function TideStrip({
           : "slack";
 
   const wind = windRating(windMph);
+
+  // Prefer the client-computed live score when the hourly timeline is here.
+  let liveScore = score;
+  let liveLabel = label;
+  if (scoreStart != null && scoreHours && scoreHours.length > 0) {
+    const idx = Math.min(
+      scoreHours.length - 1,
+      Math.max(0, Math.floor((now - scoreStart) / 3_600_000)),
+    );
+    liveScore = scoreHours[idx];
+    liveLabel = scoreLabel(liveScore);
+  }
 
   return (
     <div
@@ -142,16 +160,16 @@ export default function TideStrip({
         </p>
         <p
           className="mt-1 text-xl font-bold leading-none tabular-nums"
-          style={{ color: SCORE_COLORS[label] }}
+          style={{ color: SCORE_COLORS[liveLabel] }}
         >
-          {score}
+          {liveScore}
           <span className="text-xs font-medium text-ink-faint"> /100</span>
         </p>
         <p
           className="mt-1 text-xs font-medium"
-          style={{ color: SCORE_COLORS[label] }}
+          style={{ color: SCORE_COLORS[liveLabel] }}
         >
-          {label}
+          {liveLabel}
         </p>
       </div>
     </div>

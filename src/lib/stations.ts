@@ -209,22 +209,22 @@ function distKm(a: Location, b: Location): number {
   return Math.sqrt(dLat * dLat + dLon * dLon);
 }
 
+/** One search-index entry: [slug, name, stateSlug, nearCity, aliases].
+ * Positional tuples, not objects — this array is serialized into the HTML of
+ * every page that renders a SearchBar, and repeated JSON keys across ~780
+ * entries cost ~130 KB per page. Keep it lean. */
+export type SearchRow = [string, string, string, string, string[]];
+
 /** Lightweight list for the client-side search box (curated + all stations). */
-export async function getSearchIndex() {
+export async function getSearchIndex(): Promise<SearchRow[]> {
   const all = await getAllLocations();
-  return all.map((l) => ({
-    slug: l.slug,
-    name: l.name,
-    state: l.state,
-    stateName: l.stateName,
-    tagline: l.tagline,
-    aliases: l.aliases,
-    context: l.nearCity
-      ? `Near ${l.nearCity}`
-      : l.tier === "station"
-        ? "NOAA tide station"
-        : l.tagline,
-  }));
+  return all.map((l) => [
+    l.slug,
+    l.name,
+    l.state,
+    l.nearCity ?? "",
+    l.aliases ?? [],
+  ]);
 }
 
 /** Nearest other locations — used for auto-generated station pages. */

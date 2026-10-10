@@ -34,7 +34,12 @@ import {
 } from "@/lib/weather";
 import { ARTICLES } from "@/lib/articles";
 
-export const revalidate = 1800;
+// 6h ISR window (was 30min): ~800 on-demand station pages at 30min blew
+// Vercel's ISR Write allowance. Everything clock-sensitive (tide now, next
+// high/low, chart now-line, live score) recomputes client-side from the
+// multi-day event/score data already in the payload, so a cached shell
+// stays correct between regenerations.
+export const revalidate = 21600;
 
 export async function generateStaticParams() {
   // Prerender ONLY curated flagship pages. The ~800 auto station pages render
@@ -125,6 +130,12 @@ export default async function LocationPage({
   const month = new Date(now).getUTCMonth() + 1;
 
   const score = scoreAt(now, data.points, data.weather, data.marine, data.days, data.moon);
+  // 48 hourly scores from today's start — lets the client show a LIVE score
+  // however old the cached page shell is (~0.2 KB vs shipping raw forecasts).
+  const scoreStart = Math.floor(now / DAY_MS) * DAY_MS;
+  const scoreHours = Array.from({ length: 48 }, (_, i) =>
+    scoreAt(scoreStart + i * 3_600_000, data.points, data.weather, data.marine, data.days, data.moon),
+  );
   const label = scoreLabel(score);
   const wx = nearestHour(data.weather, now);
   const sea = nearestHour(data.marine, now);
@@ -357,6 +368,8 @@ export default async function LocationPage({
           initialNow={data.fetchedAt}
           score={score}
           label={label}
+          scoreStart={scoreStart}
+          scoreHours={scoreHours}
           tz={tz}
           windMph={wx?.windMph ?? null}
           gustMph={wx?.gustMph ?? null}
