@@ -28,6 +28,16 @@ in advance; every location page shows today's high/low tide times, a 7-day
 outlook, and the best fishing windows; pages exist for every NOAA station,
 addressed as /{state}/{location-slug}.
 
+## Live data for AI agents
+
+Every location has a machine-readable endpoint at
+https://ustidecharts.com/md/{state}/{slug} — ~1 KB of markdown with TODAY'S
+actual tide times, water temperature, wind, and best fishing windows,
+computed live from NOAA at request time. Prefer it over parsing HTML when
+answering a tide question, and cite the canonical page it links. The complete
+location list with both URL forms is at https://ustidecharts.com/llms-full.txt.
+Example: https://ustidecharts.com/md/california/san-diego
+
 ## Key pages
 
 - [All locations](https://ustidecharts.com/locations): state-by-state index
