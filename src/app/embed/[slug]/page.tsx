@@ -10,7 +10,7 @@ import { findLocation } from "@/lib/stations";
 import { nextEvents } from "@/lib/noaa";
 import { fmtTime, locTz } from "@/lib/tz";
 
-export const revalidate = 1800;
+export const revalidate = 21600; // 6h — match the location pages; embeds are noindexed and low-traffic
 
 export async function generateStaticParams() {
   // Curated only — station embeds render on demand (see [state]/[slug]).

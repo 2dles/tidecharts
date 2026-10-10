@@ -5,31 +5,36 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { LOCATIONS } from "@/lib/locations";
-import { stateCodeFor } from "@/lib/states";
+import type { SearchRow } from "@/lib/stations";
+import { STATES, stateCodeFor } from "@/lib/states";
 
-export interface SearchLoc {
+// Rows arrive as positional tuples to keep page payloads small (the index is
+// serialized into the HTML of every page that renders this component).
+// [slug, name, stateSlug, nearCity, aliases]
+interface Loc {
   slug: string;
   name: string;
   state: string;
-  stateName: string;
-  tagline: string;
-  aliases?: string[];
-  /** Short right-hand label for the dropdown (e.g. "Near San Rafael") */
-  context?: string;
+  nearCity: string;
+  aliases: string[];
 }
 
-function match(loc: SearchLoc, q: string): number {
+const fromRow = ([slug, name, state, nearCity, aliases]: SearchRow): Loc => ({
+  slug, name, state, nearCity, aliases,
+});
+
+function match(loc: Loc, q: string): number {
   const query = q.toLowerCase().trim();
   if (!query) return 0;
   const name = loc.name.toLowerCase();
   if (name.startsWith(query)) return 5;
   // aliases[0] is the station's PRIMARY nearby city — rank it above
   // stations that merely have the city as a secondary tag
-  if (loc.aliases?.[0]?.startsWith(query)) return 4;
+  if (loc.aliases[0]?.startsWith(query)) return 4;
   if (name.includes(query)) return 3;
-  if (loc.aliases?.some((a) => a.startsWith(query))) return 2.5;
-  if (loc.aliases?.some((a) => a.includes(query))) return 2;
-  if (loc.stateName.toLowerCase().startsWith(query)) return 1;
+  if (loc.aliases.some((a) => a.startsWith(query))) return 2.5;
+  if (loc.aliases.some((a) => a.includes(query))) return 2;
+  if ((STATES[loc.state]?.name ?? "").toLowerCase().startsWith(query)) return 1;
   return 0;
 }
 
@@ -39,11 +44,23 @@ export default function SearchBar({
   defaultState,
 }: {
   large?: boolean;
-  locations?: SearchLoc[];
+  locations?: SearchRow[];
   /** State slug to prefer in ranking. If omitted, detected from the visitor's IP. */
   defaultState?: string;
 }) {
-  const list: SearchLoc[] = locations ?? LOCATIONS;
+  const list: Loc[] = useMemo(
+    () =>
+      locations
+        ? locations.map(fromRow)
+        : LOCATIONS.map((l) => ({
+            slug: l.slug,
+            name: l.name,
+            state: l.state,
+            nearCity: l.nearCity ?? "",
+            aliases: l.aliases ?? [],
+          })),
+    [locations],
+  );
   const router = useRouter();
   const [q, setQ] = useState("");
   const [open, setOpen] = useState(false);
@@ -87,7 +104,7 @@ export default function SearchBar({
     return () => document.removeEventListener("mousedown", onClick);
   }, []);
 
-  const go = (loc: SearchLoc) => {
+  const go = (loc: Loc) => {
     setOpen(false);
     setQ("");
     router.push(`/${loc.state}/${loc.slug}`);
@@ -183,11 +200,11 @@ export default function SearchBar({
                   </span>
                 </span>
                 <span className="hidden max-w-[55%] shrink-0 truncate text-xs text-ink-faint sm:block">
-                  {loc.context ?? loc.tagline}
+                  {loc.nearCity ? `Near ${loc.nearCity}` : STATES[loc.state]?.name ?? ""}
                 </span>
               </div>
               <span className="mt-0.5 block truncate text-xs text-ink-faint sm:hidden">
-                {loc.context ?? loc.tagline}
+                {loc.nearCity ? `Near ${loc.nearCity}` : STATES[loc.state]?.name ?? ""}
               </span>
             </li>
           ))}
