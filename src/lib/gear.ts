@@ -10,7 +10,7 @@
 // version of this file drifted from the catalog and advertised prices and
 // product names that did not exist — do not reintroduce that by editing here.
 //
-// Last generated 2026-08-15.
+// Last generated 2026-11-04.
 // ─────────────────────────────────────────────────────────────────────────────
 
 export interface Product {
@@ -143,8 +143,8 @@ export const PRODUCTS: Record<string, Product> = {
     category: "Surf Rods",
     price: 25.95,
     blurb:
-      "Okuma build the Tundra as a surf series and say so themselves — they describe it as favoured by catfish anglers and cost-conscious surf anglers.",
-    image: "https://cdn.shopify.com/s/files/1/0033/5442/7456/files/362064_c7df0fb1-c7ea-4a9f-b785-fc59546fe82f.jpg",
+      "Okuma build the Tundra as a surf series and say so themselves, they describe it as favoured by catfish anglers and cost-conscious surf anglers.",
+    image: "https://cdn.shopify.com/s/files/1/0033/5442/7456/files/362064_c731f9e7-a4c0-47aa-be39-3d6b6603e2a0.jpg",
     gradient: "linear-gradient(135deg,#0e3a5c,#155e88)",
     icon: "🎣",
   },
@@ -177,6 +177,7 @@ export const PRODUCTS: Record<string, Product> = {
     price: 59.99,
     blurb:
       "Eight feet is the honest middle: long enough to keep line above the wash on a gentle beach, short enough to fish from a pier or a boat without apologising to anyone.",
+    image: "https://cdn.shopify.com/s/files/1/0033/5442/7456/files/748815.jpg",
     gradient: "linear-gradient(135deg,#0d4a4a,#137a6e)",
     icon: "🎣",
   },
@@ -187,8 +188,20 @@ export const PRODUCTS: Record<string, Product> = {
     price: 32.99,
     blurb:
       "Four ounces is the weight most 9 to 11 foot surf rods are built to throw, and the one to reach for when the water is moving hard enough that a 3 oz starts walking.",
+    image: "https://cdn.shopify.com/s/files/1/0033/5442/7456/files/27482_252522cb-927d-4573-93c1-166ddacf10f1.jpg",
     gradient: "linear-gradient(135deg,#3a2e59,#5d4a8f)",
     icon: "🪝",
+  },
+  "jig-head-fish-1-8": {
+    key: "jig-head-fish-1-8",
+    name: "Eagle Claw Saltwater Fish Head Jig — 1/8 oz, Assorted, 10-Pack",
+    category: "Lures",
+    price: 4.99,
+    blurb:
+      "A fish-head profile on a 90-degree leg, which is what keeps a soft plastic running straight instead of rolling on the retrieve.",
+    image: "https://cdn.shopify.com/s/files/1/0033/5442/7456/files/898413_22b03e62-0858-4c17-9a5c-39551765026f.png",
+    gradient: "linear-gradient(135deg,#52340e,#8a5a1d)",
+    icon: "⚓",
   },
   "dipsy-mid": {
     key: "dipsy-mid",
@@ -210,26 +223,6 @@ export const PRODUCTS: Record<string, Product> = {
       "The short one, for jetties, piers and beaches where you don't need to reach the horizon. Easier to control in a crowd and easier to fit in a car.",
     image: "https://cdn.shopify.com/s/files/1/0033/5442/7456/files/533342.jpg",
     gradient: "linear-gradient(135deg,#0e3a5c,#155e88)",
-    icon: "🎣",
-  },
-  "bank-sinker-3oz": {
-    key: "bank-sinker-3oz",
-    name: "MO's Bank Sinkers — 3 oz, 26-Pack",
-    category: "Terminal Tackle",
-    price: 29.99,
-    blurb:
-      "The everyday surf weight for moderate current — heavy enough to hold a bait through a push, light enough to cast on a medium rod all morning.",
-    gradient: "linear-gradient(135deg,#3a2e59,#5d4a8f)",
-    icon: "🪝",
-  },
-  "dwave-combo-7": {
-    key: "dwave-combo-7",
-    name: "Daiwa D-Wave Saltwater Spinning Combo — 7 ft, 2-Piece Medium",
-    category: "Rod & Reel Combos",
-    price: 59.99,
-    blurb:
-      "The inshore length of the D-Wave range: seven feet of medium fiberglass on a 40-size reel, rated by Daiwa for saltwater as well as heavy freshwater.",
-    gradient: "linear-gradient(135deg,#0d4a4a,#137a6e)",
     icon: "🎣",
   },
   "lead-core": {
@@ -260,7 +253,7 @@ export const PRODUCTS: Record<string, Product> = {
     category: "Lures",
     price: 21.99,
     blurb:
-      "A trolling minnow that runs at fifteen feet without weight or a downrigger — the lip does the work.",
+      "A trolling minnow that runs at fifteen feet without weight or a downrigger, the lip does the work.",
     image: "https://productimageserver.com/product/xl/89811XL.jpg",
     gradient: "linear-gradient(135deg,#52340e,#8a5a1d)",
     icon: "⚓",
@@ -292,7 +285,7 @@ export const BY_SPECIES: Record<string, string[]> = {
     "braided-line",
     "circle-hooks",
     "bank-sinker-4oz",
-    "jig-assort",
+    "jig-head-fish-1-8",
     "landing-net",
     "pliers",
     "dipsy-mid"
@@ -302,7 +295,7 @@ export const BY_SPECIES: Record<string, string[]> = {
     "braided-line",
     "circle-hooks",
     "bank-sinker-4oz",
-    "jig-assort",
+    "jig-head-fish-1-8",
     "landing-net",
     "pliers",
     "dipsy-mid"
@@ -311,7 +304,7 @@ export const BY_SPECIES: Record<string, string[]> = {
     "daiwa-ft-surf-9",
     "braided-line",
     "circle-hooks",
-    "bank-sinker-3oz",
+    "bank-sinker-4oz",
     "jig-assort",
     "landing-net",
     "pliers",
@@ -321,7 +314,7 @@ export const BY_SPECIES: Record<string, string[]> = {
     "daiwa-ft-surf-9",
     "braided-line",
     "circle-hooks",
-    "bank-sinker-3oz",
+    "bank-sinker-4oz",
     "jig-assort",
     "landing-net",
     "pliers",
@@ -332,26 +325,26 @@ export const BY_SPECIES: Record<string, string[]> = {
     "braided-line",
     "circle-hooks",
     "bank-sinker-4oz",
-    "jig-assort",
+    "jig-head-fish-1-8",
     "landing-net",
     "pliers",
     "dipsy-mid"
   ],
   "salmon": [
-    "dwave-combo-7",
+    "dwave-combo-8",
     "lead-core",
     "mustad-barrel-swivel-2-0",
-    "bank-sinker-3oz",
+    "bank-sinker-4oz",
     "xrap-magnum",
     "landing-net",
     "pliers",
     "dipsy-mid"
   ],
   "yellowtail": [
-    "dwave-combo-7",
+    "dwave-combo-8",
     "braided-line",
     "circle-hooks",
-    "bank-sinker-3oz",
+    "bank-sinker-4oz",
     "jig-assort",
     "landing-net",
     "pliers",
@@ -361,7 +354,7 @@ export const BY_SPECIES: Record<string, string[]> = {
     "daiwa-ft-surf-9",
     "braided-line",
     "circle-hooks",
-    "bank-sinker-3oz",
+    "bank-sinker-4oz",
     "jig-assort",
     "landing-net",
     "pliers",
@@ -372,7 +365,7 @@ export const BY_SPECIES: Record<string, string[]> = {
     "braided-line",
     "circle-hooks",
     "bank-sinker-4oz",
-    "jig-assort",
+    "jig-head-fish-1-8",
     "landing-net",
     "pliers",
     "dipsy-mid"
@@ -381,7 +374,7 @@ export const BY_SPECIES: Record<string, string[]> = {
     "daiwa-ft-surf-9",
     "braided-line",
     "circle-hooks",
-    "bank-sinker-3oz",
+    "bank-sinker-4oz",
     "jig-assort",
     "landing-net",
     "pliers",
@@ -392,7 +385,7 @@ export const BY_SPECIES: Record<string, string[]> = {
     "braided-line",
     "circle-hooks",
     "bank-sinker-4oz",
-    "jig-assort",
+    "jig-head-fish-1-8",
     "landing-net",
     "pliers",
     "dipsy-mid"
