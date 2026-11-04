@@ -125,6 +125,67 @@ const FL_CITIES: [string, number, number][] = [
   ["Pensacola", 30.42, -87.22], ["Perdido Key", 30.29, -87.44],
 ];
 
+
+const TX_CITIES: [string, number, number][] = [
+  ["Sabine Pass", 29.73, -93.87], ["Port Arthur", 29.9, -93.93],
+  ["Crystal Beach", 29.45, -94.63], ["Port Bolivar", 29.37, -94.77],
+  ["Galveston", 29.3, -94.8], ["Texas City", 29.38, -94.9],
+  ["Kemah", 29.54, -95.02], ["San Leon", 29.49, -94.95],
+  ["Jamaica Beach", 29.19, -94.98], ["Surfside Beach", 28.95, -95.29],
+  ["Freeport", 28.95, -95.36], ["Quintana", 28.94, -95.32],
+  ["Sargent", 28.77, -95.62], ["Matagorda", 28.69, -95.97],
+  ["Palacios", 28.71, -96.22], ["Port O'Connor", 28.45, -96.41],
+  ["Seadrift", 28.41, -96.71], ["Rockport", 28.02, -97.05],
+  ["Aransas Pass", 27.91, -97.15], ["Port Aransas", 27.83, -97.06],
+  ["Corpus Christi", 27.8, -97.4], ["Padre Island", 27.62, -97.22],
+  ["Port Mansfield", 26.56, -97.43], ["South Padre Island", 26.1, -97.17],
+  ["Port Isabel", 26.07, -97.21],
+];
+
+const GA_CITIES: [string, number, number][] = [
+  ["Savannah", 32.08, -81.09], ["Tybee Island", 32.0, -80.85],
+  ["Thunderbolt", 32.03, -81.05], ["Skidaway Island", 31.94, -81.05],
+  ["Richmond Hill", 31.94, -81.3], ["Midway", 31.8, -81.43],
+  ["Darien", 31.37, -81.43], ["Sapelo Island", 31.47, -81.25],
+  ["Brunswick", 31.15, -81.49], ["St. Simons Island", 31.15, -81.37],
+  ["Sea Island", 31.19, -81.34], ["Jekyll Island", 31.07, -81.42],
+  ["St. Marys", 30.73, -81.55], ["Cumberland Island", 30.85, -81.45],
+  ["Kingsland", 30.8, -81.69],
+];
+
+const SC_CITIES: [string, number, number][] = [
+  ["Little River", 33.87, -78.61], ["North Myrtle Beach", 33.82, -78.68],
+  ["Myrtle Beach", 33.69, -78.89], ["Surfside Beach", 33.61, -78.97],
+  ["Garden City", 33.58, -79.0], ["Murrells Inlet", 33.55, -79.04],
+  ["Pawleys Island", 33.43, -79.12], ["Georgetown", 33.37, -79.29],
+  ["McClellanville", 33.09, -79.46], ["Isle of Palms", 32.79, -79.79],
+  ["Sullivan's Island", 32.76, -79.84], ["Mount Pleasant", 32.83, -79.83],
+  ["Charleston", 32.78, -79.93], ["Folly Beach", 32.66, -79.94],
+  ["Kiawah Island", 32.61, -80.08], ["Seabrook Island", 32.58, -80.17],
+  ["Edisto Beach", 32.5, -80.3], ["Beaufort", 32.43, -80.67],
+  ["Port Royal", 32.38, -80.69], ["Fripp Island", 32.32, -80.47],
+  ["Hilton Head Island", 32.22, -80.75], ["Bluffton", 32.24, -80.86],
+  ["Daufuskie Island", 32.11, -80.88],
+];
+
+const NC_CITIES: [string, number, number][] = [
+  ["Corolla", 36.38, -75.83], ["Duck", 36.17, -75.75],
+  ["Kitty Hawk", 36.07, -75.7], ["Kill Devil Hills", 36.03, -75.67],
+  ["Nags Head", 35.96, -75.63], ["Manteo", 35.91, -75.67],
+  ["Rodanthe", 35.59, -75.47], ["Avon", 35.35, -75.5],
+  ["Buxton", 35.27, -75.54], ["Frisco", 35.24, -75.62],
+  ["Hatteras", 35.22, -75.69], ["Ocracoke", 35.11, -75.98],
+  ["Cedar Island", 34.99, -76.3], ["Harkers Island", 34.69, -76.56],
+  ["Beaufort", 34.72, -76.66], ["Morehead City", 34.72, -76.73],
+  ["Atlantic Beach", 34.7, -76.74], ["Emerald Isle", 34.68, -77.0],
+  ["Swansboro", 34.69, -77.12], ["Surf City", 34.43, -77.55],
+  ["Topsail Beach", 34.37, -77.63], ["Wrightsville Beach", 34.21, -77.8],
+  ["Wilmington", 34.23, -77.94], ["Carolina Beach", 34.04, -77.89],
+  ["Kure Beach", 33.99, -77.91], ["Southport", 33.92, -78.02],
+  ["Oak Island", 33.91, -78.14], ["Holden Beach", 33.91, -78.3],
+  ["Ocean Isle Beach", 33.89, -78.43], ["Sunset Beach", 33.88, -78.51],
+];
+
 export const STATES: Record<string, StateConfig> = {
   california: {
     slug: "california",
@@ -178,6 +239,95 @@ export const STATES: Record<string, StateConfig> = {
     regsName: "FWC regulations",
     regsUrl: "https://myfwc.com/fishing/saltwater/recreational/",
     bounds: [24.4, -87.7, 30.9, -79.9],
+  },
+
+  texas: {
+    slug: "texas",
+    name: "Texas",
+    code: "TX",
+    description:
+      "Live NOAA tide predictions and fishing forecasts for the Texas coast — Sabine Pass to South Padre, the jetties, the bays and the surf, every station in NOAA's network.",
+    regions: [
+      { key: "upper-coast", name: "Upper Coast" },
+      { key: "mid-coast", name: "Middle Coast" },
+      { key: "lower-coast", name: "Lower Coast" },
+    ],
+    regionFor: (lat) => (lat >= 28.8 ? "upper-coast" : lat >= 27.3 ? "mid-coast" : "lower-coast"),
+    regionSpecies: {
+      "upper-coast": ["redfish", "speckled-trout", "black-drum", "southern-flounder", "sheepshead"],
+      "mid-coast": ["redfish", "speckled-trout", "black-drum", "southern-flounder", "spanish-mackerel"],
+      "lower-coast": ["redfish", "speckled-trout", "snook", "black-drum", "tarpon"],
+    },
+    cities: TX_CITIES,
+    featured: ["galveston", "port-aransas", "freeport"],
+    regsName: "TPWD regulations",
+    regsUrl: "https://tpwd.texas.gov/regulations/outdoor-annual/fishing/saltwater-fishing",
+    bounds: [25.9, -97.6, 30.1, -93.5],
+  },
+  georgia: {
+    slug: "georgia",
+    name: "Georgia",
+    code: "GA",
+    description:
+      "Live NOAA tide predictions and fishing forecasts for the Georgia coast — Tybee to Cumberland, the Golden Isles and the biggest tides on the South Atlantic, every station in NOAA's network.",
+    regions: [
+      { key: "savannah-coast", name: "Savannah Coast" },
+      { key: "golden-isles", name: "Golden Isles" },
+    ],
+    regionFor: (lat) => (lat >= 31.6 ? "savannah-coast" : "golden-isles"),
+    regionSpecies: {
+      "savannah-coast": ["redfish", "speckled-trout", "whiting", "southern-flounder", "bluefish"],
+      "golden-isles": ["redfish", "speckled-trout", "whiting", "southern-flounder", "tarpon"],
+    },
+    cities: GA_CITIES,
+    featured: ["tybee-island", "st-simons-island", "jekyll-island"],
+    regsName: "Georgia DNR regulations",
+    regsUrl: "https://georgiawildlife.com/fishing/saltwater",
+    bounds: [30.6, -81.8, 32.3, -80.7],
+  },
+  "south-carolina": {
+    slug: "south-carolina",
+    name: "South Carolina",
+    code: "SC",
+    description:
+      "Live NOAA tide predictions and fishing forecasts for the South Carolina coast — the Grand Strand piers, Charleston's jetties and the Lowcountry sounds, every station in NOAA's network.",
+    regions: [
+      { key: "grand-strand", name: "Grand Strand" },
+      { key: "lowcountry", name: "Lowcountry" },
+    ],
+    regionFor: (lat) => (lat >= 33.2 ? "grand-strand" : "lowcountry"),
+    regionSpecies: {
+      "grand-strand": ["whiting", "bluefish", "spanish-mackerel", "king-mackerel", "redfish"],
+      lowcountry: ["redfish", "speckled-trout", "southern-flounder", "sheepshead", "cobia"],
+    },
+    cities: SC_CITIES,
+    featured: ["charleston", "myrtle-beach", "hilton-head-island"],
+    regsName: "SCDNR regulations",
+    regsUrl: "https://www.dnr.sc.gov/regulations.html",
+    bounds: [32.0, -81.2, 33.9, -78.5],
+  },
+  "north-carolina": {
+    slug: "north-carolina",
+    name: "North Carolina",
+    code: "NC",
+    description:
+      "Live NOAA tide predictions and fishing forecasts for the North Carolina coast — the Outer Banks, Cape Hatteras, the Crystal Coast and the Cape Fear beaches, every station in NOAA's network.",
+    regions: [
+      { key: "outer-banks", name: "Outer Banks" },
+      { key: "crystal-coast", name: "Crystal Coast" },
+      { key: "cape-fear", name: "Cape Fear Coast" },
+    ],
+    regionFor: (lat) => (lat >= 35.0 ? "outer-banks" : lat >= 34.5 ? "crystal-coast" : "cape-fear"),
+    regionSpecies: {
+      "outer-banks": ["redfish", "bluefish", "spanish-mackerel", "striped-bass", "cobia"],
+      "crystal-coast": ["redfish", "speckled-trout", "southern-flounder", "spanish-mackerel", "sheepshead"],
+      "cape-fear": ["redfish", "southern-flounder", "speckled-trout", "king-mackerel", "whiting"],
+    },
+    cities: NC_CITIES,
+    featured: ["nags-head", "cape-hatteras", "wrightsville-beach"],
+    regsName: "NC Marine Fisheries regulations",
+    regsUrl: "https://www.deq.nc.gov/about/divisions/marine-fisheries/recreational-fishing",
+    bounds: [33.8, -78.6, 36.6, -75.4],
   },
 };
 
