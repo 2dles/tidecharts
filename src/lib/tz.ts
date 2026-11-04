@@ -19,10 +19,18 @@ const PT = "America/Los_Angeles";
 /** Timezone for a location: NOAA lst_ldt returns STATION-LOCAL time, so all
  * naive math must run in the station's own zone. */
 export function locTz(loc: { state: string; lon: number }): string {
-  if (loc.state === "florida") {
-    return loc.lon < -85.05 ? "America/Chicago" : "America/New_York";
+  switch (loc.state) {
+    case "florida":
+      return loc.lon < -85.05 ? "America/Chicago" : "America/New_York";
+    case "texas":
+      return "America/Chicago";
+    case "georgia":
+    case "south-carolina":
+    case "north-carolina":
+      return "America/New_York";
+    default:
+      return PT;
   }
-  return PT;
 }
 
 /** Current moment expressed as naive local ms for the given IANA timezone. */
