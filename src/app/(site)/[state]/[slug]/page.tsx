@@ -156,6 +156,20 @@ export default async function LocationPage({
     (e) => e.t >= dayStart && e.t < dayStart + 2 * DAY_MS,
   );
 
+  // 7-day tide table. Every page that outranks us for "{city} tides" prints a
+  // multi-day table as plain HTML; we fetch the 7 days already (noaa.ts) and
+  // were only printing two. Grouped by day so each row block carries its
+  // sunrise/sunset, which is what a reader planning a dawn trip actually wants.
+  const weekTable = Array.from({ length: 7 }, (_, i) => {
+    const start = dayStart + i * DAY_MS;
+    const dateKey = new Date(start).toISOString().slice(0, 10);
+    return {
+      start,
+      astro: data.days.find((d) => d.date === dateKey) ?? null,
+      events: data.events.filter((e) => e.t >= start && e.t < start + DAY_MS),
+    };
+  }).filter((d) => d.events.length > 0);
+
   const activeSpecies = loc.speciesKeys
     .map((k) => SPECIES[k])
     .filter(Boolean)
@@ -601,6 +615,77 @@ export default async function LocationPage({
               </div>
             );
           })}
+        </div>
+      </section>
+
+      {/* 7-DAY TIDE TABLE — crawlable, one block per day */}
+      <section className="mt-10" aria-labelledby="week-table-h">
+        <h2 id="week-table-h" className="text-lg font-semibold tracking-tight">
+          7-Day Tide Table for {headName}
+        </h2>
+        <p className="mt-1 max-w-3xl text-xs leading-relaxed text-ink-faint">
+          High and low tide times and heights for the next seven days, with
+          sunrise (↑) and sunset (↓). Heights are relative to MLLW. NOAA predictions
+          for station {loc.stationId}; local time.
+        </p>
+        <div className="mt-4 overflow-x-auto">
+          <table className="w-full text-sm">
+            <caption className="sr-only">
+              Seven-day high and low tide table for {loc.name}
+            </caption>
+            <thead>
+              <tr className="text-left text-xs uppercase tracking-wider text-ink-faint">
+                <th className="pb-2 pr-4 font-medium">Day</th>
+                <th className="pb-2 pr-4 font-medium">Tides</th>
+                <th className="pb-2 font-medium">Sun</th>
+              </tr>
+            </thead>
+            <tbody>
+              {weekTable.map((d, i) => (
+                <tr key={d.start} className="border-t border-line align-top">
+                  <td className="whitespace-nowrap py-3 pr-4 font-medium">
+                    {i === 0 ? "Today" : i === 1 ? "Tomorrow" : fmtDay(d.start)}
+                    {i < 2 && (
+                      <span className="block text-xs font-normal text-ink-faint">
+                        {fmtDay(d.start)}
+                      </span>
+                    )}
+                  </td>
+                  <td className="py-3 pr-4">
+                    <ul className="grid gap-x-6 gap-y-1 md:grid-cols-2">
+                      {d.events.map((e) => (
+                        <li key={e.t} className="flex gap-2 tabular-nums">
+                          <span
+                            className={`w-9 shrink-0 ${
+                              e.type === "H" ? "text-sky-300" : "text-ink-dim"
+                            }`}
+                          >
+                            {e.type === "H" ? "High" : "Low"}
+                          </span>
+                          <span className="whitespace-nowrap">{fmtTime(e.t)}</span>
+                          <span className="whitespace-nowrap text-ink-faint">{e.h.toFixed(1)} ft</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </td>
+                  <td className="whitespace-nowrap py-3 tabular-nums text-ink-dim">
+                    {d.astro ? (
+                      <>
+                        <span className="block">
+                          <span className="text-ink-faint">↑</span> {fmtTime(d.astro.sunrise)}
+                        </span>
+                        <span className="block">
+                          <span className="text-ink-faint">↓</span> {fmtTime(d.astro.sunset)}
+                        </span>
+                      </>
+                    ) : (
+                      "—"
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </section>
 
