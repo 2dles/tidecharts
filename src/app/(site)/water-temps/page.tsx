@@ -3,14 +3,13 @@ import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import WaterTempMap from "@/components/WaterTempMap";
 import { getWaterTemps, tempColor } from "@/lib/watertemps";
-import { STATES } from "@/lib/states";
+import { STATES, STATE_NAMES_TEXT } from "@/lib/states";
 
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Water Temperature Map — California & Florida Ocean Temps Today",
-  description:
-    "Live water temperatures along the California and Florida coasts. Current sea surface temps at every NOAA tide station, updated hourly, on a zoomable map.",
+  title: "Water Temperature Map — Ocean Temps Today at Every Tide Station",
+  description: `Live water temperatures along the coasts of ${STATE_NAMES_TEXT}. Current sea surface temps at every NOAA tide station, updated hourly, on a zoomable map.`,
   alternates: { canonical: "/water-temps" },
 };
 

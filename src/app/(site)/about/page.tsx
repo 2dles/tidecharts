@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import { STATE_NAMES_TEXT } from "@/lib/states";
 
 export const metadata: Metadata = {
   title: "About USTideCharts",
@@ -30,7 +31,7 @@ export default function AboutPage() {
           forecast, and a solunar calendar — and some mental math. We put the
           tide chart, the weather, the water conditions, and a single honest
           0–100 fishing score on one page, for every NOAA tide prediction
-          station in California and Florida, with more states on the way.
+          station in {STATE_NAMES_TEXT}, with more states on the way.
         </p>
         <p>
           The site is independently built and angler-run, based in the San

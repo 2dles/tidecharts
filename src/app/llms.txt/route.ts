@@ -6,7 +6,7 @@
 
 import { ARTICLES } from "@/lib/articles";
 import { LOCATIONS } from "@/lib/locations";
-import { STATES } from "@/lib/states";
+import { STATES, STATE_NAMES_TEXT } from "@/lib/states";
 
 export const revalidate = 86400;
 
@@ -15,7 +15,7 @@ export async function GET() {
   const body = `# USTideCharts
 
 > Live NOAA tide charts, weather, water temperature, and fishing forecasts for
-> every NOAA tide-prediction station in ${states.map((s) => s.name).join(" and ")}
+> every NOAA tide-prediction station in ${STATE_NAMES_TEXT}
 > (~900 location pages). Tide predictions come directly from NOAA CO-OPS
 > harmonic stations — the same data as official tide tables — shown to the
 > minute in each station's local time zone. Weather and marine conditions are

@@ -3,6 +3,7 @@ import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CopyButton from "@/components/CopyButton";
 import { getAllLocations } from "@/lib/stations";
+import { STATES } from "@/lib/states";
 
 export const metadata: Metadata = {
   title: "Free Embeddable Tide Chart Widget for Your Website",
@@ -21,6 +22,9 @@ const snippet = (
 
 export default async function WidgetPage() {
   const count = (await getAllLocations()).length;
+  const names = Object.values(STATES).map((s) => s.name);
+  const stateList =
+    names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}` : names[0];
   return (
     <div className="mx-auto max-w-4xl px-4 pt-8 sm:px-6">
       <Breadcrumbs
@@ -102,8 +106,8 @@ export default async function WidgetPage() {
           </p>
           <p>
             We ask only that the small &quot;USTideCharts&quot; credit link stays
-            visible. Currently available for {count} locations across
-            California and Florida, with more states coming — if you need a location we
+            visible. Currently available for {count} locations across{" "}
+            {stateList}, with more states coming — if you need a location we
             don&apos;t cover yet, reach out and we&apos;ll usually add it within
             a week.
           </p>
