@@ -13,7 +13,7 @@ import { getLocationData } from "@/lib/data";
 import { getProducts } from "@/lib/gear";
 import { UNIVERSAL_KEYS } from "@/lib/gear-keys";
 import { getNearby } from "@/lib/locations";
-import { findLocation, nearestLocations } from "@/lib/stations";
+import { findLocation, nearbyStations } from "@/lib/stations";
 import { bestWindows, dayScores, scoreAt, scoreLabel } from "@/lib/score";
 import { SPECIES, speciesActivity } from "@/lib/species";
 import { getState, stateCodeFor } from "@/lib/states";
@@ -192,8 +192,22 @@ export default async function LocationPage({
   const stateArticles = ARTICLES.filter((a) => a.states?.includes(loc.state));
   const generalArticles = ARTICLES.filter((a) => !a.states);
   const relatedArticles = [...stateArticles, ...generalArticles].slice(0, 3);
-  const nearby =
-    loc.tier === "station" ? await nearestLocations(loc) : getNearby(loc);
+  // Hand-picked neighbours first on curated pages, then the closest stations
+  // by distance, so every page links 8 places along the coast.
+  const closest = await nearbyStations(loc, 12);
+  const picked = loc.tier === "station" ? [] : getNearby(loc).map((l) => l.slug);
+  const nearby = [
+    ...picked.map((slug) => closest.find((c) => c.loc.slug === slug)).filter((c): c is NonNullable<typeof c> => Boolean(c)),
+    ...closest.filter((c) => !picked.includes(c.loc.slug)),
+  ]
+    .slice(0, 8)
+    .sort((a, b) => a.miles - b.miles);
+  // Several NOAA stations share a short name ("Sunny Point Army Base"), and a
+  // station can share the page's own name; use the full station name there.
+  const shortNameCount = new Map<string, number>();
+  for (const c of nearby) shortNameCount.set(c.loc.name, (shortNameCount.get(c.loc.name) ?? 0) + 1);
+  const nearbyLabel = (n: typeof loc) =>
+    (shortNameCount.get(n.name) ?? 0) > 1 || n.name === loc.name ? n.stationName : n.name;
 
   // --- Crawlable prose + FAQ (unique per page, refreshed with the data) ---
 
@@ -797,16 +811,23 @@ export default async function LocationPage({
           <p className="mt-3 text-sm leading-relaxed text-ink-dim">{loc.intro}</p>
         </div>
         <div className="card p-6">
-          <h2 className="text-lg font-semibold tracking-tight">Nearby Spots</h2>
-          <ul className="mt-3 space-y-3">
-            {nearby.map((n) => (
+          <h2 className="text-lg font-semibold tracking-tight">Tide Stations Near {loc.name}</h2>
+          <ul className="mt-3 divide-y divide-line">
+            {nearby.map(({ loc: n, miles, dir }) => (
               <li key={n.slug}>
                 <Link
                   href={`/${n.state}/${n.slug}`}
-                  className="group block rounded-xl border border-line p-3 transition-colors hover:border-line-hi"
+                  className="group flex items-baseline justify-between gap-3 py-2"
                 >
-                  <p className="font-medium group-hover:text-sky-300">{n.name}</p>
-                  <p className="mt-0.5 text-xs text-ink-faint">{n.tagline}</p>
+                  <span className="min-w-0">
+                    <span className="block truncate font-medium group-hover:text-sky-300">{nearbyLabel(n)}</span>
+                    {n.nearCity && (
+                      <span className="block truncate text-xs text-ink-faint">near {n.nearCity}</span>
+                    )}
+                  </span>
+                  <span className="shrink-0 text-xs tabular-nums text-ink-faint">
+                    {miles < 0.5 ? "<0.5" : miles < 10 ? miles.toFixed(1) : Math.round(miles)} mi {dir}
+                  </span>
                 </Link>
               </li>
             ))}
