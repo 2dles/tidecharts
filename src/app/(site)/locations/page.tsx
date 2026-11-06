@@ -4,14 +4,13 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import SearchBar from "@/components/SearchBar";
 import { LOCATIONS } from "@/lib/locations";
 import { getAllLocations, getSearchIndex } from "@/lib/stations";
-import { STATES } from "@/lib/states";
+import { STATES, STATE_NAMES_TEXT } from "@/lib/states";
 
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "All Tide Chart Locations — California & Florida",
-  description:
-    "Browse live NOAA tide charts and fishing forecasts by state. Every tide prediction station in California and Florida, with weather, water temps, and bite windows.",
+  title: "All Tide Chart Locations by State",
+  description: `Browse live NOAA tide charts and fishing forecasts by state. Every tide prediction station in ${STATE_NAMES_TEXT}, with weather, water temps, and bite windows.`,
   alternates: { canonical: "/locations" },
 };
 

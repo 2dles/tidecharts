@@ -4,7 +4,7 @@
 
 import { getAllLocations } from "@/lib/stations";
 import { ARTICLES } from "@/lib/articles";
-import { STATES } from "@/lib/states";
+import { STATES, STATE_NAMES_TEXT } from "@/lib/states";
 
 export const revalidate = 86400;
 
@@ -29,7 +29,7 @@ ${locs
   const body = `# USTideCharts — full index
 
 > Live NOAA tide charts and fishing forecasts for every NOAA tide-prediction
-> station in ${Object.values(STATES).map((s) => s.name).join(" and ")}.
+> station in ${STATE_NAMES_TEXT}.
 > Every location below has TWO endpoints: the canonical HTML page, and a
 > live markdown endpoint at /md/{state}/{slug} returning today's actual tide
 > times, conditions, and fishing windows in ~1 KB of plain text — fetch that

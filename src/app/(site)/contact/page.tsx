@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import { STATE_NAMES_TEXT } from "@/lib/states";
 
 export const metadata: Metadata = {
   title: "Contact USTideCharts",
@@ -46,7 +47,7 @@ export default function ContactPage() {
         </p>
         <p>
           <span className="text-ink">Station and location requests.</span> We
-          cover every NOAA tide prediction station in California and Florida.
+          cover every NOAA tide prediction station in {STATE_NAMES_TEXT}.
           If your spot is missing or you want your state added next, ask — new
           locations usually ship within a week.
         </p>

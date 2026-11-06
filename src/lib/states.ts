@@ -337,6 +337,12 @@ export function getState(slug: string): StateConfig | undefined {
   return STATES[slug];
 }
 
+/** "California, Florida, … and North Carolina", for copy that names the coverage. */
+export const STATE_NAMES_TEXT = (() => {
+  const n = Object.values(STATES).map((s) => s.name);
+  return n.length > 1 ? `${n.slice(0, -1).join(", ")} and ${n[n.length - 1]}` : n[0];
+})();
+
 export function stateCodeFor(stateSlug: string): string {
   return STATES[stateSlug]?.code ?? "US";
 }
