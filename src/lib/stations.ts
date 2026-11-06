@@ -227,6 +227,38 @@ export async function getSearchIndex(): Promise<SearchRow[]> {
   ]);
 }
 
+const COMPASS = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
+
+export interface NearbyStation {
+  loc: Location;
+  /** Straight-line distance in miles, one decimal. */
+  miles: number;
+  /** 8-point compass direction from the page's station to this one. */
+  dir: string;
+}
+
+/**
+ * The n closest other tide pages, with straight-line distance and direction.
+ * Shown on every station page so people (and crawlers) can hop along the
+ * coast: a nearby station is often the better match for where they launch.
+ */
+export async function nearbyStations(loc: Location, n = 8): Promise<NearbyStation[]> {
+  const all = await getAllLocations();
+  return all
+    .filter((l) => l.slug !== loc.slug && l.stationId !== loc.stationId)
+    .map((l) => {
+      const dLat = (l.lat - loc.lat) * 111;
+      const dLon = (l.lon - loc.lon) * 111 * Math.cos((loc.lat * Math.PI) / 180);
+      const km = Math.sqrt(dLat * dLat + dLon * dLon);
+      const deg = (Math.atan2(dLon, dLat) * 180) / Math.PI;
+      const dir = COMPASS[Math.round(((deg + 360) % 360) / 45) % 8];
+      return { loc: l, km, dir };
+    })
+    .sort((a, b) => a.km - b.km)
+    .slice(0, n)
+    .map(({ loc: l, km, dir }) => ({ loc: l, miles: Math.round(km * 0.621371 * 10) / 10, dir }));
+}
+
 /** Nearest other locations — used for auto-generated station pages. */
 export async function nearestLocations(loc: Location, n = 3): Promise<Location[]> {
   const all = await getAllLocations();
