@@ -8,17 +8,21 @@ import { STATES } from "@/lib/states";
 export const metadata: Metadata = {
   title: "Free Embeddable Tide Chart Widget for Your Website",
   description:
-    "Add a live, interactive NOAA tide chart to your marina, harbor, bait shop, or charter website — free, no signup, one line of code.",
+    "Add a live, interactive NOAA tide chart to your marina, harbor, bait shop, or charter website — free, no signup, copy and paste.",
   alternates: { canonical: "/widget" },
 };
 
+// The credit line sits outside the iframe so it is part of the host page.
+// Plain brand text only: keyword-rich widget links are what Google's link
+// spam policy targets, and the brand name is what we want people to remember.
 const snippet = (
   slug: string,
 ) => `<iframe src="https://ustidecharts.com/embed/${slug}"
   title="Tide chart"
   width="100%" height="460"
   style="border:0;border-radius:12px;overflow:hidden"
-  loading="lazy"></iframe>`;
+  loading="lazy"></iframe>
+<p style="margin:4px 0 0;font:12px/1.4 sans-serif;text-align:right">Tides by <a href="https://ustidecharts.com/">USTideCharts</a></p>`;
 
 export default async function WidgetPage() {
   const count = (await getAllLocations()).length;
@@ -40,7 +44,7 @@ export default async function WidgetPage() {
         Run a marina, harbor office, bait shop, charter operation, or fishing
         club? Put a live, interactive tide chart on your own website — the same
         NOAA-powered chart from USTideCharts, free, no signup, no API key. Paste
-        one line of code and it stays current forever.
+        the snippet below and it stays current forever.
       </p>
 
       <section className="mt-8" aria-labelledby="how-widget-h">
@@ -90,6 +94,12 @@ export default async function WidgetPage() {
             style={{ border: 0, borderRadius: 12, overflow: "hidden" }}
             loading="lazy"
           />
+          <p className="mt-1 text-right text-xs text-ink-faint">
+            Tides by{" "}
+            <a href="https://ustidecharts.com/" className="text-sky-300 hover:text-teal-300">
+              USTideCharts
+            </a>
+          </p>
         </div>
       </section>
 
@@ -105,8 +115,8 @@ export default async function WidgetPage() {
             visitors can pan, zoom, and hover just like on USTideCharts.
           </p>
           <p>
-            We ask only that the small &quot;USTideCharts&quot; credit link stays
-            visible. Currently available for {count} locations across{" "}
+            We ask only that the small &quot;Tides by USTideCharts&quot; line
+            under the chart stays in place. Currently available for {count} locations across{" "}
             {stateList}, with more states coming — if you need a location we
             don&apos;t cover yet, reach out and we&apos;ll usually add it within
             a week.
