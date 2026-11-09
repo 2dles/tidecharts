@@ -48,7 +48,7 @@ export default function FeaturedTabs({
   return (
     <div>
       <div
-        className="mb-4 flex gap-1 rounded-xl border border-line bg-card/60 p-1 text-sm w-fit"
+        className="mb-4 flex w-fit max-w-full flex-wrap gap-1 rounded-xl border border-line bg-card/60 p-1 text-sm"
         role="tablist"
         aria-label="Featured state"
       >
@@ -58,7 +58,7 @@ export default function FeaturedTabs({
             role="tab"
             aria-selected={g.state === group.state}
             onClick={() => setActive(g.state)}
-            className={`rounded-lg px-3 py-1.5 font-medium transition-colors ${
+            className={`whitespace-nowrap rounded-lg px-3 py-1.5 font-medium transition-colors ${
               g.state === group.state
                 ? "bg-sky-400/15 text-sky-300"
                 : "text-ink-faint hover:text-ink-dim"

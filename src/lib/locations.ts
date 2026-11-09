@@ -2,6 +2,7 @@
 // stationId = NOAA CO-OPS tide prediction station.
 import { FL_LOCATIONS } from "./locations-fl";
 import { ATL_LOCATIONS } from "./locations-atl";
+import { PNW_LOCATIONS } from "./locations-pnw";
 
 // Region keys are defined per-state in states.ts (norcal/central/socal,
 // panhandle/gulf/atlantic/keys, ...)
@@ -374,7 +375,7 @@ export const CA_LOCATIONS: Location[] = [
   },
 ];
 
-export const LOCATIONS: Location[] = [...CA_LOCATIONS, ...FL_LOCATIONS, ...ATL_LOCATIONS];
+export const LOCATIONS: Location[] = [...CA_LOCATIONS, ...FL_LOCATIONS, ...ATL_LOCATIONS, ...PNW_LOCATIONS];
 
 export function getLocation(slug: string): Location | undefined {
   return LOCATIONS.find((l) => l.slug === slug);

@@ -186,6 +186,55 @@ const NC_CITIES: [string, number, number][] = [
   ["Ocean Isle Beach", 33.89, -78.43], ["Sunset Beach", 33.88, -78.51],
 ];
 
+const WA_CITIES: [string, number, number][] = [
+  ["Blaine", 48.99, -122.75], ["Birch Bay", 48.92, -122.75],
+  ["Bellingham", 48.75, -122.48], ["Anacortes", 48.51, -122.61],
+  ["Friday Harbor", 48.53, -123.01], ["Eastsound", 48.7, -122.91],
+  ["La Conner", 48.39, -122.5], ["Oak Harbor", 48.29, -122.64],
+  ["Coupeville", 48.22, -122.69], ["Langley", 48.04, -122.41],
+  ["Everett", 47.98, -122.2], ["Mukilteo", 47.95, -122.3],
+  ["Edmonds", 47.81, -122.38], ["Kingston", 47.8, -122.5],
+  ["Seattle", 47.6, -122.34], ["Bainbridge Island", 47.63, -122.52],
+  ["Bremerton", 47.57, -122.63], ["Port Orchard", 47.54, -122.64],
+  ["Des Moines", 47.4, -122.33], ["Vashon", 47.45, -122.46],
+  ["Gig Harbor", 47.33, -122.58], ["Tacoma", 47.25, -122.44],
+  ["Steilacoom", 47.17, -122.6], ["Olympia", 47.04, -122.9],
+  ["Shelton", 47.22, -123.1], ["Hoodsport", 47.41, -123.14],
+  ["Brinnon", 47.68, -122.9], ["Quilcene", 47.82, -122.88],
+  ["Port Ludlow", 47.92, -122.69], ["Port Townsend", 48.12, -122.76],
+  ["Sequim", 48.08, -123.1], ["Port Angeles", 48.12, -123.43],
+  ["Sekiu", 48.26, -124.3], ["Neah Bay", 48.37, -124.62],
+  ["La Push", 47.91, -124.64], ["Taholah", 47.35, -124.29],
+  ["Moclips", 47.24, -124.22], ["Ocean Shores", 46.97, -124.16],
+  ["Aberdeen", 46.98, -123.82], ["Hoquiam", 46.98, -123.89],
+  ["Westport", 46.89, -124.1], ["Grayland", 46.8, -124.09],
+  ["Tokeland", 46.71, -123.98], ["Raymond", 46.69, -123.73],
+  ["South Bend", 46.66, -123.8], ["Ocean Park", 46.49, -124.05],
+  ["Long Beach", 46.35, -124.05], ["Ilwaco", 46.31, -124.04],
+  ["Chinook", 46.27, -123.95], ["Cathlamet", 46.2, -123.38],
+  ["Longview", 46.14, -122.94], ["Vancouver", 45.63, -122.67],
+];
+
+const OR_CITIES: [string, number, number][] = [
+  ["Astoria", 46.19, -123.83], ["Warrenton", 46.17, -123.92],
+  ["Hammond", 46.2, -123.95], ["Seaside", 45.99, -123.92],
+  ["Cannon Beach", 45.89, -123.96], ["Manzanita", 45.72, -123.93],
+  ["Nehalem", 45.72, -123.89], ["Wheeler", 45.69, -123.88],
+  ["Rockaway Beach", 45.61, -123.94], ["Garibaldi", 45.56, -123.91],
+  ["Bay City", 45.52, -123.89], ["Tillamook", 45.46, -123.84],
+  ["Netarts", 45.43, -123.95], ["Pacific City", 45.2, -123.96],
+  ["Neskowin", 45.1, -123.98], ["Lincoln City", 44.96, -124.01],
+  ["Depoe Bay", 44.81, -124.06], ["Newport", 44.64, -124.05],
+  ["Toledo", 44.62, -123.94], ["Waldport", 44.43, -124.07],
+  ["Yachats", 44.31, -124.1], ["Florence", 43.98, -124.1],
+  ["Reedsport", 43.7, -124.1], ["Winchester Bay", 43.68, -124.18],
+  ["North Bend", 43.41, -124.22], ["Coos Bay", 43.37, -124.22],
+  ["Charleston", 43.34, -124.33], ["Bandon", 43.12, -124.41],
+  ["Port Orford", 42.75, -124.5], ["Gold Beach", 42.41, -124.42],
+  ["Brookings", 42.05, -124.27], ["St. Helens", 45.86, -122.81],
+  ["Portland", 45.52, -122.68],
+];
+
 export const STATES: Record<string, StateConfig> = {
   california: {
     slug: "california",
@@ -328,6 +377,70 @@ export const STATES: Record<string, StateConfig> = {
     regsName: "NC Marine Fisheries regulations",
     regsUrl: "https://www.deq.nc.gov/about/divisions/marine-fisheries/recreational-fishing",
     bounds: [33.8, -78.6, 36.6, -75.4],
+  },
+  washington: {
+    slug: "washington",
+    name: "Washington",
+    code: "WA",
+    description:
+      "Live NOAA tide predictions and fishing forecasts for Washington's salt water: Puget Sound, the San Juans, the Strait of Juan de Fuca, the outer coast and the lower Columbia, every station in NOAA's network.",
+    regions: [
+      { key: "puget-sound", name: "Puget Sound & San Juans" },
+      { key: "strait", name: "Strait of Juan de Fuca" },
+      { key: "outer-coast", name: "Outer Coast" },
+      { key: "columbia-river", name: "Lower Columbia River" },
+    ],
+    regionFor: (lat, lon) =>
+      lat < 46.4 && lon > -123.6
+        ? "columbia-river"
+        : lon < -123.7 && lat < 48.0
+          ? "outer-coast"
+          : lat >= 48.0 && lon < -123.3
+            ? "strait"
+            : "puget-sound",
+    regionSpecies: {
+      "puget-sound": ["salmon", "dungeness-crab", "lingcod", "cabezon"],
+      strait: ["salmon", "lingcod", "rockfish", "cabezon", "dungeness-crab"],
+      "outer-coast": ["salmon", "dungeness-crab", "rockfish", "lingcod", "redtail-surfperch"],
+      "columbia-river": ["salmon", "white-sturgeon"],
+    },
+    cities: WA_CITIES,
+    featured: ["seattle", "westport", "port-townsend"],
+    regsName: "WDFW regulations",
+    regsUrl: "https://wdfw.wa.gov/fishing/regulations",
+    bounds: [45.5, -124.8, 49.0, -122.0],
+  },
+  oregon: {
+    slug: "oregon",
+    name: "Oregon",
+    code: "OR",
+    description:
+      "Live NOAA tide predictions and fishing forecasts for the Oregon coast: the Columbia River mouth, Tillamook, Yaquina and Coos bays, and the south coast rivers, every station in NOAA's network.",
+    regions: [
+      { key: "north-coast", name: "North Coast" },
+      { key: "central-coast", name: "Central Coast" },
+      { key: "south-coast", name: "South Coast" },
+      { key: "columbia-river", name: "Columbia & Willamette" },
+    ],
+    regionFor: (lat, lon) =>
+      lat >= 45.3 && lon > -123.6
+        ? "columbia-river"
+        : lat >= 45.0
+          ? "north-coast"
+          : lat >= 43.6
+            ? "central-coast"
+            : "south-coast",
+    regionSpecies: {
+      "north-coast": ["salmon", "dungeness-crab", "rockfish", "lingcod", "redtail-surfperch"],
+      "central-coast": ["dungeness-crab", "rockfish", "lingcod", "redtail-surfperch", "salmon"],
+      "south-coast": ["dungeness-crab", "rockfish", "lingcod", "redtail-surfperch", "salmon"],
+      "columbia-river": ["salmon", "white-sturgeon"],
+    },
+    cities: OR_CITIES,
+    featured: ["astoria", "newport", "coos-bay"],
+    regsName: "ODFW regulations",
+    regsUrl: "https://myodfw.com/fishing/regulations",
+    bounds: [42.0, -124.6, 46.3, -122.6],
   },
 };
 

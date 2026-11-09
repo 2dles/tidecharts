@@ -6,28 +6,28 @@ export default function SiteLayout({
   return (
     <>
       <header className="sticky top-0 z-40 border-b border-line bg-abyss/70 backdrop-blur-xl">
-        <nav className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
-          <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight">
-            <span aria-hidden className="grid h-7 w-7 place-items-center rounded-lg bg-gradient-to-br from-sky-400 to-teal-400 text-sm text-abyss">
+        <nav className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-2 px-3 sm:px-6">
+          <Link href="/" className="flex shrink-0 items-center gap-1.5 font-semibold tracking-tight sm:gap-2">
+            <span aria-hidden className="hidden h-7 w-7 place-items-center min-[380px]:grid rounded-lg bg-gradient-to-br from-sky-400 to-teal-400 text-sm text-abyss">
               ≈
             </span>
             <span>
               USTide<span className="text-gradient">Charts</span>
             </span>
           </Link>
-          <div className="flex items-center gap-0.5 text-sm text-ink-dim sm:gap-2">
-            <Link href="/locations" className="rounded-lg px-2 py-1.5 transition-colors hover:bg-card-hi hover:text-ink sm:px-3">
+          <div className="flex items-center text-[13px] text-ink-dim sm:gap-2 sm:text-sm">
+            <Link href="/locations" className="rounded-lg px-1 py-1.5 transition-colors hover:bg-card-hi hover:text-ink min-[380px]:px-1.5 sm:px-3">
               Locations
             </Link>
-            <Link href="/guides" className="rounded-lg px-2 py-1.5 transition-colors hover:bg-card-hi hover:text-ink sm:px-3">
+            <Link href="/guides" className="rounded-lg px-1 py-1.5 transition-colors hover:bg-card-hi hover:text-ink min-[380px]:px-1.5 sm:px-3">
               Guides
             </Link>
-            <Link href="/water-temps" className="rounded-lg px-2 py-1.5 transition-colors hover:bg-card-hi hover:text-ink sm:px-3">
+            <Link href="/water-temps" className="rounded-lg px-1 py-1.5 transition-colors hover:bg-card-hi hover:text-ink min-[380px]:px-1.5 sm:px-3">
               <span className="hidden sm:inline">Water </span>Temps
             </Link>
             <a
               href="https://theanglerstore.com?utm_source=ustidecharts&utm_medium=nav"
-              className="ml-1 whitespace-nowrap rounded-lg bg-gradient-to-r from-sky-500/90 to-teal-500/90 px-2.5 py-1.5 font-medium text-abyss transition-opacity hover:opacity-90 sm:px-3"
+              className="ml-0.5 whitespace-nowrap rounded-lg bg-gradient-to-r from-sky-500/90 to-teal-500/90 px-2 py-1.5 font-medium text-abyss transition-opacity hover:opacity-90 sm:px-3"
             >
               <span className="hidden sm:inline">Gear </span>Store
             </a>
@@ -48,7 +48,7 @@ export default function SiteLayout({
                 planning — always check conditions on the water.
               </p>
             </div>
-            <div className="flex gap-12">
+            <div className="flex flex-wrap gap-x-12 gap-y-8">
               <div className="flex flex-col gap-2">
                 <p className="font-medium text-ink-dim">Explore</p>
                 <Link href="/california" className="hover:text-ink-dim">California Tides</Link>
@@ -57,6 +57,8 @@ export default function SiteLayout({
                 <Link href="/georgia" className="hover:text-ink-dim">Georgia Tides</Link>
                 <Link href="/south-carolina" className="hover:text-ink-dim">South Carolina Tides</Link>
                 <Link href="/north-carolina" className="hover:text-ink-dim">North Carolina Tides</Link>
+                <Link href="/washington" className="hover:text-ink-dim">Washington Tides</Link>
+                <Link href="/oregon" className="hover:text-ink-dim">Oregon Tides</Link>
                 <Link href="/guides" className="hover:text-ink-dim">Fishing Guides</Link>
                 <Link href="/water-temps" className="hover:text-ink-dim">Water Temperatures</Link>
                 <Link href="/widget" className="hover:text-ink-dim">Free Tide Widget</Link>
