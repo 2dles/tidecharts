@@ -59,6 +59,9 @@ export default function SiteLayout({
                 <Link href="/north-carolina" className="hover:text-ink-dim">North Carolina Tides</Link>
                 <Link href="/washington" className="hover:text-ink-dim">Washington Tides</Link>
                 <Link href="/oregon" className="hover:text-ink-dim">Oregon Tides</Link>
+                <Link href="/louisiana" className="hover:text-ink-dim">Louisiana Tides</Link>
+                <Link href="/mississippi" className="hover:text-ink-dim">Mississippi Tides</Link>
+                <Link href="/alabama" className="hover:text-ink-dim">Alabama Tides</Link>
                 <Link href="/guides" className="hover:text-ink-dim">Fishing Guides</Link>
                 <Link href="/water-temps" className="hover:text-ink-dim">Water Temperatures</Link>
                 <Link href="/widget" className="hover:text-ink-dim">Free Tide Widget</Link>

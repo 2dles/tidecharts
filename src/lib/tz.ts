@@ -23,6 +23,9 @@ export function locTz(loc: { state: string; lon: number }): string {
     case "florida":
       return loc.lon < -85.05 ? "America/Chicago" : "America/New_York";
     case "texas":
+    case "louisiana":
+    case "mississippi":
+    case "alabama":
       return "America/Chicago";
     case "georgia":
     case "south-carolina":

@@ -3,6 +3,7 @@
 import { FL_LOCATIONS } from "./locations-fl";
 import { ATL_LOCATIONS } from "./locations-atl";
 import { PNW_LOCATIONS } from "./locations-pnw";
+import { GULF_LOCATIONS } from "./locations-gulf";
 
 // Region keys are defined per-state in states.ts (norcal/central/socal,
 // panhandle/gulf/atlantic/keys, ...)
@@ -375,7 +376,7 @@ export const CA_LOCATIONS: Location[] = [
   },
 ];
 
-export const LOCATIONS: Location[] = [...CA_LOCATIONS, ...FL_LOCATIONS, ...ATL_LOCATIONS, ...PNW_LOCATIONS];
+export const LOCATIONS: Location[] = [...CA_LOCATIONS, ...FL_LOCATIONS, ...ATL_LOCATIONS, ...PNW_LOCATIONS, ...GULF_LOCATIONS];
 
 export function getLocation(slug: string): Location | undefined {
   return LOCATIONS.find((l) => l.slug === slug);
