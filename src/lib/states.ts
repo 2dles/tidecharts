@@ -272,6 +272,164 @@ const AL_CITIES: [string, number, number][] = [
   ["Elberta", 30.41, -87.6],
 ];
 
+const VA_CITIES: [string, number, number][] = [
+  ["Chincoteague", 37.93, -75.38], ["Wachapreague", 37.6, -75.69],
+  ["Oyster", 37.29, -75.92], ["Cape Charles", 37.27, -76.02],
+  ["Onancock", 37.71, -75.75], ["Saxis", 37.92, -75.72],
+  ["Reedville", 37.84, -76.28], ["Kilmarnock", 37.71, -76.38],
+  ["Deltaville", 37.55, -76.33], ["Gloucester Point", 37.25, -76.5],
+  ["Yorktown", 37.24, -76.51], ["Poquoson", 37.12, -76.35],
+  ["Hampton", 37.03, -76.35], ["Newport News", 36.98, -76.43],
+  ["Norfolk", 36.85, -76.29], ["Portsmouth", 36.84, -76.3],
+  ["Virginia Beach", 36.85, -75.98], ["Sandbridge", 36.73, -75.94],
+  ["Smithfield", 36.98, -76.63], ["Williamsburg", 37.27, -76.71],
+  ["Urbanna", 37.64, -76.57], ["Colonial Beach", 38.25, -76.96],
+  ["Fredericksburg", 38.3, -77.46], ["Alexandria", 38.8, -77.05],
+];
+
+const MD_CITIES: [string, number, number][] = [
+  ["Ocean City", 38.34, -75.08], ["Berlin", 38.32, -75.22],
+  ["Crisfield", 37.98, -75.85], ["Deal Island", 38.16, -75.95],
+  ["Cambridge", 38.56, -76.08], ["Tilghman Island", 38.71, -76.34],
+  ["St. Michaels", 38.79, -76.22], ["Easton", 38.77, -76.08],
+  ["Kent Island", 38.95, -76.32], ["Rock Hall", 39.14, -76.24],
+  ["Chestertown", 39.21, -76.07], ["Havre de Grace", 39.55, -76.09],
+  ["Baltimore", 39.28, -76.61], ["Annapolis", 38.98, -76.49],
+  ["Deale", 38.78, -76.55], ["Chesapeake Beach", 38.69, -76.53],
+  ["Solomons", 38.32, -76.45], ["Lexington Park", 38.27, -76.45],
+  ["Point Lookout", 38.04, -76.32], ["Leonardtown", 38.29, -76.64],
+  ["Washington", 38.89, -77.03],
+];
+
+const DE_CITIES: [string, number, number][] = [
+  ["Fenwick Island", 38.46, -75.05], ["Bethany Beach", 38.54, -75.06],
+  ["Rehoboth Beach", 38.72, -75.08], ["Lewes", 38.77, -75.14],
+  ["Milford", 38.91, -75.43], ["Bowers", 39.06, -75.4],
+  ["Dover", 39.16, -75.52], ["Leipsic", 39.24, -75.52],
+  ["Woodland Beach", 39.33, -75.47], ["Delaware City", 39.58, -75.59],
+  ["New Castle", 39.66, -75.57], ["Wilmington", 39.74, -75.55],
+];
+
+const NJ_CITIES: [string, number, number][] = [
+  ["Keansburg", 40.44, -74.13], ["Highlands", 40.4, -73.99],
+  ["Perth Amboy", 40.51, -74.27], ["Long Branch", 40.3, -73.99],
+  ["Asbury Park", 40.22, -74.01], ["Belmar", 40.18, -74.02],
+  ["Manasquan", 40.12, -74.05], ["Point Pleasant Beach", 40.09, -74.05],
+  ["Seaside Heights", 39.94, -74.07], ["Toms River", 39.95, -74.2],
+  ["Barnegat Light", 39.76, -74.11], ["Forked River", 39.84, -74.19],
+  ["Beach Haven", 39.56, -74.24], ["Tuckerton", 39.6, -74.34],
+  ["Brigantine", 39.41, -74.36], ["Atlantic City", 39.36, -74.42],
+  ["Ventnor", 39.34, -74.48], ["Margate", 39.33, -74.5],
+  ["Ocean City", 39.28, -74.57], ["Sea Isle City", 39.15, -74.69],
+  ["Avalon", 39.1, -74.72], ["Stone Harbor", 39.05, -74.76],
+  ["Wildwood", 38.99, -74.81], ["Cape May", 38.94, -74.91],
+  ["Villas", 39.03, -74.94], ["Fortescue", 39.24, -75.17],
+  ["Salem", 39.57, -75.47], ["Camden", 39.93, -75.12],
+  ["Trenton", 40.22, -74.76], ["Jersey City", 40.72, -74.05],
+  ["Hoboken", 40.74, -74.03], ["Bayonne", 40.67, -74.11],
+];
+
+const NY_CITIES: [string, number, number][] = [
+  ["Staten Island", 40.58, -74.15], ["Coney Island", 40.57, -73.98],
+  ["Manhattan", 40.75, -73.99], ["Brooklyn", 40.65, -73.95],
+  ["Queens", 40.73, -73.79], ["Bronx", 40.84, -73.86],
+  ["City Island", 40.85, -73.79], ["Yonkers", 40.93, -73.9],
+  ["Nyack", 41.09, -73.92], ["Peekskill", 41.29, -73.92],
+  ["Newburgh", 41.5, -74.01], ["Poughkeepsie", 41.7, -73.93],
+  ["Kingston", 41.93, -73.97], ["Albany", 42.65, -73.75],
+  ["Rockaway", 40.58, -73.82], ["Long Beach", 40.59, -73.66],
+  ["Freeport", 40.66, -73.58], ["Babylon", 40.7, -73.33],
+  ["Fire Island", 40.64, -73.16], ["Patchogue", 40.77, -73.02],
+  ["Moriches", 40.81, -72.82], ["Hampton Bays", 40.87, -72.52],
+  ["Southampton", 40.88, -72.39], ["Sag Harbor", 41.0, -72.29],
+  ["East Hampton", 40.96, -72.18], ["Montauk", 41.04, -71.95],
+  ["Greenport", 41.1, -72.36], ["Orient", 41.14, -72.3],
+  ["Mattituck", 41.0, -72.54], ["Port Jefferson", 40.95, -73.07],
+  ["Northport", 40.9, -73.34], ["Huntington", 40.87, -73.43],
+  ["Oyster Bay", 40.87, -73.53], ["Glen Cove", 40.86, -73.63],
+  ["Port Washington", 40.83, -73.7],
+];
+
+const CT_CITIES: [string, number, number][] = [
+  ["Greenwich", 41.03, -73.63], ["Stamford", 41.05, -73.54],
+  ["Norwalk", 41.1, -73.42], ["Westport", 41.14, -73.36],
+  ["Fairfield", 41.14, -73.26], ["Bridgeport", 41.18, -73.19],
+  ["Stratford", 41.18, -73.13], ["Milford", 41.22, -73.06],
+  ["New Haven", 41.3, -72.92], ["Branford", 41.28, -72.81],
+  ["Guilford", 41.28, -72.68], ["Madison", 41.28, -72.6],
+  ["Clinton", 41.28, -72.53], ["Westbrook", 41.28, -72.45],
+  ["Old Saybrook", 41.29, -72.38], ["Old Lyme", 41.32, -72.33],
+  ["Niantic", 41.33, -72.19], ["New London", 41.36, -72.1],
+  ["Groton", 41.35, -72.08], ["Mystic", 41.35, -71.97],
+  ["Stonington", 41.34, -71.91], ["Essex", 41.35, -72.39],
+  ["East Haddam", 41.45, -72.46], ["Middletown", 41.56, -72.65],
+  ["Hartford", 41.76, -72.67],
+];
+
+const RI_CITIES: [string, number, number][] = [
+  ["Westerly", 41.38, -71.83], ["Watch Hill", 41.31, -71.86],
+  ["Charlestown", 41.38, -71.64], ["Point Judith", 41.36, -71.48],
+  ["Narragansett", 41.43, -71.46], ["Wickford", 41.57, -71.45],
+  ["East Greenwich", 41.66, -71.46], ["Warwick", 41.7, -71.42],
+  ["Providence", 41.82, -71.41], ["East Providence", 41.81, -71.37],
+  ["Bristol", 41.67, -71.27], ["Portsmouth", 41.6, -71.25],
+  ["Tiverton", 41.63, -71.21], ["Newport", 41.49, -71.31],
+  ["Jamestown", 41.5, -71.37], ["Little Compton", 41.51, -71.17],
+  ["Block Island", 41.17, -71.56],
+];
+
+const MA_CITIES: [string, number, number][] = [
+  ["Newburyport", 42.81, -70.88], ["Plum Island", 42.75, -70.8],
+  ["Ipswich", 42.68, -70.84], ["Rockport", 42.66, -70.62],
+  ["Gloucester", 42.61, -70.66], ["Marblehead", 42.5, -70.86],
+  ["Salem", 42.52, -70.9], ["Lynn", 42.46, -70.95],
+  ["Revere", 42.41, -71.0], ["Boston", 42.36, -71.05],
+  ["Quincy", 42.25, -71.0], ["Hull", 42.3, -70.9],
+  ["Cohasset", 42.24, -70.8], ["Scituate", 42.2, -70.73],
+  ["Marshfield", 42.09, -70.71], ["Duxbury", 42.04, -70.67],
+  ["Plymouth", 41.96, -70.67], ["Sandwich", 41.76, -70.5],
+  ["Barnstable", 41.7, -70.3], ["Hyannis", 41.65, -70.28],
+  ["Dennis", 41.73, -70.19], ["Wellfleet", 41.94, -70.03],
+  ["Provincetown", 42.05, -70.19], ["Orleans", 41.79, -69.99],
+  ["Chatham", 41.68, -69.96], ["Harwich", 41.69, -70.08],
+  ["Falmouth", 41.55, -70.62], ["Woods Hole", 41.52, -70.67],
+  ["Bourne", 41.74, -70.6], ["Wareham", 41.76, -70.72],
+  ["Marion", 41.7, -70.76], ["New Bedford", 41.64, -70.93],
+  ["Westport", 41.51, -71.07], ["Fall River", 41.7, -71.16],
+  ["Vineyard Haven", 41.45, -70.6], ["Edgartown", 41.39, -70.51],
+  ["Menemsha", 41.35, -70.77], ["Nantucket", 41.28, -70.1],
+];
+
+const NH_CITIES: [string, number, number][] = [
+  ["Seabrook", 42.89, -70.87], ["Hampton", 42.94, -70.84],
+  ["North Hampton", 42.97, -70.83], ["Rye", 43.01, -70.77],
+  ["New Castle", 43.07, -70.72], ["Portsmouth", 43.07, -70.76],
+  ["Newington", 43.1, -70.83], ["Dover", 43.2, -70.87],
+  ["Durham", 43.13, -70.93], ["Exeter", 42.98, -70.95],
+];
+
+const ME_CITIES: [string, number, number][] = [
+  ["Kittery", 43.09, -70.74], ["York", 43.16, -70.65],
+  ["Ogunquit", 43.25, -70.6], ["Wells", 43.32, -70.58],
+  ["Kennebunkport", 43.36, -70.48], ["Biddeford Pool", 43.44, -70.36],
+  ["Saco", 43.5, -70.44], ["Old Orchard Beach", 43.52, -70.38],
+  ["Scarborough", 43.58, -70.33], ["Cape Elizabeth", 43.56, -70.2],
+  ["South Portland", 43.64, -70.24], ["Portland", 43.66, -70.26],
+  ["Falmouth", 43.73, -70.24], ["Freeport", 43.86, -70.1],
+  ["Harpswell", 43.8, -69.98], ["Bath", 43.91, -69.82],
+  ["Phippsburg", 43.82, -69.81], ["Boothbay Harbor", 43.85, -69.63],
+  ["Damariscotta", 44.03, -69.53], ["Friendship", 43.98, -69.33],
+  ["Port Clyde", 43.93, -69.26], ["Rockland", 44.1, -69.11],
+  ["Camden", 44.21, -69.06], ["Belfast", 44.43, -69.0],
+  ["Bucksport", 44.57, -68.8], ["Castine", 44.39, -68.8],
+  ["Stonington", 44.16, -68.67], ["Blue Hill", 44.41, -68.59],
+  ["Southwest Harbor", 44.28, -68.33], ["Bar Harbor", 44.39, -68.2],
+  ["Ellsworth", 44.54, -68.42], ["Winter Harbor", 44.39, -68.08],
+  ["Milbridge", 44.53, -67.88], ["Jonesport", 44.53, -67.6],
+  ["Machias", 44.72, -67.46], ["Lubec", 44.86, -66.98],
+  ["Eastport", 44.91, -66.99],
+];
+
 export const STATES: Record<string, StateConfig> = {
   california: {
     slug: "california",
@@ -539,6 +697,226 @@ export const STATES: Record<string, StateConfig> = {
     regsName: "Alabama Marine Resources regulations",
     regsUrl: "https://www.outdooralabama.com/fishing/saltwater-recreational-size-creel-limits",
     bounds: [30.2, -88.4, 31.0, -87.5],
+  },
+  "virginia": {
+    slug: "virginia",
+    name: "Virginia",
+    code: "VA",
+    description:
+      "Live NOAA tide predictions and fishing forecasts for Virginia's tidal water: Virginia Beach, the mouth of the Chesapeake, the Eastern Shore and the bay's rivers, every station in NOAA's network.",
+    regions: [
+      { key: "virginia-beach", name: "Virginia Beach & Oceanfront" },
+      { key: "chesapeake-bay", name: "Chesapeake Bay & Rivers" },
+      { key: "eastern-shore", name: "Eastern Shore" },
+    ],
+    regionFor: (lat, lon) => (lon > -75.8 && lat > 37.0 ? "eastern-shore" : lon > -76.05 && lat < 36.95 ? "virginia-beach" : "chesapeake-bay"),
+    regionSpecies: {
+      "virginia-beach": ["summer-flounder", "bluefish", "atlantic-croaker", "redfish", "spanish-mackerel"],
+      "chesapeake-bay": ["atlantic-croaker", "summer-flounder", "striped-bass-atlantic", "speckled-trout", "cobia"],
+      "eastern-shore": ["summer-flounder", "black-sea-bass", "redfish", "bluefish", "tautog"],
+    },
+    cities: VA_CITIES,
+    featured: ["virginia-beach", "chesapeake-bay-bridge-tunnel", "chincoteague"],
+    regsName: "VMRC regulations",
+    regsUrl: "https://mrc.virginia.gov/regulations/swrecfishingrules.shtm",
+    bounds: [36.5, -77.5, 38.9, -75.2],
+  },
+  "maryland": {
+    slug: "maryland",
+    name: "Maryland",
+    code: "MD",
+    description:
+      "Live NOAA tide predictions and fishing forecasts for Maryland's tidal water: Ocean City and the coastal bays, and the Chesapeake from the Susquehanna Flats to Point Lookout, every station in NOAA's network.",
+    regions: [
+      { key: "chesapeake", name: "Chesapeake Bay & Rivers" },
+      { key: "coastal-bays", name: "Ocean City & Coastal Bays" },
+    ],
+    regionFor: (_lat, lon) => (lon > -75.3 ? "coastal-bays" : "chesapeake"),
+    regionSpecies: {
+      "chesapeake": ["striped-bass-atlantic", "atlantic-croaker", "bluefish", "summer-flounder"],
+      "coastal-bays": ["summer-flounder", "striped-bass-atlantic", "tautog", "black-sea-bass", "bluefish"],
+    },
+    cities: MD_CITIES,
+    featured: ["ocean-city", "annapolis", "solomons-island"],
+    regsName: "Maryland DNR regulations",
+    regsUrl: "https://dnr.maryland.gov/fisheries/pages/regulations/index.aspx",
+    bounds: [37.9, -77.3, 39.7, -75.0],
+  },
+  "delaware": {
+    slug: "delaware",
+    name: "Delaware",
+    code: "DE",
+    description:
+      "Live NOAA tide predictions and fishing forecasts for Delaware: the Delaware River and Bay, Lewes and Cape Henlopen, Indian River Inlet and the inland bays, every station in NOAA's network.",
+    regions: [
+      { key: "delaware-bay", name: "Delaware River & Bay" },
+      { key: "beaches-inland-bays", name: "Beaches & Inland Bays" },
+    ],
+    regionFor: (lat) => (lat >= 38.75 ? "delaware-bay" : "beaches-inland-bays"),
+    regionSpecies: {
+      "delaware-bay": ["striped-bass-atlantic", "summer-flounder", "weakfish", "atlantic-croaker", "bluefish"],
+      "beaches-inland-bays": ["summer-flounder", "striped-bass-atlantic", "tautog", "bluefish", "black-sea-bass"],
+    },
+    cities: DE_CITIES,
+    featured: ["lewes", "indian-river-inlet", "delaware-city"],
+    regsName: "DNREC fishing regulations",
+    regsUrl: "https://dnrec.delaware.gov/fish-wildlife/fishing/",
+    bounds: [38.4, -75.8, 39.8, -75.0],
+  },
+  "new-jersey": {
+    slug: "new-jersey",
+    name: "New Jersey",
+    code: "NJ",
+    description:
+      "Live NOAA tide predictions and fishing forecasts for New Jersey: Sandy Hook to Cape May, the inlets and back bays of the Jersey Shore, Delaware Bay and the tidal rivers, every station in NOAA's network.",
+    regions: [
+      { key: "north-shore", name: "North Jersey Shore" },
+      { key: "south-shore", name: "South Jersey Shore" },
+      { key: "delaware-bay", name: "Delaware Bay & River" },
+    ],
+    regionFor: (lat, lon) => (lon <= -74.9 || (lat > 39.8 && lon < -74.6) ? "delaware-bay" : lat >= 39.8 ? "north-shore" : "south-shore"),
+    regionSpecies: {
+      "north-shore": ["striped-bass-atlantic", "summer-flounder", "bluefish", "black-sea-bass", "tautog"],
+      "south-shore": ["summer-flounder", "striped-bass-atlantic", "bluefish", "weakfish", "black-sea-bass"],
+      "delaware-bay": ["striped-bass-atlantic", "summer-flounder", "weakfish", "atlantic-croaker"],
+    },
+    cities: NJ_CITIES,
+    featured: ["sandy-hook", "atlantic-city", "cape-may"],
+    regsName: "NJ Fish & Wildlife marine regulations",
+    regsUrl: "https://dep.nj.gov/njfw/fishing/marine/",
+    bounds: [38.9, -75.6, 41.0, -73.9],
+  },
+  "new-york": {
+    slug: "new-york",
+    name: "New York",
+    code: "NY",
+    description:
+      "Live NOAA tide predictions and fishing forecasts for New York's tidal water: New York Harbor, the Hudson up to Albany, and Long Island's South Shore, North Shore and East End, every station in NOAA's network.",
+    regions: [
+      { key: "nyc-harbor", name: "New York Harbor" },
+      { key: "hudson-river", name: "Hudson River" },
+      { key: "south-shore", name: "Long Island South Shore" },
+      { key: "north-shore-east-end", name: "Long Island North Shore & East End" },
+    ],
+    regionFor: (lat, lon) => (lon < -73.7 && lat > 40.95 ? "hudson-river" : lon < -73.75 ? "nyc-harbor" : lat < 40.87 ? "south-shore" : "north-shore-east-end"),
+    regionSpecies: {
+      "nyc-harbor": ["striped-bass-atlantic", "bluefish", "summer-flounder", "scup", "black-sea-bass"],
+      "hudson-river": ["striped-bass-atlantic"],
+      "south-shore": ["striped-bass-atlantic", "summer-flounder", "bluefish", "weakfish", "black-sea-bass"],
+      "north-shore-east-end": ["striped-bass-atlantic", "scup", "tautog", "black-sea-bass", "bluefish"],
+    },
+    cities: NY_CITIES,
+    featured: ["new-york-city", "montauk", "jones-inlet"],
+    regsName: "NYSDEC saltwater regulations",
+    regsUrl: "https://dec.ny.gov/things-to-do/saltwater-fishing",
+    bounds: [40.5, -74.3, 42.7, -71.8],
+  },
+  "connecticut": {
+    slug: "connecticut",
+    name: "Connecticut",
+    code: "CT",
+    description:
+      "Live NOAA tide predictions and fishing forecasts for the Connecticut shore of Long Island Sound, Greenwich to Stonington, and the tidal Connecticut River, every station in NOAA's network.",
+    regions: [
+      { key: "western", name: "Western Sound" },
+      { key: "eastern", name: "Eastern Sound & Connecticut River" },
+    ],
+    regionFor: (lat, lon) => (lon < -72.6 && !(lon > -72.75 && lat > 41.4) ? "western" : "eastern"),
+    regionSpecies: {
+      "western": ["striped-bass-atlantic", "bluefish", "scup", "tautog", "summer-flounder"],
+      "eastern": ["striped-bass-atlantic", "tautog", "scup", "black-sea-bass", "bluefish"],
+    },
+    cities: CT_CITIES,
+    featured: ["new-london", "new-haven", "bridgeport"],
+    regsName: "CT DEEP saltwater regulations",
+    regsUrl: "https://portal.ct.gov/deep/fishing/saltwater/saltwater-fishing",
+    bounds: [41.0, -73.7, 41.8, -71.8],
+  },
+  "rhode-island": {
+    slug: "rhode-island",
+    name: "Rhode Island",
+    code: "RI",
+    description:
+      "Live NOAA tide predictions and fishing forecasts for Rhode Island: Narragansett Bay, the south coast from Watch Hill to Point Judith, and Block Island, every station in NOAA's network.",
+    regions: [
+      { key: "narragansett-bay", name: "Narragansett Bay" },
+      { key: "south-coast", name: "South Coast & Block Island" },
+    ],
+    regionFor: (lat, lon) => (lat > 41.4 && lon > -71.5 ? "narragansett-bay" : "south-coast"),
+    regionSpecies: {
+      "narragansett-bay": ["striped-bass-atlantic", "tautog", "scup", "black-sea-bass", "bluefish"],
+      "south-coast": ["striped-bass-atlantic", "tautog", "scup", "summer-flounder", "black-sea-bass"],
+    },
+    cities: RI_CITIES,
+    featured: ["newport-rhode-island", "point-judith", "block-island"],
+    regsName: "RIDEM recreational fishing",
+    regsUrl: "https://dem.ri.gov/natural-resources-bureau/marine-fisheries/recreational-saltwater-fishing/recreational-saltwater",
+    bounds: [41.1, -71.9, 41.9, -71.1],
+  },
+  "massachusetts": {
+    slug: "massachusetts",
+    name: "Massachusetts",
+    code: "MA",
+    description:
+      "Live NOAA tide predictions and fishing forecasts for coastal Massachusetts: the North Shore, Boston Harbor, Cape Cod and the Canal, Buzzards Bay, Martha's Vineyard and Nantucket, every station in NOAA's network.",
+    regions: [
+      { key: "boston-north-shore", name: "Boston & North Shore" },
+      { key: "cape-cod-islands", name: "Cape Cod & Islands" },
+      { key: "south-coast", name: "South Shore & Buzzards Bay" },
+    ],
+    regionFor: (lat, lon) => (lat >= 42.2 ? "boston-north-shore" : lon > -70.65 ? "cape-cod-islands" : "south-coast"),
+    regionSpecies: {
+      "boston-north-shore": ["striped-bass-atlantic", "atlantic-mackerel", "bluefish", "winter-flounder"],
+      "cape-cod-islands": ["striped-bass-atlantic", "bluefish", "scup", "black-sea-bass", "summer-flounder"],
+      "south-coast": ["scup", "tautog", "black-sea-bass", "striped-bass-atlantic", "summer-flounder"],
+    },
+    cities: MA_CITIES,
+    featured: ["boston", "cape-cod-canal", "chatham"],
+    regsName: "Mass. DMF regulations",
+    regsUrl: "https://www.mass.gov/info-details/recreational-saltwater-fishing-regulations",
+    bounds: [41.2, -71.2, 42.9, -69.9],
+  },
+  "new-hampshire": {
+    slug: "new-hampshire",
+    name: "New Hampshire",
+    code: "NH",
+    description:
+      "Live NOAA tide predictions and fishing forecasts for New Hampshire's seacoast: Hampton Harbor, Portsmouth and the Piscataqua, Great Bay and the Isles of Shoals, every station in NOAA's network.",
+    regions: [
+      { key: "seacoast", name: "Seacoast & Great Bay" },
+    ],
+    regionFor: () => "seacoast",
+    regionSpecies: {
+      "seacoast": ["striped-bass-atlantic", "atlantic-mackerel", "winter-flounder", "bluefish"],
+    },
+    cities: NH_CITIES,
+    featured: ["portsmouth", "hampton-harbor", "isles-of-shoals"],
+    regsName: "NH Fish and Game saltwater rules",
+    regsUrl: "https://www.wildlife.nh.gov/saltwater-fisheries-new-hampshire/recreational-saltwater-fishing",
+    bounds: [42.8, -71.0, 43.3, -70.6],
+  },
+  "maine": {
+    slug: "maine",
+    name: "Maine",
+    code: "ME",
+    description:
+      "Live NOAA tide predictions and fishing forecasts for the Maine coast: the southern beaches, Casco Bay, Midcoast and Penobscot Bay, Mount Desert Island and Downeast to Eastport, every station in NOAA's network.",
+    regions: [
+      { key: "southern-maine", name: "Southern Maine & Casco Bay" },
+      { key: "midcoast", name: "Midcoast & Penobscot Bay" },
+      { key: "downeast", name: "Downeast" },
+    ],
+    regionFor: (_lat, lon) => (lon < -69.8 ? "southern-maine" : lon < -68.5 ? "midcoast" : "downeast"),
+    regionSpecies: {
+      "southern-maine": ["striped-bass-atlantic", "atlantic-mackerel", "bluefish"],
+      "midcoast": ["atlantic-mackerel", "striped-bass-atlantic"],
+      "downeast": ["atlantic-mackerel", "striped-bass-atlantic"],
+    },
+    cities: ME_CITIES,
+    featured: ["portland", "kennebunkport", "bar-harbor"],
+    regsName: "Maine DMR recreational rules",
+    regsUrl: "https://www.maine.gov/dmr/fisheries/recreational/fishing-regulations-tips",
+    bounds: [43.0, -71.1, 45.2, -66.9],
   },
 };
 

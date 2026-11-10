@@ -30,6 +30,16 @@ export function locTz(loc: { state: string; lon: number }): string {
     case "georgia":
     case "south-carolina":
     case "north-carolina":
+    case "virginia":
+    case "maryland":
+    case "delaware":
+    case "new-jersey":
+    case "new-york":
+    case "connecticut":
+    case "rhode-island":
+    case "massachusetts":
+    case "new-hampshire":
+    case "maine":
       return "America/New_York";
     case "washington":
     case "oregon":
