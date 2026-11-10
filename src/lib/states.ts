@@ -235,6 +235,43 @@ const OR_CITIES: [string, number, number][] = [
   ["Portland", 45.52, -122.68],
 ];
 
+const LA_CITIES: [string, number, number][] = [
+  ["Holly Beach", 29.77, -93.46], ["Cameron", 29.8, -93.33],
+  ["Hackberry", 30.0, -93.34], ["Lake Charles", 30.23, -93.22],
+  ["Grand Chenier", 29.77, -92.98], ["Pecan Island", 29.66, -92.43],
+  ["Intracoastal City", 29.79, -92.15], ["Delcambre", 29.95, -91.99],
+  ["Cypremort Point", 29.73, -91.85], ["Morgan City", 29.7, -91.21],
+  ["Houma", 29.6, -90.72], ["Dulac", 29.39, -90.71],
+  ["Chauvin", 29.44, -90.6], ["Cocodrie", 29.25, -90.66],
+  ["Leeville", 29.25, -90.21], ["Port Fourchon", 29.11, -90.2],
+  ["Grand Isle", 29.24, -90.0], ["Lafitte", 29.67, -90.1],
+  ["Port Sulphur", 29.48, -89.69], ["Empire", 29.39, -89.6],
+  ["Venice", 29.28, -89.35], ["Pointe a la Hache", 29.58, -89.8],
+  ["Hopedale", 29.89, -89.65], ["Delacroix", 29.76, -89.79],
+  ["New Orleans", 29.95, -90.07], ["Slidell", 30.28, -89.78],
+  ["Mandeville", 30.36, -90.07], ["Madisonville", 30.4, -90.16],
+];
+
+const MS_CITIES: [string, number, number][] = [
+  ["Waveland", 30.29, -89.38], ["Bay St. Louis", 30.31, -89.33],
+  ["Pass Christian", 30.32, -89.25], ["Long Beach", 30.35, -89.15],
+  ["Gulfport", 30.37, -89.09], ["Biloxi", 30.4, -88.89],
+  ["D'Iberville", 30.43, -88.89], ["Ocean Springs", 30.41, -88.83],
+  ["Gautier", 30.39, -88.61], ["Pascagoula", 30.37, -88.56],
+  ["Moss Point", 30.41, -88.53],
+];
+
+const AL_CITIES: [string, number, number][] = [
+  ["Bayou La Batre", 30.4, -88.25], ["Coden", 30.38, -88.23],
+  ["Dauphin Island", 30.25, -88.11], ["Theodore", 30.55, -88.17],
+  ["Mobile", 30.69, -88.04], ["Spanish Fort", 30.67, -87.92],
+  ["Daphne", 30.6, -87.9], ["Fairhope", 30.52, -87.9],
+  ["Point Clear", 30.48, -87.92], ["Magnolia Springs", 30.4, -87.78],
+  ["Bon Secour", 30.31, -87.73], ["Fort Morgan", 30.23, -88.02],
+  ["Gulf Shores", 30.25, -87.7], ["Orange Beach", 30.29, -87.57],
+  ["Elberta", 30.41, -87.6],
+];
+
 export const STATES: Record<string, StateConfig> = {
   california: {
     slug: "california",
@@ -441,6 +478,67 @@ export const STATES: Record<string, StateConfig> = {
     regsName: "ODFW regulations",
     regsUrl: "https://myodfw.com/fishing/regulations",
     bounds: [42.0, -124.6, 46.3, -122.6],
+  },
+  louisiana: {
+    slug: "louisiana",
+    name: "Louisiana",
+    code: "LA",
+    description:
+      "Live NOAA tide predictions and fishing forecasts for coastal Louisiana: Calcasieu and Cameron, Vermilion and Terrebonne bays, Grand Isle, Barataria, the river delta and Lake Pontchartrain, every station in NOAA's network.",
+    regions: [
+      { key: "southwest", name: "Southwest Louisiana" },
+      { key: "central", name: "Vermilion, Atchafalaya & Terrebonne" },
+      { key: "southeast", name: "Southeast Louisiana" },
+    ],
+    regionFor: (_lat, lon) => (lon <= -91.8 ? "southwest" : lon <= -90.2 ? "central" : "southeast"),
+    regionSpecies: {
+      southwest: ["speckled-trout", "redfish", "southern-flounder", "black-drum", "sheepshead"],
+      central: ["redfish", "speckled-trout", "southern-flounder", "black-drum", "sheepshead"],
+      southeast: ["speckled-trout", "redfish", "southern-flounder", "sheepshead", "black-drum"],
+    },
+    cities: LA_CITIES,
+    featured: ["grand-isle", "cocodrie", "cameron"],
+    regsName: "LDWF regulations",
+    regsUrl: "https://www.wlf.louisiana.gov/page/recreational-saltwater-finfish",
+    bounds: [28.9, -93.9, 30.4, -88.8],
+  },
+  mississippi: {
+    slug: "mississippi",
+    name: "Mississippi",
+    code: "MS",
+    description:
+      "Live NOAA tide predictions and fishing forecasts for the Mississippi Gulf Coast: Bay St. Louis to Pascagoula, Mississippi Sound and the barrier islands, every station in NOAA's network.",
+    regions: [{ key: "mississippi-sound", name: "Mississippi Sound" }],
+    regionFor: () => "mississippi-sound",
+    regionSpecies: {
+      "mississippi-sound": ["speckled-trout", "redfish", "southern-flounder", "sheepshead", "spanish-mackerel"],
+    },
+    cities: MS_CITIES,
+    featured: ["biloxi", "gulfport", "pascagoula"],
+    regsName: "MDMR regulations",
+    regsUrl: "https://dmr.ms.gov/recreational-fishing/",
+    bounds: [30.1, -89.7, 30.5, -88.3],
+  },
+  alabama: {
+    slug: "alabama",
+    name: "Alabama",
+    code: "AL",
+    description:
+      "Live NOAA tide predictions and fishing forecasts for coastal Alabama: Mobile Bay, Dauphin Island, Fort Morgan, Gulf Shores and Orange Beach, every station in NOAA's network.",
+    regions: [
+      { key: "mobile-bay", name: "Mobile Bay & Dauphin Island" },
+      { key: "gulf-beaches", name: "Gulf Shores & Orange Beach" },
+    ],
+    regionFor: (lat, lon) => (lon > -87.85 && lat < 30.4 ? "gulf-beaches" : "mobile-bay"),
+    regionSpecies: {
+      "mobile-bay": ["speckled-trout", "redfish", "southern-flounder", "sheepshead", "black-drum"],
+      "gulf-beaches": ["pompano", "spanish-mackerel", "redfish", "king-mackerel", "cobia"],
+    },
+    cities: AL_CITIES,
+    featured: ["dauphin-island", "gulf-shores", "mobile"],
+    regsName: "Alabama Marine Resources regulations",
+    regsUrl: "https://www.outdooralabama.com/fishing/saltwater-recreational-size-creel-limits",
+    bounds: [30.2, -88.4, 31.0, -87.5],
   },
 };
 
