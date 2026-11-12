@@ -24,7 +24,11 @@ function url(stationId: string, interval: "10" | "hilo", now: number): string {
 }
 
 async function getJson(u: string): Promise<unknown> {
-  const res = await fetchRetry(u, { next: { revalidate: 1800 } });
+  // 6h, matching the station pages. Next takes the LOWEST revalidate among a
+  // route's fetches as the page's own, so the old 1800 here quietly made every
+  // station page regenerate every 30 minutes despite `revalidate = 21600`.
+  // Predictions are fixed in advance and the payload spans 7 days.
+  const res = await fetchRetry(u, { next: { revalidate: 21600 } });
   return res.json();
 }
 

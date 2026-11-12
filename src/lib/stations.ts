@@ -1,15 +1,16 @@
 // Full-coverage station generation for every configured state.
 //
-// Fetches NOAA's complete tide-prediction station list at build/revalidate
-// time and turns every station in a configured state into a location page.
-// Curated locations (locations.ts) always win on conflicts. If the list fetch
-// fails (offline build, NOAA outage) the site gracefully ships curated-only.
+// Turns every station in NOAA's tide-prediction list (snapshot below) that
+// sits in a configured state into a location page. Curated locations
+// (locations.ts) always win on conflicts.
 
 import { LOCATIONS, type Location } from "./locations";
 import { STATES } from "./states";
 
-const LIST_URL =
-  "https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations.json?type=tidepredictions";
+// NOAA's station list, snapshotted by scripts/snapshot-stations.mjs. The live
+// list is ~2.7 MB, over Next's 2 MB data-cache limit, so fetching it here meant
+// a download and parse on every cold render. Rows: [id, name, state, lat, lng].
+import snapshot from "@/data/noaa-stations.json";
 
 interface RawStation {
   id: string;
@@ -82,10 +83,12 @@ let cached: Location[] | null = null;
 export async function getStationLocations(): Promise<Location[]> {
   if (cached) return cached;
   try {
-    const res = await fetch(LIST_URL, { next: { revalidate: 86_400 } });
-    if (!res.ok) throw new Error(`mdapi ${res.status}`);
-    const data = (await res.json()) as { stations?: RawStation[] };
-    if (!data.stations?.length) throw new Error("empty station list");
+    const data: { stations: RawStation[] } = {
+      stations: (snapshot.rows as [string, string, string, number, number][]).map(
+        ([id, name, state, lat, lng]) => ({ id, name, state, lat, lng }),
+      ),
+    };
+    if (!data.stations.length) throw new Error("empty station list");
 
     const byCode = new Map(
       Object.values(STATES).map((st) => [st.code, st] as const),
