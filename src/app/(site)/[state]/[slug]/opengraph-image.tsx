@@ -2,6 +2,15 @@ import { ImageResponse } from "next/og";
 import { findLocation } from "@/lib/stations";
 import { getState } from "@/lib/states";
 
+// The image only shows the station's name, so it never needs regenerating.
+// Without generateStaticParams this route was dynamic (rendered on every
+// crawler fetch, ~90 ms CPU each). An empty list prerenders nothing at build
+// time; each station's image renders once on first request and then stays
+// cached until the next deploy.
+export async function generateStaticParams() {
+  return [];
+}
+
 export const alt = "Tide chart and fishing forecast";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";

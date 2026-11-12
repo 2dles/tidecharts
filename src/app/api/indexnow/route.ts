@@ -2,11 +2,15 @@
 //
 // IndexNow pushes URL change notices straight into Bing's index (which also
 // feeds Microsoft Copilot and ChatGPT browsing) instead of waiting for a
-// crawl. Our location pages legitimately change daily — today's tide times
-// ARE the content — so a daily submission of the location set is within the
-// protocol's intent. The key file lives at /<key>.txt in public/.
+// crawl. The key file lives at /<key>.txt in public/.
+//
+// Daily, this submits only the home, state, water-temp and curated flagship
+// pages (~130 URLs). It used to submit every station page (~2,400), which
+// asked Bing to recrawl all of them every day, and each recrawl of a stale
+// page is a server render. Station pages are discovered through the sitemap;
+// when a state is added, submit its pages once by hand.
 
-import { getAllLocations } from "@/lib/stations";
+import { LOCATIONS } from "@/lib/locations";
 import { STATE_SLUGS } from "@/lib/states";
 
 export const dynamic = "force-dynamic";
@@ -23,13 +27,12 @@ export async function GET(req: Request) {
     return new Response("Unauthorized", { status: 401 });
   }
 
-  const all = await getAllLocations();
   const urlList = [
     `https://${HOST}/`,
     ...STATE_SLUGS.map((s) => `https://${HOST}/${s}`),
-    ...all.map((l) => `https://${HOST}/${l.state}/${l.slug}`),
+    ...LOCATIONS.map((l) => `https://${HOST}/${l.state}/${l.slug}`),
     `https://${HOST}/water-temps`,
-  ].slice(0, 10000); // protocol cap per submission
+  ];
 
   const res = await fetch("https://api.indexnow.org/indexnow", {
     method: "POST",

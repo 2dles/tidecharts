@@ -24,7 +24,8 @@ export async function fetchWeather(
   });
   const res = await fetchRetry(
     `https://api.open-meteo.com/v1/forecast?${params}`,
-    { next: { revalidate: 1800 } },
+    // 6h: see noaa.ts. Hourly 8-day forecast; the client picks the current hour.
+    { next: { revalidate: 21600 } },
   );
   const data = (await res.json()) as {
     hourly: {
@@ -82,7 +83,7 @@ export async function fetchMarine(
   });
   const res = await fetchRetry(
     `https://marine-api.open-meteo.com/v1/marine?${params}`,
-    { next: { revalidate: 3600 } },
+    { next: { revalidate: 21600 } },
   );
   const data = (await res.json()) as {
     hourly: {

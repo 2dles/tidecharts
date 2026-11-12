@@ -5,11 +5,11 @@ import WaterTempMap from "@/components/WaterTempMap";
 import { getWaterTemps, tempColor } from "@/lib/watertemps";
 import { STATES, STATE_NAMES_TEXT } from "@/lib/states";
 
-export const revalidate = 3600;
+export const revalidate = 10800;
 
 export const metadata: Metadata = {
   title: "Water Temperature Map — Ocean Temps Today at Every Tide Station",
-  description: `Live water temperatures along the coasts of ${STATE_NAMES_TEXT}. Current sea surface temps at every NOAA tide station, updated hourly, on a zoomable map.`,
+  description: `Live water temperatures along the coasts of ${STATE_NAMES_TEXT}. Current sea surface temps at every NOAA tide station, updated every few hours, on a zoomable map.`,
   alternates: { canonical: "/water-temps" },
 };
 
@@ -96,7 +96,7 @@ export default async function WaterTempsPage() {
       })}
       <p className="mt-6 text-xs text-ink-faint">
         Sea surface temperatures from the Open-Meteo marine model, refreshed
-        hourly. Stations inside rivers and deltas without marine-model coverage
+        every three hours. Stations inside rivers and deltas without marine-model coverage
         are omitted.
       </p>
     </div>
