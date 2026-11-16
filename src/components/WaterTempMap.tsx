@@ -63,13 +63,23 @@ export default function WaterTempMap({
         minZoom: 4,
       }).addTo(map);
 
+      // Attu (Alaska) sits across the antimeridian with a positive longitude;
+      // plot it just west of -180 so it lands beside the rest of the Aleutians.
+      const mapLon = (p: TempPoint) => (p.lon > 0 ? p.lon - 360 : p.lon);
+      // Without a state to frame, fit the contiguous coasts: Alaska and Hawaii
+      // would stretch the default view across most of the Pacific.
+      const contiguous = points.filter(
+        (p) => p.state !== "alaska" && p.state !== "hawaii",
+      );
       const framePoints =
         frame && points.some((p) => p.state === frame)
           ? points.filter((p) => p.state === frame)
-          : points;
+          : contiguous.length
+            ? contiguous
+            : points;
       if (framePoints.length) {
         const bounds = L.latLngBounds(
-          framePoints.map((p) => [p.lat, p.lon] as [number, number]),
+          framePoints.map((p) => [p.lat, mapLon(p)] as [number, number]),
         );
         map.fitBounds(bounds.pad(0.06));
       } else {
@@ -77,7 +87,7 @@ export default function WaterTempMap({
       }
 
       for (const p of points) {
-        L.circleMarker([p.lat, p.lon], {
+        L.circleMarker([p.lat, mapLon(p)], {
           radius: 6,
           color: "#04101d",
           weight: 1.5,

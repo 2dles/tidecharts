@@ -337,8 +337,12 @@ export default function TideChart({
   }, [t0, t1]);
 
   const yTicks = useMemo(() => {
+    // One tick per foot suits a 6-10 ft range; Cook Inlet swings 30+ ft, so
+    // widen the step to keep roughly 8-12 labels on the axis.
+    const span = yMax - yMin;
+    const step = span > 24 ? 4 : span > 12 ? 2 : 1;
     const out: number[] = [];
-    for (let v = Math.ceil(yMin); v <= Math.floor(yMax); v++) out.push(v);
+    for (let v = Math.ceil(yMin / step) * step; v <= Math.floor(yMax); v += step) out.push(v);
     return out;
   }, [yMin, yMax]);
 

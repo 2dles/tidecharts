@@ -72,6 +72,8 @@ export default function SiteLayout({
                 <Link href="/massachusetts" className="hover:text-ink-dim">Massachusetts Tides</Link>
                 <Link href="/new-hampshire" className="hover:text-ink-dim">New Hampshire Tides</Link>
                 <Link href="/maine" className="hover:text-ink-dim">Maine Tides</Link>
+                <Link href="/alaska" className="hover:text-ink-dim">Alaska Tides</Link>
+                <Link href="/hawaii" className="hover:text-ink-dim">Hawaii Tides</Link>
                 <Link href="/guides" className="hover:text-ink-dim">Fishing Guides</Link>
                 <Link href="/water-temps" className="hover:text-ink-dim">Water Temperatures</Link>
                 <Link href="/widget" className="hover:text-ink-dim">Free Tide Widget</Link>

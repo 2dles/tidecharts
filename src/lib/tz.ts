@@ -44,6 +44,13 @@ export function locTz(loc: { state: string; lon: number }): string {
     case "washington":
     case "oregon":
       return PT;
+    case "alaska":
+      // The Aleutians west of ~169.5°W (Adak, Atka, Attu; Attu is across the
+      // antimeridian with a positive longitude) keep Hawaii-Aleutian time
+      // with DST; the rest of the state is Alaska time.
+      return loc.lon < -169.5 || loc.lon > 0 ? "America/Adak" : "America/Anchorage";
+    case "hawaii":
+      return "Pacific/Honolulu";
     default:
       return PT;
   }
@@ -79,10 +86,13 @@ export function ptNow(): NaiveMs {
   return nowInTz(PT);
 }
 
-/** Short display label for a location's timezone: "PT" | "ET" | "CT". */
+/** Short display label for a location's timezone: "PT" | "ET" | "CT" | "AKT" | "HST" | "HAT". */
 export function tzAbbrev(tz: string): string {
   if (tz === "America/New_York") return "ET";
   if (tz === "America/Chicago") return "CT";
+  if (tz === "America/Anchorage") return "AKT";
+  if (tz === "Pacific/Honolulu") return "HST";
+  if (tz === "America/Adak") return "HAT";
   return "PT";
 }
 

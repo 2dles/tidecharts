@@ -430,6 +430,55 @@ const ME_CITIES: [string, number, number][] = [
   ["Eastport", 44.91, -66.99],
 ];
 
+const AK_CITIES: [string, number, number][] = [
+  ["Ketchikan", 55.34, -131.65], ["Metlakatla", 55.13, -131.57],
+  ["Craig", 55.48, -133.15], ["Wrangell", 56.47, -132.38],
+  ["Petersburg", 56.81, -132.96], ["Sitka", 57.05, -135.33],
+  ["Juneau", 58.3, -134.42], ["Douglas", 58.28, -134.4],
+  ["Hoonah", 58.11, -135.44], ["Gustavus", 58.41, -135.74],
+  ["Haines", 59.24, -135.45], ["Skagway", 59.46, -135.31],
+  ["Pelican", 57.96, -136.23], ["Yakutat", 59.55, -139.73],
+  ["Cordova", 60.54, -145.76], ["Valdez", 61.13, -146.35],
+  ["Whittier", 60.77, -148.68], ["Seward", 60.1, -149.44],
+  ["Homer", 59.64, -151.55], ["Seldovia", 59.44, -151.71],
+  ["Anchor Point", 59.78, -151.83], ["Ninilchik", 60.05, -151.67],
+  ["Kasilof", 60.34, -151.28], ["Kenai", 60.55, -151.26],
+  ["Nikiski", 60.69, -151.29], ["Anchorage", 61.22, -149.9],
+  ["Eagle River", 61.32, -149.57], ["Wasilla", 61.58, -149.44],
+  ["Palmer", 61.6, -149.11], ["Kodiak", 57.79, -152.41],
+  ["Old Harbor", 57.2, -153.3], ["Sand Point", 55.34, -160.5],
+  ["King Cove", 55.06, -162.32], ["Cold Bay", 55.2, -162.72],
+  ["Unalaska", 53.87, -166.54], ["Dutch Harbor", 53.89, -166.54],
+  ["Adak", 51.88, -176.65], ["Dillingham", 59.04, -158.46],
+  ["Naknek", 58.73, -157.02], ["Bethel", 60.79, -161.76],
+  ["Nome", 64.5, -165.41], ["Kotzebue", 66.9, -162.6],
+  ["Utqiaġvik", 71.29, -156.79],
+];
+
+const HI_CITIES: [string, number, number][] = [
+  ["Honolulu", 21.31, -157.86], ["Waikiki", 21.28, -157.83],
+  ["Hawaii Kai", 21.28, -157.71], ["Waimanalo", 21.35, -157.71],
+  ["Kailua", 21.4, -157.74], ["Kaneohe", 21.41, -157.8],
+  ["Pearl City", 21.4, -157.97], ["Ewa Beach", 21.32, -158.01],
+  ["Kapolei", 21.34, -158.06], ["Waianae", 21.45, -158.19],
+  ["Haleiwa", 21.59, -158.1], ["Kahuku", 21.68, -157.95],
+  ["Laie", 21.65, -157.92], ["Lihue", 21.98, -159.37],
+  ["Kapaa", 22.08, -159.32], ["Hanalei", 22.2, -159.5],
+  ["Princeville", 22.22, -159.48], ["Poipu", 21.88, -159.46],
+  ["Hanapepe", 21.91, -159.59], ["Waimea", 21.96, -159.67],
+  ["Kekaha", 21.97, -159.72], ["Kahului", 20.89, -156.47],
+  ["Wailuku", 20.89, -156.5], ["Kihei", 20.76, -156.46],
+  ["Wailea", 20.69, -156.44], ["Lahaina", 20.88, -156.68],
+  ["Kaanapali", 20.93, -156.69], ["Paia", 20.9, -156.37],
+  ["Hana", 20.76, -155.99], ["Kaunakakai", 21.09, -157.02],
+  ["Lanai City", 20.83, -156.92], ["Hilo", 19.72, -155.08],
+  ["Kailua-Kona", 19.64, -155.99], ["Kealakekua", 19.52, -155.92],
+  ["Captain Cook", 19.5, -155.92], ["Waikoloa", 19.94, -155.79],
+  ["Kawaihae", 20.04, -155.83], ["Hawi", 20.24, -155.83],
+  ["Honokaa", 20.08, -155.47], ["Pahoa", 19.49, -154.95],
+  ["Naalehu", 19.06, -155.59],
+];
+
 export const STATES: Record<string, StateConfig> = {
   california: {
     slug: "california",
@@ -917,6 +966,74 @@ export const STATES: Record<string, StateConfig> = {
     regsName: "Maine DMR recreational rules",
     regsUrl: "https://www.maine.gov/dmr/fisheries/recreational/fishing-regulations-tips",
     bounds: [43.0, -71.1, 45.2, -66.9],
+  },
+  alaska: {
+    slug: "alaska",
+    name: "Alaska",
+    code: "AK",
+    timezoneNote: "Times are Alaska time; the western Aleutians are on Hawaii-Aleutian time.",
+    description:
+      "Live NOAA tide predictions and fishing forecasts for Alaska: the Inside Passage, Prince William Sound, Kenai and Cook Inlet, Kodiak, the Aleutians and the Bering and Arctic coasts, every station in NOAA's network.",
+    regions: [
+      { key: "southeast", name: "Southeast & Inside Passage" },
+      { key: "southcentral", name: "Prince William Sound, Kenai & Cook Inlet" },
+      { key: "kodiak", name: "Kodiak Island" },
+      { key: "aleutians", name: "Aleutians & Alaska Peninsula" },
+      { key: "western-arctic", name: "Bristol Bay, Bering Sea & Arctic" },
+    ],
+    regionFor: (lat, lon) => {
+      if (lat >= 63) return "western-arctic";
+      if (lon > 0 || lon < -157) return lat >= 57.5 ? "western-arctic" : "aleutians";
+      if (lon >= -141) return "southeast";
+      if (lat < 58.3 && lon < -151) return "kodiak";
+      return "southcentral";
+    },
+    regionSpecies: {
+      southeast: ["salmon-ak", "pacific-halibut", "rockfish", "lingcod", "dungeness-crab"],
+      southcentral: ["salmon-ak", "pacific-halibut", "rockfish", "lingcod"],
+      kodiak: ["pacific-halibut", "salmon-ak", "rockfish", "lingcod"],
+      aleutians: ["pacific-halibut", "salmon-ak", "rockfish"],
+      "western-arctic": ["salmon-ak", "pacific-halibut"],
+    },
+    cities: AK_CITIES,
+    featured: ["anchorage", "juneau", "homer"],
+    regsName: "ADF&G regulations",
+    regsUrl: "https://www.adfg.alaska.gov/index.cfm?adfg=fishregulations.main",
+    bounds: [51.0, -179.9, 71.5, -130.0],
+  },
+  hawaii: {
+    slug: "hawaii",
+    name: "Hawaii",
+    code: "HI",
+    timezoneNote: "Times are Hawaii Standard Time; Hawaii does not observe daylight saving.",
+    description:
+      "Live NOAA tide predictions and fishing forecasts for Hawaii: Oahu, Maui, Molokai, Lanai, Kauai and the Big Island, every station in NOAA's network.",
+    regions: [
+      { key: "oahu", name: "Oahu" },
+      { key: "maui-county", name: "Maui, Molokai & Lanai" },
+      { key: "hawaii-island", name: "Hawaii Island" },
+      { key: "kauai", name: "Kauai & Niihau" },
+      { key: "northwestern", name: "Northwestern Islands" },
+    ],
+    regionFor: (lat, lon) => {
+      if (lat > 23) return "northwestern";
+      if (lon < -159) return "kauai";
+      if (lon <= -157.6) return "oahu";
+      if (lat >= 20.5) return "maui-county";
+      return "hawaii-island";
+    },
+    regionSpecies: {
+      oahu: ["papio-ulua", "oio", "moi"],
+      "maui-county": ["papio-ulua", "oio", "moi"],
+      "hawaii-island": ["papio-ulua", "moi", "oio"],
+      kauai: ["papio-ulua", "oio", "moi"],
+      northwestern: ["papio-ulua"],
+    },
+    cities: HI_CITIES,
+    featured: ["honolulu", "kahului", "hilo"],
+    regsName: "DAR regulations",
+    regsUrl: "https://dlnr.hawaii.gov/dar/fishing/fishing-regulations/",
+    bounds: [18.8, -160.5, 22.4, -154.7],
   },
 };
 
