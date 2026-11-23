@@ -41,14 +41,27 @@ export default async function ArticlePage({
     .map((s) => getArticle(s))
     .filter((a): a is NonNullable<typeof a> => Boolean(a));
 
-  const jsonLd = {
-    "@context": "https://schema.org",
+  const articleLd = {
     "@type": "Article",
     headline: article.title,
     description: article.description,
     author: { "@type": "Organization", name: "USTideCharts" },
     publisher: { "@type": "Organization", name: "USTideCharts" },
     mainEntityOfPage: `https://ustidecharts.com/guides/${article.slug}`,
+  };
+  const faqLd = article.faq?.length
+    ? {
+        "@type": "FAQPage",
+        mainEntity: article.faq.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      }
+    : null;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": faqLd ? [articleLd, faqLd] : [articleLd],
   };
 
   return (
@@ -86,6 +99,21 @@ export default async function ArticlePage({
             ))}
           </section>
         ))}
+        {article.faq && article.faq.length > 0 && (
+          <section className="mt-10" aria-labelledby="article-faq-h">
+            <h2 id="article-faq-h" className="text-xl font-semibold tracking-tight">
+              Frequently asked questions
+            </h2>
+            <dl className="mt-4 space-y-5">
+              {article.faq.map((f) => (
+                <div key={f.q}>
+                  <dt className="font-semibold leading-snug">{f.q}</dt>
+                  <dd className="mt-2 leading-relaxed text-ink-dim">{f.a}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+        )}
       </article>
 
       <AdSlot placement="guide" />

@@ -13,6 +13,8 @@ export interface Article {
   gearKeys: string[];
   sections: ArticleSection[];
   relatedSlugs: string[];
+  /** Optional FAQ rendered after the body and emitted as FAQPage JSON-LD. */
+  faq?: { q: string; a: string }[];
   /** State slugs this guide is specific to; omit for general guides. */
   states?: string[];
 }
@@ -68,39 +70,109 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: "how-to-read-tide-charts",
-    title: "How to Read a Tide Chart (Without a Decoder Ring)",
+    title: "How to Read a Tide Chart: Highs, Lows, MLLW and Moving Water Explained",
     description:
-      "Highs, lows, MLLW, tide height vs. tide movement — a five-minute course that turns the squiggly line into a fishing plan.",
-    readMinutes: 5,
+      "A plain-English guide to reading a tide chart or tide table: what the heights and times mean, what MLLW is, why the East, West and Gulf coasts look different, how to spot moving water, and the mistakes that put people on the wrong beach at the wrong time.",
+    readMinutes: 12,
     gearKeys: ["inshore-combo", "headlamp", "pliers"],
-    relatedSlugs: ["how-tides-affect-fishing", "best-moon-phase-for-fishing"],
+    relatedSlugs: ["how-tides-affect-fishing", "minus-tides-explained", "incoming-vs-outgoing-tide", "best-moon-phase-for-fishing"],
+    faq: [
+      {
+        q: "What does MLLW mean on a tide chart?",
+        a: "MLLW is Mean Lower Low Water, the zero line that U.S. tide heights are measured from. NOAA computes it by averaging the lower of each day's two low tides over a 19-year period called the National Tidal Datum Epoch. A height of +4.0 ft means the water is predicted to be four feet above that long-term average low; a negative height is below it.",
+      },
+      {
+        q: "What is the difference between a tide chart and a tide table?",
+        a: "They show the same predictions in two forms. A tide table is a list: the time and height of each high and low tide. A tide chart (or tide graph) draws the water level as a continuous curve over the day, so you can see how fast the water is rising or falling between those extremes. USTideCharts station pages show both.",
+      },
+      {
+        q: "Why are there two high tides a day, and why are they different sizes?",
+        a: "The moon's gravity raises a bulge of water on the side of Earth facing it and a second bulge on the far side, so most coasts pass under two highs and two lows each tidal day of about 24 hours 50 minutes. Because the moon sits north or south of the equator most of the month, the two bulges are not centered on the same latitude, so one high is bigger than the other. That size difference is called the diurnal inequality and it is largest on the Pacific coast.",
+      },
+      {
+        q: "How accurate are tide predictions?",
+        a: "The times and heights on a NOAA-based chart are astronomical predictions, computed from decades of water-level records at each station. They are very reliable for timing. The actual water level on the day can differ by a foot or more when strong onshore or offshore wind, a storm surge, heavy river flow or a large pressure change is in play. Treat the predicted height as a baseline, not a guarantee.",
+      },
+      {
+        q: "Is high tide the same as the strongest current?",
+        a: "No. High and low tide mark the moments when the water level stops rising or falling, which is when horizontal current is usually weakest. The fastest flow is typically near mid-tide, halfway between a high and a low. In inlets, river mouths and long bays the current can also lag the water level, so slack water may come an hour or more after the chart's high or low. NOAA publishes separate tidal current predictions for places where that matters.",
+      },
+      {
+        q: "What time zone are tide charts in?",
+        a: "NOAA publishes predictions in each station's local standard or daylight time, and USTideCharts shows them that way too, with the zone printed on the page. Check this on any other chart before you plan around it, especially during the week of a daylight-saving change, when some sources are an hour off.",
+      },
+    ],
     sections: [
       {
         paragraphs: [
-          "A tide chart is just a graph of predicted water height over time. The horizontal axis is the clock; the vertical axis is feet of water above a reference level. The wave-shaped line tells you when the ocean at that exact station will be high, low, rising, or falling. Everything else — the numbers, the abbreviations, the datum jargon — is detail on top of that simple picture.",
+          "A tide chart is a graph of predicted water height over time. The horizontal axis is the clock; the vertical axis is feet of water above a reference level. The wave-shaped line tells you when the ocean at that one station will be high, low, rising or falling. Everything else on the page, the numbers, the abbreviations and the datum jargon, is detail layered on top of that simple picture.",
+          "This guide walks through every piece of that picture, in the order you meet it: the times and heights, the zero line they are measured from, why the shape of the curve differs from coast to coast, how to see moving water on the graph, how the moon changes the size of the swing, what the predictions can and cannot promise, and a short planning routine that turns all of it into a decision about when to go. If you only have a minute, skip to the routine at the end and come back for the rest.",
         ],
       },
       {
-        heading: "What the numbers mean",
+        heading: "Tide table vs. tide chart: the same data, two views",
         paragraphs: [
-          "Tide heights in the United States are quoted in feet relative to MLLW — Mean Lower Low Water — the long-term average of each day's lowest tide. A '+5.8 ft high' means the water will stand 5.8 feet above that average lowest level. Negative numbers happen too: a '−1.2 ft' low is a minus tide, water lower than an average low, which exposes rocks, reefs, and clam beds that are normally submerged. Minus tides are prized for tidepooling and bait gathering, and the huge swing that follows them moves serious water.",
-          "Times on NOAA-based charts (including USTideCharts) are given in the station's local time, already adjusted for daylight saving. Every prediction is for a specific station — a harbor entrance, a pier — and the timing can shift by 30–60 minutes just a few miles up a bay, so pick the station closest to where you'll actually stand.",
+          "The oldest form is the tide table: a list of times and heights for each high and low tide, four or so lines per day. Every USTideCharts station page prints one as a 7-day table, with sunrise and sunset beside each day's highs and lows. Tables are compact and exact, and they are what you want when you need to know one thing, such as the time of this evening's low.",
+          "The tide chart draws the same predictions as a curve. The curve is what shows you the part a table cannot: how fast the water is moving at any given minute, which is the single most useful thing for an angler, a paddler or someone walking out to a sandbar. The two highs and two lows are the peaks and troughs; everything in between is where the action is. Read the table for times, read the chart for movement.",
         ],
       },
       {
-        heading: "Height is not movement",
+        heading: "What the numbers mean: heights, times and the station",
         paragraphs: [
-          "The most common beginner mistake is fixating on the peaks and valleys. Fish do not bite because the water is high; they bite because the water is moving. On the graph, movement is the slope of the line: the steep sections between a high and a low are when current runs hardest, and the flat crests and troughs are slack water. The steepest point — and usually the best fishing — comes roughly halfway between a high and a low.",
-          "That's why an interactive chart earns its keep. Hover along the USTideCharts graph and you'll see both the height and whether the tide is rising or falling at that minute — the two facts that actually build a game plan.",
+          "Tide heights in the United States are quoted in feet relative to MLLW, Mean Lower Low Water. A '+5.8 ft high' means the water is predicted to stand 5.8 feet above that reference. A '−1.2 ft low' is a minus tide: water lower than the reference, which exposes rocks, reef and flats that are normally covered. The difference between a high and the next low is the range, and the range is what drives current.",
+          "Times are in the station's local time. NOAA publishes predictions in local standard or daylight time as appropriate, and USTideCharts prints the zone on every page, so a 4:12 PM low in Galveston is Central time and a 4:12 PM low in Seattle is Pacific. Daylight saving changes are already applied. If you use a printed table or another website, confirm the zone and whether DST is applied before you trust it, because a one-hour error is the most common way to miss a tide.",
+          "Every prediction is for one specific station: a harbor entrance, a pier, a bridge, a gauge in a creek. That matters more than people expect. In an open-coast setting the timing changes slowly along the beach, but inside a bay or up a river the same tide can arrive an hour or two later than at the entrance, and the range can be bigger or smaller. Pick the station nearest to where you will actually stand. Each USTideCharts page lists the nearest stations with distances for exactly this reason, and the water a few miles up an estuary often behaves differently from the water at the mouth.",
+        ],
+      },
+      {
+        heading: "MLLW and other datums: where 'zero' comes from",
+        paragraphs: [
+          "Zero on a U.S. tide chart is not sea level in the everyday sense. It is MLLW, which NOAA defines as the average height of the lower of each day's two low waters, taken over the 19-year National Tidal Datum Epoch (the current epoch is 1983 through 2001). Nineteen years covers the full cycle of the moon's orbit, so the average is stable. Because zero is an average low, most of the day's water sits above it, and only the lower-than-usual lows go negative. That is why minus tides are notable: they are below the average low, not merely low.",
+          "MLLW is also the chart datum for NOAA nautical charts. The depth printed on a chart is the depth at MLLW, so adding the predicted tide height to the charted depth gives the water you can expect at that moment. Boaters meet a second datum, Mean High Water (MHW), which is what bridge clearances are referenced to; a 20-foot clearance is the clearance at an average high tide, and a bigger-than-average high leaves less room. Other datums you may see are MSL (Mean Sea Level), MHHW (Mean Higher High Water) and MTL (Mean Tide Level). On a recreational tide chart you can ignore all of them except MLLW, but if a number seems wildly off from another source, a datum mismatch is the first thing to check.",
+        ],
+      },
+      {
+        heading: "Why the curve looks different on each coast",
+        paragraphs: [
+          "The moon's gravity pulls the ocean into a bulge on the side of Earth nearest it and, through a difference in pull across the planet, a second bulge on the far side. As Earth turns, most coastlines pass under both bulges in one tidal day of about 24 hours and 50 minutes, which gives two highs and two lows roughly 6 hours 12 minutes apart. The sun adds a smaller pull of its own. The shape of the ocean basin, the width of the continental shelf and the geometry of bays then reshape that signal, so the resulting curve has a different character from coast to coast.",
+          "On the Atlantic coast the tide is semidiurnal: two highs and two lows of nearly equal size, a clean, regular wave. Ranges are moderate from Florida to the Carolinas, grow through the Mid-Atlantic and become large in the Gulf of Maine. On the Pacific coast the tide is mixed semidiurnal: still two highs and two lows a day, but of noticeably different heights, because the moon's position north or south of the equator (its declination) puts the two bulges at different latitudes. This diurnal inequality is why a California chart often shows one big high followed by a modest high, and one deep low followed by a shallow one. Plan around the bigger of the two swings. Across much of the Gulf of Mexico the tide is diurnal: only one high and one low a day, with a small range of a foot or two, and a chart that looks like a slow, lazy wave. Alaska runs the gamut, from a semidiurnal range of close to thirty feet near Anchorage to mixed tides in the Aleutians, and Hawaii has small mixed tides. If a chart looks 'wrong' compared with one you are used to, it is probably just a different coast.",
+        ],
+      },
+      {
+        heading: "Height is not movement: reading the slope",
+        paragraphs: [
+          "The most common beginner mistake is fixating on the peaks and valleys. Fish do not feed because the water is high; they feed because the water is moving, carrying bait with it. Sandbars do not become dangerous because the tide is high; they become dangerous because water is rising fast across them. On the graph, movement is the slope of the line. The steep sections between a high and a low are when the water level changes fastest, and the flat crests and troughs are slack water, when it is barely changing at all.",
+          "For a regular semidiurnal tide the rate of change follows a predictable pattern that sailors summarize as the rule of twelfths. Divide the range into twelve parts; in the six hours from one extreme to the next the water moves roughly 1/12 of the range in the first hour, 2/12 in the second, 3/12 in each of the third and fourth hours, 2/12 in the fifth and 1/12 in the last. Half of all the water moves in the middle two hours. That is the window with the strongest current and, on most beaches and flats, the best fishing. The rule is an approximation that assumes a symmetrical curve; on a mixed Pacific tide or in a river where the flood and ebb take different lengths of time it is rough, which is another reason to read the actual curve rather than a rule.",
+          "Hover or tap along the USTideCharts graph and the readout shows the height at that minute and whether the water is rising or falling. Those two facts, plus the time, are what a plan is made of. Note that the chart shows the water level, not the horizontal current. In open water they line up closely, but in inlets, harbor mouths and long bays the current keeps running for a while after the level has turned, so slack water can lag the chart's high or low by an hour or more. Where that matters for safety, NOAA publishes separate tidal current predictions.",
+        ],
+      },
+      {
+        heading: "Spring tides, neap tides and the moon",
+        paragraphs: [
+          "The size of the swing changes through the month. Around the new moon and the full moon the sun and moon pull along the same line, and their effects add: highs are higher, lows are lower and the current between them is stronger. These are spring tides, which have nothing to do with the season; the word means 'to spring up.' Around the first and last quarter the pulls are at right angles and partly cancel, giving the smaller neap tides. The biggest tides of a given month usually arrive a day or two after the new or full moon rather than on the day itself, a lag oceanographers call the age of the tide.",
+          "A few times a year the new or full moon coincides with the moon's closest approach to Earth (perigee). These perigean spring tides are the largest of the year and are often called king tides in the news; they are also the dates most likely to produce a dramatic minus tide a few hours later. On a tide chart you do not need to track any of this by hand: a week of predictions shows the range growing and shrinking, and the highest high and lowest low of the week are visible at a glance. If your plan depends on exposed structure, a shallow bar or a strong current, pick the days with the biggest range. If you want gentle, forgiving water, pick the neaps.",
+        ],
+      },
+      {
+        heading: "What the predictions can and cannot promise",
+        paragraphs: [
+          "The times and heights on a NOAA-based chart are astronomical predictions. For harmonic stations, NOAA has fitted dozens of tidal constituents to years of water-level records, and the predicted time of a high or low at such a station is normally within minutes of the real thing. Many stations in the list are subordinate stations, where the prediction is derived from a nearby reference station by applying time and height offsets; those are still good, but a little less sharp, which is one more reason to prefer the station closest to you.",
+          "What the prediction does not include is weather. A sustained onshore wind piles water against the coast and raises the actual level; an offshore wind lowers it. Low barometric pressure lets the sea stand higher (roughly a foot of water for each inch of mercury), and storm surge can add several feet on top of the tide. Heavy river discharge raises levels in estuaries and can delay the ebb. None of this changes the timing much, but it can change the height by a foot or more, which is the whole margin on a sandbar crossing or a low-clearance bridge. Treat the chart as the baseline and the forecast as the correction.",
+          "One more thing the chart cannot tell you is the shape of the shore. A six-foot range on a steep beach moves the waterline a few yards; the same range across a flat estuary can move it hundreds of yards and cut off the route you walked out on. If you are heading onto flats, bars or a tidepool bench, note the time of low water, set an alarm for it, and start back as the water begins to rise, not when it reaches you.",
+        ],
+      },
+      {
+        heading: "Reading a USTideCharts station page, top to bottom",
+        paragraphs: [
+          "The page title tells you the station and today's date. Under it, the chart shows today's curve with the current water level marked, so you can see at once whether the tide is rising or falling right now and when the next turn is. The heights are in feet above MLLW; the times are the station's local time, with the zone printed. The y-axis spacing adjusts to the range, so Anchorage and Miami both fit on the screen.",
+          "Below the chart, the 7-day table lists each day's highs and lows with heights, plus sunrise and sunset, so you can line up moving water with first and last light without opening a second app. The fishing score blends tide movement, light, moon phase, wind and other measurable conditions into one 0–100 number, with tide movement weighted heaviest; it is a planning aid, not a promise of fish, and the how-the-score-works guide spells out the formula. Farther down, nearby stations are listed with distances and directions, which is the quickest way to check whether the prediction a few miles up the bay differs from the one you are looking at. Species cards and local guides follow where we have them.",
         ],
       },
       {
         heading: "A 60-second planning routine",
         paragraphs: [
-          "First, find today's swings: two highs and two lows, unequal in size. Second, circle the mid-tide hours on each side of the biggest swing — that's your moving water. Third, check whether either window overlaps dawn or dusk; if it does, that's the trip. Fourth, glance at the low-tide height: a minus low means exposed structure at low water and a fast, fishy flood behind it.",
-          // "Both live in the accessories aisle at TheAnglerStore" — there is
-          // no headlamp in the catalog, so "both" was one.
-          "If your best window lands before sunrise — and the good ones often do — plan for the dark as well as the tide. A hands-free light matters more than most people expect, and a good pair of saltwater pliers earns its keep when you're unhooking a fish by feel. The pliers are in the cards below.",
+          "First, find today's swings: on most coasts, two highs and two lows of unequal size. Second, circle the mid-tide hours on each side of the biggest swing; that is your moving water, and the rule of twelfths says the middle two hours of each swing carry half the water. Third, check whether either window overlaps dawn or dusk; if it does, that is the trip. Fourth, glance at the low-tide height: a minus low means exposed structure at low water and a fast, fishy flood behind it, and it also means a longer walk back if you are out on the flats. Fifth, look at the forecast wind: a stiff onshore blow will hold the water higher than the chart says, and an offshore wind lower.",
+          "If your best window lands before sunrise, and the good ones often do, plan for the dark as well as the tide. A hands-free light matters more than most people expect, and a good pair of saltwater pliers earns its keep when you are unhooking a fish by feel. The pliers are in the cards below.",
         ],
       },
     ],
