@@ -7,12 +7,18 @@ import { noaaDate, nowInTz, parseNaive } from "./tz";
 
 const BASE = "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter";
 
-function url(stationId: string, interval: "10" | "hilo", now: number): string {
+function url(
+  stationId: string,
+  interval: "10" | "hilo",
+  now: number,
+  fromDay = -1,
+  toDay = 7,
+): string {
   const params = new URLSearchParams({
     product: "predictions",
     application: "ustidecharts.com",
-    begin_date: noaaDate(now, -1),
-    end_date: noaaDate(now, 7),
+    begin_date: noaaDate(now, fromDay),
+    end_date: noaaDate(now, toDay),
     datum: "MLLW",
     station: stationId,
     time_zone: "lst_ldt",
@@ -67,6 +73,32 @@ export async function fetchTideEvents(
 ): Promise<TideEvent[]> {
   const now = nowInTz(tz);
   const data = (await getJson(url(stationId, "hilo", now))) as {
+    predictions?: RawPrediction[];
+    error?: { message: string };
+  };
+  if (!data.predictions?.length) {
+    throw new Error(data.error?.message ?? "No hilo predictions returned");
+  }
+  return normalize(
+    data.predictions.map((p) => ({
+      t: parseNaive(p.t),
+      h: Number(p.v),
+      type: (p.type ?? "H") as "H" | "L",
+    })),
+  );
+}
+
+/**
+ * High/low predictions for today plus the next 29 days (30 calendar days),
+ * for the per-station "tides this month" summary. One small request; cached
+ * with the same 6h window as the page.
+ */
+export async function fetchMonthEvents(
+  stationId: string,
+  tz = "America/Los_Angeles",
+): Promise<TideEvent[]> {
+  const now = nowInTz(tz);
+  const data = (await getJson(url(stationId, "hilo", now, 0, 29))) as {
     predictions?: RawPrediction[];
     error?: { message: string };
   };

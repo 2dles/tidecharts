@@ -10,6 +10,8 @@ import TideStrip from "@/components/TideStrip";
 import AdSlot from "@/components/AdSlot";
 import SpeciesImage from "@/components/SpeciesImage";
 import { getLocationData } from "@/lib/data";
+import { fetchMonthEvents } from "@/lib/noaa";
+import { computeTideFacts, patternSentence } from "@/lib/tidefacts";
 import { getProducts } from "@/lib/gear";
 import { UNIVERSAL_KEYS } from "@/lib/gear-keys";
 import { getNearby } from "@/lib/locations";
@@ -124,7 +126,14 @@ export default async function LocationPage({
   const tz = locTz(loc);
   // City-primary station pages headline with the city people search for.
   const headName = loc.cityPrimary && loc.nearCity ? loc.nearCity : loc.name;
-  const data = await getLocationData(loc);
+  // The 30-day summary is its own small request; a failure only hides that
+  // section (never sample numbers in it).
+  const [data, monthFacts] = await Promise.all([
+    getLocationData(loc),
+    fetchMonthEvents(loc.stationId, tz)
+      .then(computeTideFacts)
+      .catch(() => null),
+  ]);
   const now = nowInTz(tz);
   const today = naiveDateStr(now);
   const month = new Date(now).getUTCMonth() + 1;
@@ -309,6 +318,18 @@ export default async function LocationPage({
           {
             q: `Is this the tide chart for ${loc.nearCity}?`,
             a: `Yes — ${loc.name} (NOAA station ${loc.stationId}) is the closest official tide prediction station to ${loc.nearCity}, ${stateCfg.name}, so these are the tide times anglers and boaters in ${loc.nearCity} plan around.`,
+          },
+        ]
+      : []),
+    ...(monthFacts
+      ? [
+          {
+            q: `When is the lowest tide at ${headName} in the next 30 days?`,
+            a: `NOAA predicts the lowest tide at ${loc.name} on ${fmtDay(monthFacts.lowest.t)} at ${fmtTime(monthFacts.lowest.t)}: ${monthFacts.lowest.h.toFixed(1)} ft relative to MLLW. ${
+              monthFacts.minusDays > 0
+                ? `Low tide drops below zero (a minus tide) on ${monthFacts.minusDays} of the next ${monthFacts.days} days.`
+                : `No minus tides (lows below zero) are predicted in that period.`
+            }`,
           },
         ]
       : []),
@@ -702,6 +723,56 @@ export default async function LocationPage({
           </table>
         </div>
       </section>
+
+      {/* NEXT 30 DAYS — computed per station from NOAA high/low predictions */}
+      {monthFacts && (
+        <section className="mt-10" aria-labelledby="month-h">
+          <h2 id="month-h" className="text-lg font-semibold tracking-tight">
+            Tides at {headName} Over the Next 30 Days
+          </h2>
+          <div className="mt-3 max-w-3xl space-y-3 text-sm leading-relaxed text-ink-dim">
+            <p>
+              NOAA predicts an average daily tide range of{" "}
+              {monthFacts.avgRange.toFixed(1)} ft at {loc.name} over the next{" "}
+              {monthFacts.days} days. The biggest swing is{" "}
+              {monthFacts.biggest.range.toFixed(1)} ft on{" "}
+              {fmtDay(monthFacts.biggest.start)}; the smallest is{" "}
+              {monthFacts.smallest.range.toFixed(1)} ft on{" "}
+              {fmtDay(monthFacts.smallest.start)}. {patternSentence(monthFacts)}
+            </p>
+            <p>
+              The lowest predicted tide is {monthFacts.lowest.h.toFixed(1)} ft on{" "}
+              {fmtDay(monthFacts.lowest.t)} at {fmtTime(monthFacts.lowest.t)}, and
+              the highest is {monthFacts.highest.h.toFixed(1)} ft on{" "}
+              {fmtDay(monthFacts.highest.t)} at {fmtTime(monthFacts.highest.t)}.{" "}
+              {monthFacts.minusDays > 0
+                ? `Low tide drops below zero (a minus tide) on ${monthFacts.minusDays} of the ${monthFacts.days} days.`
+                : `No minus tides (lows below zero) are predicted in this period.`}
+            </p>
+          </div>
+          <dl className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+            {[
+              ["Average daily range", `${monthFacts.avgRange.toFixed(1)} ft`],
+              ["Biggest range", `${monthFacts.biggest.range.toFixed(1)} ft`, fmtDay(monthFacts.biggest.start)],
+              ["Smallest range", `${monthFacts.smallest.range.toFixed(1)} ft`, fmtDay(monthFacts.smallest.start)],
+              ["Lowest tide", `${monthFacts.lowest.h.toFixed(1)} ft`, fmtDay(monthFacts.lowest.t)],
+              ["Highest tide", `${monthFacts.highest.h.toFixed(1)} ft`, fmtDay(monthFacts.highest.t)],
+              ["Minus-tide days", `${monthFacts.minusDays} of ${monthFacts.days}`],
+            ].map(([label, value, sub]) => (
+              <div key={label} className="card p-4">
+                <dt className="text-xs uppercase tracking-wider text-ink-faint">{label}</dt>
+                <dd className="mt-1 text-lg font-semibold tabular-nums">{value}</dd>
+                {sub && <dd className="text-xs text-ink-faint">{sub}</dd>}
+              </div>
+            ))}
+          </dl>
+          <p className="mt-3 text-xs text-ink-faint">
+            Computed from NOAA high/low predictions for station {loc.stationId}.
+            Heights are relative to MLLW; local time. Range is each day&apos;s
+            highest high minus its lowest low.
+          </p>
+        </section>
+      )}
 
       <AdSlot placement="location" />
 
