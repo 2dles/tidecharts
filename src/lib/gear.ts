@@ -97,7 +97,7 @@ export const PRODUCTS: Record<string, Product> = {
     key: "pliers",
     name: "Rapala 8\" Super Stainless Steel Pliers",
     category: "Tools",
-    price: 32.99,
+    price: 26.99,
     blurb:
       "Eight inches of stainless with an internal spring that holds the jaws open, so you can work one-handed while the other hand is busy holding a fish.",
     image: "https://productimageserver.com/product/xl/110902XL.jpg",
@@ -378,8 +378,8 @@ export const KITS: Record<string, Kit> = {
     name: "The Surf Starter",
     blurb: "A rod, a reel, line, hooks, weight and the pliers to get the hook back.",
     pieces: 5,
-    price: 155.69,
-    saving: 21.24,
+    price: 150.41,
+    saving: 20.52,
     shipsFree: true,
   },
   "big-surf": {
@@ -396,8 +396,8 @@ export const KITS: Record<string, Kit> = {
     name: "The Beach Day Kit",
     blurb: "Braid, circle hooks, 4 oz bank sinkers, pliers and a net.",
     pieces: 5,
-    price: 119.83,
-    saving: 16.35,
+    price: 114.55,
+    saving: 15.63,
     shipsFree: true,
   },
   "bay-jetty": {
@@ -405,8 +405,8 @@ export const KITS: Record<string, Kit> = {
     name: "The Bay & Jetty Kit",
     blurb: "A 7 ft combo you can work along a wall without catching the rocks behind you, 15 lb low-vis braid, a titanium leader for anything that bites through mono, small circle hooks and a net.",
     pieces: 5,
-    price: 119.85,
-    saving: 16.35,
+    price: 120.07,
+    saving: 16.38,
     shipsFree: true,
   },
   "rockfish-ling": {
