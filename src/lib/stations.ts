@@ -65,16 +65,17 @@ function nearbyCities(
   curatedNames: Set<string>,
   lat: number,
   lon: number,
-): { name: string; km: number }[] {
-  const hits: { name: string; km: number }[] = [];
+): { name: string; km: number; curated: boolean }[] {
+  const hits: { name: string; km: number; curated: boolean }[] = [];
   for (const [name, cLat, cLon] of cities) {
-    if (curatedNames.has(name.toLowerCase())) continue;
     const dLat = (lat - cLat) * 111;
     const dLon = (lon - cLon) * 111 * Math.cos((lat * Math.PI) / 180);
     const km = Math.sqrt(dLat * dLat + dLon * dLon);
-    if (km <= 18) hits.push({ name, km });
+    if (km <= 18) {
+      hits.push({ name, km, curated: curatedNames.has(name.toLowerCase()) });
+    }
   }
-  return hits.sort((a, b) => a.km - b.km).slice(0, 3);
+  return hits.sort((a, b) => a.km - b.km);
 }
 
 // Module-level cache so a single build/render pass fetches the list once.
@@ -135,9 +136,17 @@ export async function getStationLocations(): Promise<Location[]> {
 
       const region = st.regionFor(s.lat, s.lng);
       const curatedNames = curatedNamesByState.get(st.slug) ?? new Set();
-      const cityHits = nearbyCities(st.cities, curatedNames, s.lat, s.lng).filter(
+      const allHits = nearbyCities(st.cities, curatedNames, s.lat, s.lng).filter(
         (c) => !fullName.toLowerCase().includes(c.name.toLowerCase()),
       );
+      // Curated cities are skipped as the "near" city so a generated page
+      // never competes with the curated page for that city. But when the
+      // curated city is the NEAREST one, falling through to the next town
+      // mislabelled the station ("Charles River entrance, near Revere",
+      // 1.4 km from Boston). In that case claim no nearby city at all.
+      const cityHits = allHits[0]?.curated
+        ? []
+        : allHits.filter((c) => !c.curated).slice(0, 3);
       const cities = cityHits.map((c) => c.name);
       const city = cities[0] ?? null;
       const cityIsNew = city != null;
