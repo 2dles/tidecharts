@@ -12,7 +12,7 @@ import SpeciesImage from "@/components/SpeciesImage";
 import { getLocationData } from "@/lib/data";
 import { fetchMonthEvents } from "@/lib/noaa";
 import { computeTideFacts, patternSentence } from "@/lib/tidefacts";
-import { getProducts } from "@/lib/gear";
+import { getProducts, kitFor, kitUrl } from "@/lib/gear";
 import { UNIVERSAL_KEYS } from "@/lib/gear-keys";
 import { getNearby } from "@/lib/locations";
 import { findLocation, nearbyStations } from "@/lib/stations";
@@ -188,10 +188,20 @@ export default async function LocationPage({
       return rank[a.activity] - rank[b.activity];
     });
 
-  const gearKeys = activeSpecies
-    .filter(({ activity }) => activity !== "low")
-    .flatMap(({ s }) => s.gearKeys);
-  const gear = getProducts(gearKeys).slice(0, 4);
+  const inSeason = activeSpecies.filter(({ activity }) => activity !== "low");
+  const gearKeys = inSeason.flatMap(({ s }) => s.gearKeys);
+  // With every species off-season the list was empty and the section
+  // rendered a heading over nothing. Fall back to the everywhere-saltwater
+  // basics, which the copy below then describes as exactly that.
+  const gear = getProducts(
+    gearKeys.length > 0
+      ? gearKeys
+      : ["circle-hooks", "pliers", "landing-net", "fluoro-leader"],
+  ).slice(0, 4);
+  // One kit for the strip under today's tides, chosen from the page's species,
+  // most active first. Kits ship free; single items mostly don't.
+  const kit = kitFor(activeSpecies.map(({ s }) => s.key));
+  const inSeasonNames = inSeason.slice(0, 3).map(({ s }) => s.name);
   // Only claim gear was "matched to the species" if at least one key was
   // actually species-targeted — universal-only pools (e.g. FL species the
   // store has no targeted stock for) get honest generic copy instead.
@@ -481,6 +491,38 @@ export default async function LocationPage({
           )}
         </div>
       </section>
+
+      {/* KIT STRIP. The gear section sits about seven phone screens down; this
+          is the one store mention near the top. One line, clearly labelled as
+          our sister shop, with the kit's own name, sentence and price. */}
+      {kit && (
+        <aside
+          className="card mt-4 flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between"
+          aria-label="From our sister shop"
+        >
+          <div className="min-w-0">
+            <p className="text-[11px] font-medium uppercase tracking-wider text-ink-faint">
+              Fishing {headName}? From TheAnglerStore, our sister shop
+            </p>
+            <p className="mt-1 text-sm font-semibold text-ink">
+              {kit.name}{" "}
+              <span className="tabular-nums">· ${kit.price.toFixed(2)}</span>
+              {kit.shipsFree && (
+                <span className="font-normal text-ink-dim"> · free US shipping</span>
+              )}
+            </p>
+            <p className="mt-0.5 text-xs leading-relaxed text-ink-dim">{kit.blurb}</p>
+          </div>
+          <a
+            href={kitUrl(kit)}
+            target="_blank"
+            rel="noopener"
+            className="shrink-0 text-sm font-medium text-sky-300 hover:text-teal-300"
+          >
+            See the kit →
+          </a>
+        </aside>
+      )}
 
       {/* PLAN THE TRIP */}
       <div className="mt-4 grid gap-4 lg:grid-cols-3">
@@ -844,8 +886,8 @@ export default async function LocationPage({
           </a>
         </div>
         <p className="mt-1 text-sm text-ink-dim">
-          {gearIsSpeciesMatched
-            ? `Matched to the species feeding at ${loc.name} right now.`
+          {gearIsSpeciesMatched && inSeasonNames.length > 0
+            ? `Picked for the species active at ${loc.name} this month: ${inSeasonNames.join(", ")}.`
             : "Saltwater essentials that belong in any bag, wherever you fish."}
         </p>
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

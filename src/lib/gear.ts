@@ -10,7 +10,7 @@
 // version of this file drifted from the catalog and advertised prices and
 // product names that did not exist — do not reintroduce that by editing here.
 //
-// Last generated 2026-11-04.
+// Last generated 2026-11-26.
 // ─────────────────────────────────────────────────────────────────────────────
 
 export interface Product {
@@ -48,17 +48,6 @@ export const PRODUCTS: Record<string, Product> = {
     image: "https://cdn.shopify.com/s/files/1/0033/5442/7456/files/533338.jpg",
     gradient: "linear-gradient(135deg,#0e3a5c,#155e88)",
     icon: "🎣",
-  },
-  "braided-line": {
-    key: "braided-line",
-    name: "Sufix 832 Advanced Superline Braid — 20 lb, 300 yd",
-    category: "Line & Leader",
-    price: 34.99,
-    blurb:
-      "Seven HMPE fibers plus one GORE Performance Fiber, braided at 32 picks per inch. The GORE fiber is what makes this line quiet through the guides and stubborn…",
-    image: "https://productimageserver.com/product/xl/90822XL.jpg",
-    gradient: "linear-gradient(135deg,#233a5e,#3b5fa0)",
-    icon: "🧵",
   },
   "fluoro-leader": {
     key: "fluoro-leader",
@@ -126,39 +115,6 @@ export const PRODUCTS: Record<string, Product> = {
     gradient: "linear-gradient(135deg,#3f2d3f,#6b4a66)",
     icon: "🎒",
   },
-  cooler: {
-    key: "cooler",
-    name: "Coleman CHILLER 28-Can Soft-Sided Backpack Cooler",
-    category: "Coolers",
-    price: 48.49,
-    blurb:
-      "Twenty-eight cans of capacity with TempLock insulation that holds ice past twelve hours, in a soft-sided pack you wear rather than carry.",
-    image: "https://productimageserver.com/product/xl/98875XL.jpg",
-    gradient: "linear-gradient(135deg,#134e4a,#1a7a72)",
-    icon: "🧊",
-  },
-  "inshore-combo": {
-    key: "okuma-tundra-7",
-    name: "Okuma Tundra Surf Spinning Rod — 7 ft, 2-Piece",
-    category: "Surf Rods",
-    price: 25.95,
-    blurb:
-      "Okuma build the Tundra as a surf series and say so themselves, they describe it as favoured by catfish anglers and cost-conscious surf anglers.",
-    image: "https://cdn.shopify.com/s/files/1/0033/5442/7456/files/362064_c731f9e7-a4c0-47aa-be39-3d6b6603e2a0.jpg",
-    gradient: "linear-gradient(135deg,#0e3a5c,#155e88)",
-    icon: "🎣",
-  },
-  "swimbait-kit": {
-    key: "zoom-fluke-smokin-shad",
-    name: "Zoom Fluke 4\" — Smokin' Shad, 10-Pack",
-    category: "Soft Baits",
-    price: 3.99,
-    blurb:
-      "Same darting soft-jerkbait profile in the standard body, in a translucent shad pattern that covers most clear-water situations.",
-    image: "https://cdn.shopify.com/s/files/1/0033/5442/7456/files/12399.jpg",
-    gradient: "linear-gradient(135deg,#14532d,#1f7a45)",
-    icon: "🐟",
-  },
   "carolina-kit": {
     key: "mustad-barrel-swivel-4",
     name: "Mustad High-Speed Multi-Link Swivel — Size 4, 9-Pack, 77 lb",
@@ -180,6 +136,17 @@ export const PRODUCTS: Record<string, Product> = {
     image: "https://cdn.shopify.com/s/files/1/0033/5442/7456/files/748815.jpg",
     gradient: "linear-gradient(135deg,#0d4a4a,#137a6e)",
     icon: "🎣",
+  },
+  "braid-light": {
+    key: "braid-light",
+    name: "Sufix 832 Advanced Superline Braid — 8 lb, Ghost, 300 yd",
+    category: "Line & Leader",
+    price: 29.99,
+    blurb:
+      "Eight-pound test in Ghost, the near-translucent finish. This is the spool for finesse work, surfperch on small plastics, bay bass on light jigs, anywhere heavier…",
+    image: "https://productimageserver.com/product/xl/90752XL.jpg",
+    gradient: "linear-gradient(135deg,#233a5e,#3b5fa0)",
+    icon: "🧵",
   },
   "bank-sinker-4oz": {
     key: "bank-sinker-4oz",
@@ -282,7 +249,7 @@ export const UNAVAILABLE: readonly string[] = ["sand-spike","headlamp"];
 export const BY_SPECIES: Record<string, string[]> = {
   "striped-bass": [
     "dwave-combo-8",
-    "braided-line",
+    "braid-light",
     "circle-hooks",
     "bank-sinker-4oz",
     "jig-head-fish-1-8",
@@ -292,7 +259,7 @@ export const BY_SPECIES: Record<string, string[]> = {
   ],
   "halibut": [
     "dwave-combo-8",
-    "braided-line",
+    "braid-light",
     "circle-hooks",
     "bank-sinker-4oz",
     "jig-head-fish-1-8",
@@ -302,7 +269,7 @@ export const BY_SPECIES: Record<string, string[]> = {
   ],
   "rockfish": [
     "daiwa-ft-surf-9",
-    "braided-line",
+    "fluoro-leader",
     "circle-hooks",
     "bank-sinker-4oz",
     "jig-assort",
@@ -312,7 +279,7 @@ export const BY_SPECIES: Record<string, string[]> = {
   ],
   "lingcod": [
     "daiwa-ft-surf-9",
-    "braided-line",
+    "fluoro-leader",
     "circle-hooks",
     "bank-sinker-4oz",
     "jig-assort",
@@ -322,7 +289,7 @@ export const BY_SPECIES: Record<string, string[]> = {
   ],
   "surfperch": [
     "dwave-combo-8",
-    "braided-line",
+    "braid-light",
     "circle-hooks",
     "bank-sinker-4oz",
     "jig-head-fish-1-8",
@@ -342,7 +309,7 @@ export const BY_SPECIES: Record<string, string[]> = {
   ],
   "yellowtail": [
     "dwave-combo-8",
-    "braided-line",
+    "fluoro-leader",
     "circle-hooks",
     "bank-sinker-4oz",
     "jig-assort",
@@ -352,7 +319,7 @@ export const BY_SPECIES: Record<string, string[]> = {
   ],
   "calico-bass": [
     "daiwa-ft-surf-9",
-    "braided-line",
+    "fluoro-leader",
     "circle-hooks",
     "bank-sinker-4oz",
     "jig-assort",
@@ -362,7 +329,7 @@ export const BY_SPECIES: Record<string, string[]> = {
   ],
   "corbina": [
     "dwave-combo-8",
-    "braided-line",
+    "braid-light",
     "circle-hooks",
     "bank-sinker-4oz",
     "jig-head-fish-1-8",
@@ -372,7 +339,7 @@ export const BY_SPECIES: Record<string, string[]> = {
   ],
   "spotted-bay-bass": [
     "daiwa-ft-surf-9",
-    "braided-line",
+    "fluoro-leader",
     "circle-hooks",
     "bank-sinker-4oz",
     "jig-assort",
@@ -382,7 +349,7 @@ export const BY_SPECIES: Record<string, string[]> = {
   ],
   "leopard-shark": [
     "dwave-combo-8",
-    "braided-line",
+    "braid-light",
     "circle-hooks",
     "bank-sinker-4oz",
     "jig-head-fish-1-8",
@@ -392,8 +359,130 @@ export const BY_SPECIES: Record<string, string[]> = {
   ]
 };
 
+export interface Kit {
+  /** The store's bundle id. Resolves at theanglerstore.com/bundles#<id>. */
+  id: string;
+  name: string;
+  /** The kit's own first sentence, from the store catalog. */
+  blurb: string;
+  pieces: number;
+  price: number;
+  saving: number;
+  shipsFree: boolean;
+}
+
+/** Kits on sale today, priced exactly as the store's cart prices them. */
+export const KITS: Record<string, Kit> = {
+  "surf-starter": {
+    id: "surf-starter",
+    name: "The Surf Starter",
+    blurb: "A rod, a reel, line, hooks, weight and the pliers to get the hook back.",
+    pieces: 5,
+    price: 155.69,
+    saving: 21.24,
+    shipsFree: true,
+  },
+  "big-surf": {
+    id: "big-surf",
+    name: "The Big Surf Kit",
+    blurb: "The same idea as the Starter, built heavier.",
+    pieces: 5,
+    price: 156.13,
+    saving: 21.30,
+    shipsFree: true,
+  },
+  "beach-day": {
+    id: "beach-day",
+    name: "The Beach Day Kit",
+    blurb: "Braid, circle hooks, 4 oz bank sinkers, pliers and a net.",
+    pieces: 5,
+    price: 119.83,
+    saving: 16.35,
+    shipsFree: true,
+  },
+  "bay-jetty": {
+    id: "bay-jetty",
+    name: "The Bay & Jetty Kit",
+    blurb: "A 7 ft combo you can work along a wall without catching the rocks behind you, 15 lb low-vis braid, a titanium leader for anything that bites through mono, small circle hooks and a net.",
+    pieces: 5,
+    price: 119.85,
+    saving: 16.35,
+    shipsFree: true,
+  },
+  "rockfish-ling": {
+    id: "rockfish-ling",
+    name: "The Rockfish & Lingcod Kit",
+    blurb: "Two weights of vertical jig, hi-vis braid so you can tell what your line is doing in 200 ft of water, a swivel rated well past what you'll put on it, and a net.",
+    pieces: 5,
+    price: 98.29,
+    saving: 13.41,
+    shipsFree: true,
+  },
+  "salmon-troll": {
+    id: "salmon-troll",
+    name: "The Salmon Trolling Kit",
+    blurb: "Metered lead core so you know exactly how deep you are, a mid-size diver, an 11 in flasher, a release and a snubber.",
+    pieces: 5,
+    price: 102.47,
+    saving: 13.98,
+    shipsFree: true,
+  },
+};
+
+const KIT_FOR_SPECIES: Record<string, string> = {
+  "striped-bass": "surf-starter",
+  "striped-bass-atlantic": "surf-starter",
+  "surfperch": "surf-starter",
+  "redtail-surfperch": "surf-starter",
+  "corbina": "surf-starter",
+  "halibut": "surf-starter",
+  "pompano": "surf-starter",
+  "whiting": "surf-starter",
+  "black-drum": "surf-starter",
+  "bluefish": "surf-starter",
+  "atlantic-croaker": "surf-starter",
+  "calico-bass": "bay-jetty",
+  "spotted-bay-bass": "bay-jetty",
+  "leopard-shark": "bay-jetty",
+  "redfish": "bay-jetty",
+  "speckled-trout": "bay-jetty",
+  "snook": "bay-jetty",
+  "sheepshead": "bay-jetty",
+  "mangrove-snapper": "bay-jetty",
+  "tautog": "bay-jetty",
+  "black-sea-bass": "bay-jetty",
+  "scup": "bay-jetty",
+  "summer-flounder": "bay-jetty",
+  "southern-flounder": "bay-jetty",
+  "flounder-gulf": "bay-jetty",
+  "winter-flounder": "bay-jetty",
+  "weakfish": "bay-jetty",
+  "rockfish": "rockfish-ling",
+  "lingcod": "rockfish-ling",
+  "cabezon": "rockfish-ling",
+  "salmon": "salmon-troll",
+  "salmon-ak": "salmon-troll"
+};
+const DEFAULT_KIT = "beach-day";
+
+export function kitUrl(k: Kit): string {
+  return `${STORE}/bundles?utm_source=ustidecharts&utm_medium=kit#${k.id}`;
+}
+
+/**
+ * The one kit to show on a page: the first of its species (pass them most
+ * active first) that has a kit, else the default. null if none is on sale.
+ */
+export function kitFor(speciesKeys: string[]): Kit | null {
+  for (const s of speciesKeys) {
+    const id = KIT_FOR_SPECIES[s];
+    if (id && KITS[id]) return KITS[id];
+  }
+  return DEFAULT_KIT ? KITS[DEFAULT_KIT] ?? null : null;
+}
+
 /** Relevant almost anywhere saltwater; tops a list back up when one drops out. */
-const BACKFILL: readonly string[] = ["braided-line","pliers","landing-net","circle-hooks","tackle-bag"];
+const BACKFILL: readonly string[] = ["pliers","landing-net","circle-hooks","tackle-bag"];
 const MIN_CARDS = 3;
 
 export function getProducts(keys: string[]): Product[] {
